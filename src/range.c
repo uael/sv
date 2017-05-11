@@ -30,7 +30,7 @@
 #include <semver.h>
 
 #ifdef _MSC_VER
-# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, MSG_SIZE, maxlen, fmt, __VA_ARGS__)
+# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
 #endif
 
 void sv_range_dtor(sv_range_t *self) {

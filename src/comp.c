@@ -31,7 +31,7 @@
 #include <stdio.h>
 
 #ifdef _MSC_VER
-# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, MSG_SIZE, maxlen, fmt, __VA_ARGS__)
+# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
 #endif
 
 static void sv_xrevert(sv_t *semver) {

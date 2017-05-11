@@ -31,7 +31,7 @@
 #include <semver.h>
 
 #ifdef _MSC_VER
-# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, MSG_SIZE, maxlen, fmt, __VA_ARGS__)
+# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
 #endif
 
 char sv_num_read(int *self, const char *str, size_t len, size_t *offset) {
