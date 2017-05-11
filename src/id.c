@@ -31,7 +31,7 @@
 #include <semver.h>
 
 #ifdef _MSC_VER
-# define snprintf _snprintf
+# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, MSG_SIZE, maxlen, fmt, __VA_ARGS__)
 #endif
 
 void sv_id_dtor(sv_id_t *self) {
