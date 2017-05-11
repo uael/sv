@@ -36,20 +36,20 @@ int test_semver(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   int slen;
   char buffer[1024];
-  sv_t comp = {0};
+  sv_t semver = {0};
 
-  if (sv_read(&comp, str, len, &offset)) {
+  if (sv_read(&semver, str, len, &offset)) {
     return 1;
   }
-  slen = sv_snprint(comp, buffer, 1024);
+  slen = sv_snprint(semver, buffer, 1024);
   printf("%.*s", slen, buffer);
   if (memcmp(expected, buffer, strlen(expected))) {
     printf(" != %s\n", expected);
-    sv_dtor(&comp);
+    sv_dtor(&semver);
     return 1;
   }
   printf(" == %s\n", expected);
-  sv_dtor(&comp);
+  sv_dtor(&semver);
   return 0;
 }
 
