@@ -45,9 +45,11 @@ int test_comp(const char *expected, const char *str, size_t len) {
   printf("%.*s", slen, buffer);
   if (memcmp(expected, buffer, strlen(expected))) {
     printf(" != %s\n", expected);
+    sv_comp_dtor(&comp);
     return 1;
   }
   printf(" == %s\n", expected);
+  sv_comp_dtor(&comp);
   return 0;
 }
 
