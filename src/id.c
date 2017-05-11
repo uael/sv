@@ -30,6 +30,10 @@
 #include <ctype.h>
 #include <semver.h>
 
+#ifdef _MSC_VER
+# define snprintf _snprintf
+#endif
+
 void sv_id_dtor(sv_id_t *self) {
   if (self && self->next) {
     sv_id_dtor(self->next);

@@ -29,6 +29,10 @@
 #include <semver.h>
 #include <stdio.h>
 
+#ifdef _MSC_VER
+# define snprintf _snprintf
+#endif
+
 void sv_dtor(sv_t *self) {
   sv_id_dtor(&self->prerelease);
   sv_id_dtor(&self->build);

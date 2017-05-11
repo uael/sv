@@ -26,7 +26,7 @@
  */
 
 #ifndef SEMVER_H__
-#define SEMVER_H__
+# define SEMVER_H__
 
 #include <stddef.h>
 

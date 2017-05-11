@@ -30,6 +30,10 @@
 #include <semver.h>
 #include <stdio.h>
 
+#ifdef _MSC_VER
+# define snprintf _snprintf
+#endif
+
 static void sv_xrevert(sv_t *semver) {
   if (semver->major == SV_NUM_X) {
     semver->major = semver->minor = semver->patch = 0;

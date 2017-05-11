@@ -30,6 +30,10 @@
 #include <ctype.h>
 #include <semver.h>
 
+#ifdef _MSC_VER
+# define snprintf _snprintf
+#endif
+
 char sv_num_read(int *self, const char *str, size_t len, size_t *offset) {
   char *endptr;
 

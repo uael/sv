@@ -29,6 +29,10 @@
 #include <stdlib.h>
 #include <semver.h>
 
+#ifdef _MSC_VER
+# define snprintf _snprintf
+#endif
+
 void sv_range_dtor(sv_range_t *self) {
   if (self && self->next) {
     sv_range_dtor(self->next);
