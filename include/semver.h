@@ -86,11 +86,11 @@ int  sv_comp_snprint(const sv_comp_t self, char *buffer, size_t len);
 
 struct sv_range {
   struct sv_range *next;
-  sv_comp_t comparator;
+  sv_comp_t comp;
 };
 
 void sv_range_dtor(sv_range_t *self);
-void sv_range_ctor(sv_range_t *self, const char *str, size_t len);
+char sv_range_read(sv_range_t *self, const char *str, size_t len);
 char sv_range_comp(const sv_range_t self, const sv_t semver);
 int  sv_range_snprint(const sv_range_t self, char *buffer, size_t len);
 
