@@ -36,7 +36,7 @@ int test_comp(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   int slen;
   char buffer[1024];
-  sv_comp_t comp = {};
+  sv_comp_t comp = {0};
 
   if (sv_comp_read(&comp, str, len, &offset)) {
     return 1;
