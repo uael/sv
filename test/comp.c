@@ -32,7 +32,7 @@
 
 #define STRNSIZE(s) (s), sizeof(s)-1
 
-int test_comp(const char *expected, const char *str, size_t len) {
+int test_semver(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   int slen;
   char buffer[1024];
@@ -55,67 +55,67 @@ int test_comp(const char *expected, const char *str, size_t len) {
 
 int main(int argc, char *argv[]) {
   puts("x-range:");
-  if (test_comp(">=0.0.0", STRNSIZE("*"))) {
+  if (test_semver(">=0.0.0", STRNSIZE("*"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.0.0 <2.0.0", STRNSIZE("1.x"))) {
+  if (test_semver(">=1.0.0 <2.0.0", STRNSIZE("1.x"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.2.0 <1.3.0", STRNSIZE("1.2.x"))) {
+  if (test_semver(">=1.2.0 <1.3.0", STRNSIZE("1.2.x"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=0.0.0", STRNSIZE(""))) {
+  if (test_semver(">=0.0.0", STRNSIZE(""))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.0.0 <2.0.0", STRNSIZE("1"))) {
+  if (test_semver(">=1.0.0 <2.0.0", STRNSIZE("1"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.2.0 <1.3.0", STRNSIZE("1.2"))) {
+  if (test_semver(">=1.2.0 <1.3.0", STRNSIZE("1.2"))) {
     return EXIT_FAILURE;
   }
 
   puts("\nhyphen:");
-  if (test_comp(">=1.2.3 <=2.3.4", STRNSIZE("1.2.3 - 2.3.4"))) {
+  if (test_semver(">=1.2.3 <=2.3.4", STRNSIZE("1.2.3 - 2.3.4"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.2.0 <=2.3.4", STRNSIZE("1.2 - 2.3.4"))) {
+  if (test_semver(">=1.2.0 <=2.3.4", STRNSIZE("1.2 - 2.3.4"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.2.3 <2.4.0", STRNSIZE("1.2.3 - 2.3"))) {
+  if (test_semver(">=1.2.3 <2.4.0", STRNSIZE("1.2.3 - 2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.2.3 <3.0.0", STRNSIZE("1.2.3 - 2"))) {
+  if (test_semver(">=1.2.3 <3.0.0", STRNSIZE("1.2.3 - 2"))) {
     return EXIT_FAILURE;
   }
 
   puts("\ntidle:");
-  if (test_comp(">=1.2.3 <1.3.0", STRNSIZE("~1.2.3"))) {
+  if (test_semver(">=1.2.3 <1.3.0", STRNSIZE("~1.2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.2.0 <1.3.0", STRNSIZE("~1.2"))) {
+  if (test_semver(">=1.2.0 <1.3.0", STRNSIZE("~1.2"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=1.0.0 <2.0.0", STRNSIZE("~1"))) {
+  if (test_semver(">=1.0.0 <2.0.0", STRNSIZE("~1"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=0.2.3 <0.3.0", STRNSIZE("~0.2.3"))) {
+  if (test_semver(">=0.2.3 <0.3.0", STRNSIZE("~0.2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=0.2.0 <0.3.0", STRNSIZE("~0.2"))) {
+  if (test_semver(">=0.2.0 <0.3.0", STRNSIZE("~0.2"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=0.0.0 <1.0.0", STRNSIZE("~0"))) {
+  if (test_semver(">=0.0.0 <1.0.0", STRNSIZE("~0"))) {
     return EXIT_FAILURE;
   }
 
   puts("\ncaret:");
-  if (test_comp(">=1.2.3 <2.0.0", STRNSIZE("^1.2.3"))) {
+  if (test_semver(">=1.2.3 <2.0.0", STRNSIZE("^1.2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=0.2.3 <0.3.0", STRNSIZE("^0.2.3"))) {
+  if (test_semver(">=0.2.3 <0.3.0", STRNSIZE("^0.2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_comp(">=0.0.3 <0.0.4", STRNSIZE("^0.0.3"))) {
+  if (test_semver(">=0.0.3 <0.0.4", STRNSIZE("^0.0.3"))) {
     return EXIT_FAILURE;
   }
 
