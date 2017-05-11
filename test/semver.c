@@ -38,17 +38,19 @@ int test_semver(const char *expected, const char *str, size_t len) {
   char buffer[1024];
   sv_t semver = {0};
 
+  printf("test: `%.*s`", (int) len, str);
   if (sv_read(&semver, str, len, &offset)) {
+    puts(" \tcouldn't parse");
     return 1;
   }
   slen = sv_snprint(semver, buffer, 1024);
-  printf("%.*s", slen, buffer);
+  printf(" \t=> \t`%.*s`", slen, buffer);
   if (memcmp(expected, buffer, strlen(expected))) {
-    printf(" != %s\n", expected);
+    printf(" != `%s`\n", expected);
     sv_dtor(&semver);
     return 1;
   }
-  printf(" == %s\n", expected);
+  printf(" == `%s`\n", expected);
   sv_dtor(&semver);
   return 0;
 }
@@ -79,6 +81,24 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
   if (test_semver("1.2.3-al-pha.2+77.2", STRNSIZE("1.2.3-al-pha.2+77.2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("", STRNSIZE("")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("", STRNSIZE("vv1.2.3")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("", STRNSIZE("v1.2")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("", STRNSIZE("v1.2.x")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("", STRNSIZE("v1.2.3-")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("", STRNSIZE("v1.2.3+")) == 0) {
     return EXIT_FAILURE;
   }
 

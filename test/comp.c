@@ -36,20 +36,22 @@ int test_semver(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   int slen;
   char buffer[1024];
-  sv_comp_t comp = {0};
+  sv_comp_t semver = {0};
 
-  if (sv_comp_read(&comp, str, len, &offset)) {
+  printf("test: `%.*s`", (int) len, str);
+  if (sv_comp_read(&semver, str, len, &offset)) {
+    puts(" \tcouldn't parse");
     return 1;
   }
-  slen = sv_comp_snprint(comp, buffer, 1024);
-  printf("%.*s", slen, buffer);
+  slen = sv_comp_snprint(semver, buffer, 1024);
+  printf(" \t=> \t`%.*s`", slen, buffer);
   if (memcmp(expected, buffer, strlen(expected))) {
-    printf(" != %s\n", expected);
-    sv_comp_dtor(&comp);
+    printf(" != `%s`\n", expected);
+    sv_comp_dtor(&semver);
     return 1;
   }
-  printf(" == %s\n", expected);
-  sv_comp_dtor(&comp);
+  printf(" == `%s`\n", expected);
+  sv_comp_dtor(&semver);
   return 0;
 }
 
