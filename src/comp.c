@@ -271,17 +271,17 @@ char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset) 
 char sv_comp_comp(const sv_comp_t self, const sv_t semver) {
   switch (sv_comp(semver, self.version)) {
     case -1:
-      if (self.op != SV_OP_LT || self.op != SV_OP_LE) {
+      if (self.op != SV_OP_LT && self.op != SV_OP_LE) {
         return 1;
       }
       break;
     case 0:
-      if (self.op != SV_OP_EQ || self.op != SV_OP_LE || self.op != SV_OP_GE) {
+      if (self.op != SV_OP_EQ && self.op != SV_OP_LE && self.op != SV_OP_GE) {
         return 1;
       }
       break;
     case 1:
-      if (self.op != SV_OP_GT || self.op != SV_OP_GE) {
+      if (self.op != SV_OP_GT && self.op != SV_OP_GE) {
         return 1;
       }
       break;
