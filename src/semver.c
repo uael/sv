@@ -78,5 +78,26 @@ char sv_comp(const sv_t self, const sv_t other) {
 }
 
 int sv_snprint(const sv_t self, char *buffer, size_t len) {
+  char prerelease[256], build[256];
+
+  if (self.prerelease.len && self.build.len) {
+    return snprintf(buffer, len, "%d.%d.%d-%.*s+%.*s",
+      self.major, self.minor, self.patch,
+      sv_id_snprint(self.prerelease, prerelease, 256), prerelease,
+      sv_id_snprint(self.build, build, 256), build
+    );
+  }
+  if (self.prerelease.len) {
+    return snprintf(buffer, len, "%d.%d.%d-%.*s",
+      self.major, self.minor, self.patch,
+      sv_id_snprint(self.prerelease, prerelease, 256), prerelease
+    );
+  }
+  if (self.build.len) {
+    return snprintf(buffer, len, "%d.%d.%d+%.*s",
+      self.major, self.minor, self.patch,
+      sv_id_snprint(self.build, build, 256), build
+    );
+  }
   return snprintf(buffer, len, "%d.%d.%d", self.major, self.minor, self.patch);
 }

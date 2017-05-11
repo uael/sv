@@ -54,7 +54,31 @@ int test_semver(const char *expected, const char *str, size_t len) {
 }
 
 int main(int argc, char *argv[]) {
-  if (test_semver("1.2.3", STRNSIZE("v1.2.3"))) {
+  if (test_semver("1.2.3", STRNSIZE("1.2.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3-alpha", STRNSIZE("v1.2.3-alpha"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3-alpha.2", STRNSIZE("1.2.3-alpha.2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3+77", STRNSIZE("v1.2.3+77"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3+77.2", STRNSIZE("1.2.3+77.2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3-alpha.2+77", STRNSIZE("v1.2.3-alpha.2+77"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3-alpha.2+77.2", STRNSIZE("1.2.3-alpha.2+77.2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3-al-pha.2+77", STRNSIZE("v1.2.3-al-pha.2+77"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver("1.2.3-al-pha.2+77.2", STRNSIZE("1.2.3-al-pha.2+77.2"))) {
     return EXIT_FAILURE;
   }
 

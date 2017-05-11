@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <semver.h>
+#include <stdio.h>
 
 #ifdef _MSC_VER
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
@@ -114,4 +115,13 @@ char sv_id_comp(const sv_id_t self, const sv_id_t other) {
   }
 
   return sv_id_comp(*self.next, *other.next);
+}
+
+int sv_id_snprint(const sv_id_t self, char *buffer, size_t len) {
+  char next[1024];
+
+  if (self.next) {
+    return snprintf(buffer, len, "%.*s.%.*s", (int) self.len, self.raw, sv_id_snprint(*self.next, next, 1024), next);
+  }
+  return snprintf(buffer, len, "%.*s", (int) self.len, self.raw);
 }
