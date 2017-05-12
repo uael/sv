@@ -48,7 +48,7 @@ int test_comparison(char expected, const char *sv_str, size_t sv_len, const char
     puts(" \tcouldn't parse comp");
     return 1;
   }
-  result = sv_comp_comp(comp, semver);
+  result = sv_match(semver, comp);
   printf(" \t=> %d\t", result);
   if (result != expected) {
     printf(" != `%d`\n", expected);

@@ -268,32 +268,6 @@ char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset) 
   return 0;
 }
 
-char sv_comp_comp(const sv_comp_t self, const sv_t semver) {
-  switch (sv_comp(semver, self.version)) {
-    case -1:
-      if (self.op != SV_OP_LT && self.op != SV_OP_LE) {
-        return 1;
-      }
-      break;
-    case 0:
-      if (self.op != SV_OP_EQ && self.op != SV_OP_LE && self.op != SV_OP_GE) {
-        return 1;
-      }
-      break;
-    case 1:
-      if (self.op != SV_OP_GT && self.op != SV_OP_GE) {
-        return 1;
-      }
-      break;
-    default:
-      return 1;
-  }
-  if (self.next) {
-    return sv_comp_comp(*self.next, semver);
-  }
-  return 0;
-}
-
 int sv_comp_snprint(const sv_comp_t self, char *buffer, size_t len) {
   char *op = "";
   char semver[256], next[1024];

@@ -81,7 +81,7 @@ struct sv_comp {
 
 void sv_comp_dtor(sv_comp_t *self);
 char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset);
-char sv_comp_comp(const sv_comp_t self, const sv_t semver);
+char sv_match(const sv_t self, const sv_comp_t comp);
 int  sv_comp_snprint(const sv_comp_t self, char *buffer, size_t len);
 
 struct sv_range {
