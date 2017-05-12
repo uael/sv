@@ -54,7 +54,7 @@ static sv_comp_t *sv_xconvert(sv_comp_t *self) {
     sv_xrevert(&self->version);
     self->op = SV_OP_GE;
     self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
-    *self->next = (sv_comp_t) {.op = SV_OP_LT, .version = self->version};
+    *self->next = (sv_comp_t) {SV_OP_LT, self->version};
     ++self->next->version.major;
     return self->next;
   }
@@ -62,7 +62,7 @@ static sv_comp_t *sv_xconvert(sv_comp_t *self) {
     sv_xrevert(&self->version);
     self->op = SV_OP_GE;
     self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
-    *self->next = (sv_comp_t) {.op = SV_OP_LT, .version = self->version};
+    *self->next = (sv_comp_t) {SV_OP_LT, self->version};
     ++self->next->version.minor;
     return self->next;
   }
@@ -111,17 +111,11 @@ static char parse_hiphen(sv_comp_t *self, const char *str, size_t len, size_t *o
   sv_xrevert(&self->version);
   self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
   if (partial.minor == SV_NUM_X) {
-    *self->next = (sv_comp_t) {
-      .op = SV_OP_LT, .version = {partial.major + 1}
-    };
+    *self->next = (sv_comp_t) {SV_OP_LT, {partial.major + 1}};
   } else if (partial.patch == SV_NUM_X) {
-    *self->next = (sv_comp_t) {
-      .op = SV_OP_LT, .version = {partial.major, partial.minor + 1}
-    };
+    *self->next = (sv_comp_t) {SV_OP_LT, {partial.major, partial.minor + 1}};
   } else {
-    *self->next = (sv_comp_t) {
-      .op = SV_OP_LE, .version = partial
-    };
+    *self->next = (sv_comp_t) {SV_OP_LE, partial};
   }
 
   return 0;
@@ -146,9 +140,7 @@ static char parse_tidle(sv_comp_t *self, const char *str, size_t len, size_t *of
     ++partial.patch;
   }
   self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
-  *self->next = (sv_comp_t) {
-    .op = SV_OP_LT, .version = partial
-  };
+  *self->next = (sv_comp_t) {SV_OP_LT, partial};
   return 0;
 }
 
@@ -169,9 +161,7 @@ static char parse_caret(sv_comp_t *self, const char *str, size_t len, size_t *of
     partial.minor = partial.patch = 0;
   }
   self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
-  *self->next = (sv_comp_t) {
-    .op = SV_OP_LT, .version = partial
-  };
+  *self->next = (sv_comp_t) {SV_OP_LT, partial};
   return 0;
 }
 
@@ -184,7 +174,7 @@ void sv_comp_dtor(sv_comp_t *self) {
 }
 
 char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset) {
-  *self = (sv_comp_t) {0};
+  *self = (sv_comp_t) {SV_OP_EQ};
   while (*offset < len) {
     switch (str[*offset]) {
       case '^':
