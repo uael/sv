@@ -91,7 +91,7 @@ struct sv_range {
 
 void sv_range_dtor(sv_range_t *self);
 char sv_range_read(sv_range_t *self, const char *str, size_t len);
-char sv_range_comp(const sv_range_t self, const sv_t semver);
+char sv_rmatch(const sv_t self, const sv_range_t range);
 int  sv_range_snprint(const sv_range_t self, char *buffer, size_t len);
 
 #endif /* SEMVER_H__ */

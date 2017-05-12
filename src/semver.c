@@ -79,32 +79,6 @@ char sv_comp(const sv_t self, const sv_t other) {
   return sv_id_comp(self.build, other.build);
 }
 
-char sv_match(const sv_t self, const sv_comp_t comp) {
-  switch (sv_comp(self, comp.version)) {
-    case -1:
-      if (comp.op != SV_OP_LT && comp.op != SV_OP_LE) {
-        return 1;
-      }
-      break;
-    case 0:
-      if (comp.op != SV_OP_EQ && comp.op != SV_OP_LE && comp.op != SV_OP_GE) {
-        return 1;
-      }
-      break;
-    case 1:
-      if (comp.op != SV_OP_GT && comp.op != SV_OP_GE) {
-        return 1;
-      }
-      break;
-    default:
-      return 1;
-  }
-  if (comp.next) {
-    return sv_match(self, *comp.next);
-  }
-  return 0;
-}
-
 int sv_snprint(const sv_t self, char *buffer, size_t len) {
   char prerelease[256], build[256];
 

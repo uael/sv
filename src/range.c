@@ -45,6 +45,10 @@ char sv_range_read(sv_range_t *self, const char *str, size_t len) {
   return 1;
 }
 
-char sv_range_comp(const sv_range_t self, const sv_t sv) {
+char sv_rmatch(const sv_t self, const sv_range_t range) {
+  return 1;
+}
+
+int  sv_range_snprint(const sv_range_t self, char *buffer, size_t len) {
   return 1;
 }
