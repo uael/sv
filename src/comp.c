@@ -272,26 +272,26 @@ char sv_match(const sv_t self, const sv_comp_t comp) {
   switch (sv_comp(self, comp.version)) {
     case -1:
       if (comp.op != SV_OP_LT && comp.op != SV_OP_LE) {
-        return 1;
+        return 0;
       }
       break;
     case 0:
       if (comp.op != SV_OP_EQ && comp.op != SV_OP_LE && comp.op != SV_OP_GE) {
-        return 1;
+        return 0;
       }
       break;
     case 1:
       if (comp.op != SV_OP_GT && comp.op != SV_OP_GE) {
-        return 1;
+        return 0;
       }
       break;
     default:
-      return 1;
+      return 0;
   }
   if (comp.next) {
     return sv_match(self, *comp.next);
   }
-  return 0;
+  return 1;
 }
 
 int sv_comp_snprint(const sv_comp_t self, char *buffer, size_t len) {

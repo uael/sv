@@ -41,12 +41,27 @@ void sv_range_dtor(sv_range_t *self) {
   }
 }
 
-char sv_range_read(sv_range_t *self, const char *str, size_t len) {
+char sv_range_read(sv_range_t *self, const char *str, size_t len, size_t *offset) {
+  *self = (sv_range_t) {0};
+  if (*offset < len) {
+    if (sv_comp_read(&self->comp, str, len, offset)) {
+      return 1;
+    }
+    while (*offset < len && str[*offset] == ' ') ++*offset;
+    if (*offset < len && str[*offset] == '|'
+        && *offset + 1 < len && str[*offset + 1] == '|') {
+      *offset += 2;
+      while (*offset < len && str[*offset] == ' ') ++*offset;
+      self->next = calloc(1, sizeof(sv_range_t));
+      return sv_range_read(self->next, str, len, offset);
+    }
+    return 0;
+  }
   return 1;
 }
 
 char sv_rmatch(const sv_t self, const sv_range_t range) {
-  return 1;
+  return (char) (sv_match(self, range.comp) ? 1 : range.next ? sv_rmatch(self, *range.next) : 0);
 }
 
 int  sv_range_snprint(const sv_range_t self, char *buffer, size_t len) {

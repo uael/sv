@@ -63,7 +63,7 @@ int test_comparison(char expected, const char *sv_str, size_t sv_len, const char
 }
 
 int main(int argc, char *argv[]) {
-  if (test_comparison(0, STRNSIZE("v1.2.3"), STRNSIZE(">1"))) {
+  if (test_comparison(1, STRNSIZE("v1.2.3"), STRNSIZE(">1"))) {
     return EXIT_FAILURE;
   }
 
