@@ -165,6 +165,16 @@ static char parse_caret(sv_comp_t *self, const char *str, size_t len, size_t *of
   return 0;
 }
 
+void sv_comp_ctor(sv_comp_t *self) {
+#ifndef _MSC_VER
+  *self = (sv_comp_t) {0};
+#else
+  self->next = NULL;
+  self->op = SV_OP_EQ;
+  sv_ctor(&self->version);
+#endif
+}
+
 void sv_comp_dtor(sv_comp_t *self) {
   if (self && self->next) {
     sv_comp_dtor(self->next);
@@ -174,7 +184,7 @@ void sv_comp_dtor(sv_comp_t *self) {
 }
 
 char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset) {
-  *self = (sv_comp_t) {0};
+  sv_comp_ctor(self);
   while (*offset < len) {
     switch (str[*offset]) {
       case '^':

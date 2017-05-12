@@ -34,6 +34,15 @@
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
 #endif
 
+static void sv_range_init(sv_range_t *self) {
+#ifndef _MSC_VER
+  *self = (sv_range_t) {0};
+#else
+  self->next = NULL;
+  sv_comp_ctor(&self->comp);
+#endif
+}
+
 void sv_range_dtor(sv_range_t *self) {
   if (self && self->next) {
     sv_range_dtor(self->next);
@@ -43,7 +52,7 @@ void sv_range_dtor(sv_range_t *self) {
 }
 
 char sv_range_read(sv_range_t *self, const char *str, size_t len, size_t *offset) {
-  *self = (sv_range_t) {0};
+  sv_range_init(self);
   if (sv_comp_read(&self->comp, str, len, offset)) {
     return 1;
   }
