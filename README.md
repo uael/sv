@@ -14,12 +14,34 @@ $ xmake check
 $ xmake install
 ```
 
+## API
+
+```c
+...
+sv_t semver = {0};
+sv_range_t range = {0};
+
+sv_read(&semver, "v1.2.3-alpha.1", sizeof("v1.2.3-alpha.1")-1);
+assert(1 == semver.major);
+assert(2 == semver.minor);
+assert(3 == semver.patch);
+assert(0 == memcmp("alpha", semver.prerelease.raw, sizeof("alpha")-1));
+assert(0 == memcmp("1", semver.prerelease.next->raw, sizeof("1")-1));
+
+sv_range_read(&range, "1.2.1 || >=1.2.3 <1.2.5", sizeof("1.2.1 || >=1.2.3 <1.2.5")-1);
+assert(1 == sv_rmatch(semver, range));
+
+sv_dtor(&semver);
+sv_range_dtor(&range);
+...
+```
+
 ## Versions
 
 A "version" is described by the `v2.0.0` specification found at
 <http://semver.org/>.
 
-A leading `"="` or `"v"` character is stripped off and ignored.
+A leading `"v"` character is stripped off and ignored.
 
 ## Ranges
 
