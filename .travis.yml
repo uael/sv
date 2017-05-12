@@ -2,11 +2,14 @@ sudo: false
 language: c
 
 install:
-  - mkdir build && cd build
+  - xmake
+  - cd build
   - cmake ..
   - make all
 
-script: ctest --verbose
+script:
+ - ctest --verbose
+ - cd .. && xmake check
 
 matrix:
   include:
