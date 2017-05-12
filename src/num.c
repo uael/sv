@@ -65,7 +65,7 @@ char sv_num_comp(const int self, const int other) {
   if (self > other) {
     return 1;
   }
-  if (other < self) {
+  if (self < other) {
     return -1;
   }
   return 0;

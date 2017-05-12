@@ -32,7 +32,7 @@
 
 #define STRNSIZE(s) (s), sizeof(s)-1
 
-int test_comparison(char expected, const char *sv_str, size_t sv_len, const char *comp_str, size_t comp_len) {
+int test_match(char expected, const char *sv_str, size_t sv_len, const char *comp_str, size_t comp_len) {
   size_t offset = 0;
   char result;
   sv_t semver = {0};
@@ -63,7 +63,25 @@ int test_comparison(char expected, const char *sv_str, size_t sv_len, const char
 }
 
 int main(int argc, char *argv[]) {
-  if (test_comparison(1, STRNSIZE("v1.2.3"), STRNSIZE(">1"))) {
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("1.2.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("1.2.x"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("1.x.x"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("1.x"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("1"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("*"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE(">1"))) {
     return EXIT_FAILURE;
   }
 
