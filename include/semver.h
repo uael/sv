@@ -58,8 +58,8 @@ struct sv_id {
 
 void sv_id_dtor(sv_id_t *self);
 char sv_id_read(sv_id_t *self, const char *str, size_t len, size_t *offset);
+int  sv_id_write(const sv_id_t self, char *buffer, size_t len);
 char sv_id_comp(const sv_id_t self, const sv_id_t other);
-int  sv_id_snprint(const sv_id_t self, char *buffer, size_t len);
 
 struct sv {
   int major, minor, patch;
@@ -70,8 +70,8 @@ struct sv {
 
 void sv_dtor(sv_t *self);
 char sv_read(sv_t *self, const char *str, size_t len, size_t *offset);
+int  sv_write(const sv_t self, char *buffer, size_t len);
 char sv_comp(const sv_t self, const sv_t other);
-int  sv_snprint(const sv_t self, char *buffer, size_t len);
 
 struct sv_comp {
   struct sv_comp *next;
@@ -81,8 +81,8 @@ struct sv_comp {
 
 void sv_comp_dtor(sv_comp_t *self);
 char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset);
+int  sv_comp_write(const sv_comp_t self, char *buffer, size_t len);
 char sv_match(const sv_t self, const sv_comp_t comp);
-int  sv_comp_snprint(const sv_comp_t self, char *buffer, size_t len);
 
 struct sv_range {
   struct sv_range *next;
@@ -91,7 +91,7 @@ struct sv_range {
 
 void sv_range_dtor(sv_range_t *self);
 char sv_range_read(sv_range_t *self, const char *str, size_t len, size_t *offset);
+int  sv_range_write(const sv_range_t self, char *buffer, size_t len);
 char sv_rmatch(const sv_t self, const sv_range_t range);
-int  sv_range_snprint(const sv_range_t self, char *buffer, size_t len);
 
 #endif /* SEMVER_H__ */

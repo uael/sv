@@ -65,14 +65,14 @@ char sv_rmatch(const sv_t self, const sv_range_t range) {
   return (char) (sv_match(self, range.comp) ? 1 : range.next ? sv_rmatch(self, *range.next) : 0);
 }
 
-int  sv_range_snprint(const sv_range_t self, char *buffer, size_t len) {
+int sv_range_write(const sv_range_t self, char *buffer, size_t len) {
   char comp[1024], next[1024];
 
   if (self.next) {
     return snprintf(buffer, len, "%.*s || %.*s",
-      sv_comp_snprint(self.comp, comp, 1024), comp,
-      sv_range_snprint(*self.next, next, 1024), next
+                    sv_comp_write(self.comp, comp, 1024), comp,
+                    sv_range_write(*self.next, next, 1024), next
     );
   }
-  return snprintf(buffer, len, "%.*s", sv_comp_snprint(self.comp, comp, 1024), comp);
+  return snprintf(buffer, len, "%.*s", sv_comp_write(self.comp, comp, 1024), comp);
 }

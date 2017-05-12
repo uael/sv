@@ -43,7 +43,7 @@ int test_semver(const char *expected, const char *str, size_t len) {
     puts(" \tcouldn't parse");
     return 1;
   }
-  slen = sv_comp_snprint(comp, buffer, 1024);
+  slen = sv_comp_write(comp, buffer, 1024);
   printf(" \t=> \t`%.*s`", slen, buffer);
   if (memcmp(expected, buffer, strlen(expected))) {
     printf(" != `%s`\n", expected);

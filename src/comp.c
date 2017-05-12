@@ -294,7 +294,7 @@ char sv_match(const sv_t self, const sv_comp_t comp) {
   return 1;
 }
 
-int sv_comp_snprint(const sv_comp_t self, char *buffer, size_t len) {
+int sv_comp_write(const sv_comp_t self, char *buffer, size_t len) {
   char *op = "";
   char semver[256], next[1024];
 
@@ -314,9 +314,9 @@ int sv_comp_snprint(const sv_comp_t self, char *buffer, size_t len) {
       op = ">=";
       break;
   }
-  sv_snprint(self.version, semver, 256);
+  sv_write(self.version, semver, 256);
   if (self.next) {
-    return snprintf(buffer, len, "%s%s %.*s", op, semver, sv_comp_snprint(*self.next, next, 1024), next);
+    return snprintf(buffer, len, "%s%s %.*s", op, semver, sv_comp_write(*self.next, next, 1024), next);
   }
   return snprintf(buffer, len, "%s%s", op, semver);
 }

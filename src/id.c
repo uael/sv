@@ -117,11 +117,11 @@ char sv_id_comp(const sv_id_t self, const sv_id_t other) {
   return sv_id_comp(*self.next, *other.next);
 }
 
-int sv_id_snprint(const sv_id_t self, char *buffer, size_t len) {
+int sv_id_write(const sv_id_t self, char *buffer, size_t len) {
   char next[1024];
 
   if (self.next) {
-    return snprintf(buffer, len, "%.*s.%.*s", (int) self.len, self.raw, sv_id_snprint(*self.next, next, 1024), next);
+    return snprintf(buffer, len, "%.*s.%.*s", (int) self.len, self.raw, sv_id_write(*self.next, next, 1024), next);
   }
   return snprintf(buffer, len, "%.*s", (int) self.len, self.raw);
 }
