@@ -2,8 +2,11 @@ set_project("libsv")
 set_version("0.0.1")
 
 set_warnings("all", "error")
-add_cflags("-Wno-nullability-completeness")
-add_cxxflags("-Wno-nullability-completeness")
+
+if is_os("ios") then
+    add_cflags("-Wno-nullability-completeness")
+    add_cxxflags("-Wno-nullability-completeness")
+end
 
 if is_mode("release") then
     set_symbols("hidden")
