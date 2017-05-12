@@ -2,6 +2,8 @@ set_project("libsv")
 set_version("0.0.1")
 
 set_warnings("all", "error")
+add_cflags("-Wno-nullability-completeness")
+add_cxxflags("-Wno-nullability-completeness")
 
 if is_mode("r") then
     set_symbols("hidden")
