@@ -3,7 +3,7 @@ set_version("0.0.1")
 
 set_warnings("all", "error")
 
-if is_os("ios") then
+if is_os("macosx") or is_os("ios") then
     add_cflags("-Wno-nullability-completeness")
     add_cxxflags("-Wno-nullability-completeness")
 end
