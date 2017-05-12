@@ -75,7 +75,8 @@ static sv_comp_t *sv_xconvert(sv_comp_t *self) {
 }
 
 static char parse_partial(sv_t *self, const char *str, size_t len, size_t *offset) {
-  *self = (sv_t) {SV_NUM_X, SV_NUM_X, SV_NUM_X};
+  sv_ctor(self);
+  self->major = self->minor = self->patch = SV_NUM_X;
   if (*offset < len) {
     self->raw = str + *offset;
     if (sv_num_read(&self->major, str, len, offset)) {
