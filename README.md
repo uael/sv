@@ -4,7 +4,7 @@ public domain c semver
 [![Build Status](https://travis-ci.org/uael/sv.svg?branch=master)](https://travis-ci.org/uael/sv)
 [![Build status](https://ci.appveyor.com/api/projects/status/7li44f9agk0u4dxc?svg=true)](https://ci.appveyor.com/project/uael/sv)
 
-## Install
+## Install
 
 [Install xmake build system (A make-like build utility based on Lua)](http://xmake.io)
 
