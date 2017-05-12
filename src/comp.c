@@ -92,8 +92,8 @@ static char parse_partial(sv_t *self, const char *str, size_t len, size_t *offse
     if (sv_num_read(&self->patch, str, len, offset)) {
       return 1;
     }
-    if (str[*offset] == '-' && sv_id_read(&self->prerelease, str, len, (++*offset, offset))
-      || str[*offset] == '+' && sv_id_read(&self->build, str, len, (++*offset, offset))) {
+    if ((str[*offset] == '-' && sv_id_read(&self->prerelease, str, len, (++*offset, offset)))
+      || (str[*offset] == '+' && sv_id_read(&self->build, str, len, (++*offset, offset)))) {
       return 1;
     }
     self->len = str + *offset - self->raw;

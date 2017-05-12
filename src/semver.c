@@ -50,8 +50,8 @@ char sv_read(sv_t *self, const char *str, size_t len, size_t *offset) {
       || sv_num_read(&self->minor, str, len, (++*offset, offset)) || self->minor == SV_NUM_X
       || *offset >= len || str[*offset] != '.'
       || sv_num_read(&self->patch, str, len, (++*offset, offset)) || self->patch == SV_NUM_X
-      || str[*offset] == '-' && sv_id_read(&self->prerelease, str, len, (++*offset, offset))
-      || str[*offset] == '+' && sv_id_read(&self->build, str, len, (++*offset, offset))) {
+      || (str[*offset] == '-' && sv_id_read(&self->prerelease, str, len, (++*offset, offset)))
+      || (str[*offset] == '+' && sv_id_read(&self->build, str, len, (++*offset, offset)))) {
       self->len = str + *offset - self->raw;
       return 1;
     }

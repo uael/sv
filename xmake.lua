@@ -1,6 +1,8 @@
 set_project("libsv")
 set_version("0.0.1")
 
+set_warnings("all", "error")
+
 if is_mode("r") then
     set_symbols("hidden")
     set_optimize("fastest")
