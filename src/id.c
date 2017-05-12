@@ -74,7 +74,7 @@ char sv_id_read(sv_id_t *self, const char *str, size_t len, size_t *offset) {
     self->num = (int) strtol(self->raw, NULL, 0);
   }
   if (str[*offset] == '.') {
-    self->next = malloc(sizeof(sv_id_t));
+    self->next = (sv_id_t *) malloc(sizeof(sv_id_t));
     ++*offset;
     return sv_id_read(self->next, str, len, offset);
   }

@@ -85,20 +85,20 @@ int sv_write(const sv_t self, char *buffer, size_t len) {
   if (self.prerelease.len && self.build.len) {
     return snprintf(buffer, len, "%d.%d.%d-%.*s+%.*s",
       self.major, self.minor, self.patch,
-                    sv_id_write(self.prerelease, prerelease, 256), prerelease,
-                    sv_id_write(self.build, build, 256), build
+      sv_id_write(self.prerelease, prerelease, 256), prerelease,
+      sv_id_write(self.build, build, 256), build
     );
   }
   if (self.prerelease.len) {
     return snprintf(buffer, len, "%d.%d.%d-%.*s",
       self.major, self.minor, self.patch,
-                    sv_id_write(self.prerelease, prerelease, 256), prerelease
+      sv_id_write(self.prerelease, prerelease, 256), prerelease
     );
   }
   if (self.build.len) {
     return snprintf(buffer, len, "%d.%d.%d+%.*s",
       self.major, self.minor, self.patch,
-                    sv_id_write(self.build, build, 256), build
+      sv_id_write(self.build, build, 256), build
     );
   }
   return snprintf(buffer, len, "%d.%d.%d", self.major, self.minor, self.patch);

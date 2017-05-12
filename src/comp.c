@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include <semver.h>
 #include <stdio.h>
-#include <ctype.h>
 
 #ifdef _MSC_VER
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
@@ -54,7 +53,7 @@ static sv_comp_t *sv_xconvert(sv_comp_t *self) {
   if (self->version.minor == SV_NUM_X) {
     sv_xrevert(&self->version);
     self->op = SV_OP_GE;
-    self->next = malloc(sizeof(sv_comp_t));
+    self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
     *self->next = (sv_comp_t) {.op = SV_OP_LT, .version = self->version};
     ++self->next->version.major;
     return self->next;
@@ -62,7 +61,7 @@ static sv_comp_t *sv_xconvert(sv_comp_t *self) {
   if (self->version.patch == SV_NUM_X) {
     sv_xrevert(&self->version);
     self->op = SV_OP_GE;
-    self->next = malloc(sizeof(sv_comp_t));
+    self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
     *self->next = (sv_comp_t) {.op = SV_OP_LT, .version = self->version};
     ++self->next->version.minor;
     return self->next;
@@ -110,21 +109,18 @@ static char parse_hiphen(sv_comp_t *self, const char *str, size_t len, size_t *o
   }
   self->op = SV_OP_GE;
   sv_xrevert(&self->version);
-  self->next = malloc(sizeof(sv_comp_t));
+  self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
   if (partial.minor == SV_NUM_X) {
     *self->next = (sv_comp_t) {
-      .op = SV_OP_LT,
-      .version = {partial.major + 1}
+      .op = SV_OP_LT, .version = {partial.major + 1}
     };
   } else if (partial.patch == SV_NUM_X) {
     *self->next = (sv_comp_t) {
-      .op = SV_OP_LT,
-      .version = {partial.major, partial.minor + 1}
+      .op = SV_OP_LT, .version = {partial.major, partial.minor + 1}
     };
   } else {
     *self->next = (sv_comp_t) {
-      .op = SV_OP_LE,
-      .version = partial
+      .op = SV_OP_LE, .version = partial
     };
   }
 
@@ -149,7 +145,7 @@ static char parse_tidle(sv_comp_t *self, const char *str, size_t len, size_t *of
   } else {
     ++partial.patch;
   }
-  self->next = malloc(sizeof(sv_comp_t));
+  self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
   *self->next = (sv_comp_t) {
     .op = SV_OP_LT, .version = partial
   };
@@ -158,7 +154,7 @@ static char parse_tidle(sv_comp_t *self, const char *str, size_t len, size_t *of
 
 static char parse_caret(sv_comp_t *self, const char *str, size_t len, size_t *offset) {
   sv_t partial;
-  
+
   if (parse_partial(&self->version, str, len, offset)) {
     return 1;
   }
@@ -172,7 +168,7 @@ static char parse_caret(sv_comp_t *self, const char *str, size_t len, size_t *of
     ++partial.major;
     partial.minor = partial.patch = 0;
   }
-  self->next = malloc(sizeof(sv_comp_t));
+  self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
   *self->next = (sv_comp_t) {
     .op = SV_OP_LT, .version = partial
   };
@@ -188,6 +184,7 @@ void sv_comp_dtor(sv_comp_t *self) {
 }
 
 char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset) {
+  *self = (sv_comp_t) {0};
   while (*offset < len) {
     switch (str[*offset]) {
       case '^':
@@ -259,10 +256,10 @@ char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset) 
   }
   next:
   if (*offset < len && str[*offset] == ' '
-      && *offset < len + 1 && str[*offset] != ' ' && str[*offset] != '|') {
+    && *offset < len + 1 && str[*offset] != ' ' && str[*offset] != '|') {
     ++*offset;
     if (*offset < len) {
-      self->next = calloc(1, sizeof(sv_comp_t));
+      self->next = (sv_comp_t *) malloc(sizeof(sv_comp_t));
       return sv_comp_read(self->next, str, len, offset);
     }
     return 1;

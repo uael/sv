@@ -49,10 +49,10 @@ char sv_range_read(sv_range_t *self, const char *str, size_t len, size_t *offset
   }
   while (*offset < len && str[*offset] == ' ') ++*offset;
   if (*offset < len && str[*offset] == '|'
-      && *offset + 1 < len && str[*offset + 1] == '|') {
+    && *offset + 1 < len && str[*offset + 1] == '|') {
     *offset += 2;
     while (*offset < len && str[*offset] == ' ') ++*offset;
-    self->next = calloc(1, sizeof(sv_range_t));
+    self->next = (sv_range_t *) malloc(sizeof(sv_range_t));
     return sv_range_read(self->next, str, len, offset);
   }
   return 0;
@@ -67,8 +67,8 @@ int sv_range_write(const sv_range_t self, char *buffer, size_t len) {
 
   if (self.next) {
     return snprintf(buffer, len, "%.*s || %.*s",
-                    sv_comp_write(self.comp, comp, 1024), comp,
-                    sv_range_write(*self.next, next, 1024), next
+      sv_comp_write(self.comp, comp, 1024), comp,
+      sv_range_write(*self.next, next, 1024), next
     );
   }
   return snprintf(buffer, len, "%.*s", sv_comp_write(self.comp, comp, 1024), comp);
