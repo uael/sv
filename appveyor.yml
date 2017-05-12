@@ -15,6 +15,8 @@ configuration:
   - Release
 
 init:
+  - ps: Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
+  - cmd: xmake --version
   - cmd: cmake --version
   - cmd: msbuild /version
 
@@ -40,6 +42,15 @@ build:
   project: C:\projects\sv\build\sv.sln
   verbosity: quiet
 
+build_script:
+  - ps: cd C:\projects\sv
+  - cmd: if %platform%==x64 xmake f -a x64
+  - cmd: if %configuration%==Debug xmake f -m debug
+  - cmd: if %configuration%==Release xmake f -m release
+  - cmd: xmake -v -a
+
 test_script:
   - ps: cd C:\projects\sv\build
   - cmd: ctest -VV
+  - ps: cd C:\projects\sv
+  - cmd: xmake check

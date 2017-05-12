@@ -5,13 +5,13 @@ set_warnings("all", "error")
 add_cflags("-Wno-nullability-completeness")
 add_cxxflags("-Wno-nullability-completeness")
 
-if is_mode("r") then
+if is_mode("release") then
     set_symbols("hidden")
     set_optimize("fastest")
     set_strip("all")
 end
 
-if is_mode("d") then
+if is_mode("debug") then
     set_symbols("debug")
     set_optimize("none")
 end
