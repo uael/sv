@@ -28,6 +28,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <semver.h>
+#include <stdio.h>
 
 #ifdef _MSC_VER
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
@@ -65,5 +66,13 @@ char sv_rmatch(const sv_t self, const sv_range_t range) {
 }
 
 int  sv_range_snprint(const sv_range_t self, char *buffer, size_t len) {
-  return 1;
+  char comp[1024], next[1024];
+
+  if (self.next) {
+    return snprintf(buffer, len, "%.*s || %.*s",
+      sv_comp_snprint(self.comp, comp, 1024), comp,
+      sv_range_snprint(*self.next, next, 1024), next
+    );
+  }
+  return snprintf(buffer, len, "%.*s", sv_comp_snprint(self.comp, comp, 1024), comp);
 }
