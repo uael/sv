@@ -49,10 +49,10 @@ char sv_num_read(int *self, const char *str, size_t len, size_t *offset);
 char sv_num_comp(const int self, const int other);
 
 struct sv_id {
-  size_t len;
-  const char *raw;
   char numeric;
   int num;
+  size_t len;
+  const char *raw;
   struct sv_id *next;
 };
 
@@ -74,9 +74,9 @@ int  sv_write(const sv_t self, char *buffer, size_t len);
 char sv_comp(const sv_t self, const sv_t other);
 
 struct sv_comp {
+  struct sv_comp *next;
   enum sv_op op;
   sv_t version;
-  struct sv_comp *next;
 };
 
 void sv_comp_dtor(sv_comp_t *self);
@@ -85,8 +85,8 @@ int  sv_comp_write(const sv_comp_t self, char *buffer, size_t len);
 char sv_match(const sv_t self, const sv_comp_t comp);
 
 struct sv_range {
-  sv_comp_t comp;
   struct sv_range *next;
+  sv_comp_t comp;
 };
 
 void sv_range_dtor(sv_range_t *self);

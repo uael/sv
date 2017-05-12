@@ -47,7 +47,7 @@ char sv_id_read(sv_id_t *self, const char *str, size_t len, size_t *offset) {
   size_t i = 0;
   char is_zero = 0;
 
-  *self = (sv_id_t) {.numeric = 1};
+  *self = (sv_id_t) {1};
   while (*offset < len) {
     if (isalnum(str[*offset]) || str[*offset] == '-') {
       if (!isdigit(str[*offset])) {
