@@ -45,7 +45,7 @@ int test_semver(const char *expected, const char *str, size_t len) {
   }
   slen = sv_write(semver, buffer, 1024);
   printf(" \t=> \t`%.*s`", slen, buffer);
-  if (memcmp(expected, buffer, strlen(expected))) {
+  if (memcmp(expected, buffer, (size_t) slen)) {
     printf(" != `%s`\n", expected);
     sv_dtor(&semver);
     return 1;

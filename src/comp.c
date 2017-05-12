@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <semver.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #ifdef _MSC_VER
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
@@ -257,7 +258,8 @@ char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset) 
     self = sv_xconvert(self);
   }
   next:
-  if (str[*offset] == ' ') {
+  if (*offset < len && str[*offset] == ' '
+      && *offset < len + 1 && str[*offset] != ' ' && str[*offset] != '|') {
     ++*offset;
     if (*offset < len) {
       self->next = calloc(1, sizeof(sv_comp_t));

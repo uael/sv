@@ -36,88 +36,88 @@ int test_semver(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   int slen;
   char buffer[1024];
-  sv_range_t comp = {0};
+  sv_range_t range = {0};
 
   printf("test: `%.*s`", (int) len, str);
-  if (sv_range_read(&comp, str, len, &offset)) {
+  if (sv_range_read(&range, str, len, &offset)) {
     puts(" \tcouldn't parse");
     return 1;
   }
-  slen = sv_range_write(comp, buffer, 1024);
+  slen = sv_range_write(range, buffer, 1024);
   printf(" \t=> \t`%.*s`", slen, buffer);
-  if (memcmp(expected, buffer, strlen(expected))) {
+  if (memcmp(expected, buffer, (size_t) slen)) {
     printf(" != `%s`\n", expected);
-    sv_range_dtor(&comp);
+    sv_range_dtor(&range);
     return 1;
   }
   printf(" == `%s`\n", expected);
-  sv_range_dtor(&comp);
+  sv_range_dtor(&range);
   return 0;
 }
 
 int main(int argc, char *argv[]) {
   puts("x-range:");
-  if (test_semver(">=0.0.0", STRNSIZE("*"))) {
+  if (test_semver(">=0.0.0 || 1.2.3", STRNSIZE("* || 1.2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.0.0 <2.0.0", STRNSIZE("1.x"))) {
+  if (test_semver(">=1.0.0 <2.0.0 || >=2.0.0 <3.0.0", STRNSIZE("1.x || 2.x"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <1.3.0", STRNSIZE("1.2.x"))) {
+  if (test_semver(">=1.2.0 <1.3.0 || 3.0.0", STRNSIZE("1.2.x || 3.0.0"))) {
     return EXIT_FAILURE;
   }
   if (test_semver(">=0.0.0", STRNSIZE(""))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.0.0 <2.0.0", STRNSIZE("1"))) {
+  if (test_semver(">=1.0.0 <2.0.0 || >=2.0.0 <3.0.0 || >=3.0.0 <4.0.0", STRNSIZE("1 || 2 || 3"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <1.3.0", STRNSIZE("1.2"))) {
+  if (test_semver(">=1.2.0 <1.3.0 || >=5.0.0", STRNSIZE("1.2 || >=5"))) {
     return EXIT_FAILURE;
   }
 
   puts("\nhyphen:");
-  if (test_semver(">=1.2.3 <=2.3.4", STRNSIZE("1.2.3 - 2.3.4"))) {
+  if (test_semver(">=1.2.3 <=2.3.4 || >=5.0.0", STRNSIZE("1.2.3 - 2.3.4 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <=2.3.4", STRNSIZE("1.2 - 2.3.4"))) {
+  if (test_semver(">=1.2.0 <=2.3.4 || >=5.0.0", STRNSIZE("1.2 - 2.3.4 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.3 <2.4.0", STRNSIZE("1.2.3 - 2.3"))) {
+  if (test_semver(">=1.2.3 <2.4.0 || >=5.0.0", STRNSIZE("1.2.3 - 2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.3 <3.0.0", STRNSIZE("1.2.3 - 2"))) {
+  if (test_semver(">=1.2.3 <3.0.0 || >=5.0.0", STRNSIZE("1.2.3 - 2 || >=5"))) {
     return EXIT_FAILURE;
   }
 
   puts("\ntidle:");
-  if (test_semver(">=1.2.3 <1.3.0", STRNSIZE("~1.2.3"))) {
+  if (test_semver(">=1.2.3 <1.3.0 || >=5.0.0", STRNSIZE("~1.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <1.3.0", STRNSIZE("~1.2"))) {
+  if (test_semver(">=1.2.0 <1.3.0 || >=5.0.0", STRNSIZE("~1.2 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.0.0 <2.0.0", STRNSIZE("~1"))) {
+  if (test_semver(">=1.0.0 <2.0.0 || >=5.0.0", STRNSIZE("~1 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.2.3 <0.3.0", STRNSIZE("~0.2.3"))) {
+  if (test_semver(">=0.2.3 <0.3.0 || >=5.0.0", STRNSIZE("~0.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.2.0 <0.3.0", STRNSIZE("~0.2"))) {
+  if (test_semver(">=0.2.0 <0.3.0 || >=5.0.0", STRNSIZE("~0.2 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.0.0 <1.0.0", STRNSIZE("~0"))) {
+  if (test_semver(">=0.0.0 <1.0.0 || >=5.0.0", STRNSIZE("~0 || >=5"))) {
     return EXIT_FAILURE;
   }
 
   puts("\ncaret:");
-  if (test_semver(">=1.2.3 <2.0.0", STRNSIZE("^1.2.3"))) {
+  if (test_semver(">=1.2.3 <2.0.0 || >=5.0.0", STRNSIZE("^1.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.2.3 <0.3.0", STRNSIZE("^0.2.3"))) {
+  if (test_semver(">=0.2.3 <0.3.0 || >=5.0.0", STRNSIZE("^0.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.0.3 <0.0.4", STRNSIZE("^0.0.3"))) {
+  if (test_semver(">=0.0.3 <0.0.4 || >=5.0.0", STRNSIZE("^0.0.3 || >=5"))) {
     return EXIT_FAILURE;
   }
 
