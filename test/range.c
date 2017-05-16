@@ -55,7 +55,7 @@ int test_semver(const char *expected, const char *str, size_t len) {
   return 0;
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
   puts("x-range:");
   if (test_semver(">=0.0.0 || 1.2.3", STRNSIZE("* || 1.2.3"))) {
     return EXIT_FAILURE;

@@ -61,7 +61,7 @@ int test_match(char expected, const char *sv_str, size_t sv_len, const char *com
   return 0;
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
   if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("1.2.3"))) {
     return EXIT_FAILURE;
   }
