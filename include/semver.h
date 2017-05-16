@@ -37,7 +37,7 @@ typedef struct sv_id sv_id_t;
 typedef struct sv_comp sv_comp_t;
 typedef struct sv_range sv_range_t;
 
-enum sv_op {
+enum sv_op_t {
   SV_OP_EQ = 0,
   SV_OP_LT,
   SV_OP_LE,
@@ -77,7 +77,7 @@ char sv_comp(const sv_t self, const sv_t other);
 
 struct sv_comp {
   struct sv_comp *next;
-  enum sv_op op;
+  enum sv_op_t op;
   sv_t version;
 };
 
