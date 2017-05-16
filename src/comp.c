@@ -269,7 +269,7 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
   }
   next:
   if (*offset < len && str[*offset] == ' '
-    && *offset < len + 1 && str[*offset] != ' ' && str[*offset] != '|') {
+    && *offset < len + 1 && str[*offset + 1] != ' ' && str[*offset + 1] != '|') {
     ++*offset;
     if (*offset < len) {
       self->next = (semver_comp_t *) malloc(sizeof(semver_comp_t));
