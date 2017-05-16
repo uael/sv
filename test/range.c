@@ -34,7 +34,7 @@
 
 int test_semver(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
-  int slen;
+  unsigned slen;
   char buffer[1024];
   semver_range_t range = {0};
 
@@ -43,9 +43,9 @@ int test_semver(const char *expected, const char *str, size_t len) {
     puts(" \tcouldn't parse");
     return 1;
   }
-  slen = semver_range_write(range, buffer, 1024);
+  slen = (unsigned) semver_range_write(range, buffer, 1024);
   printf(" \t=> \t`%.*s`", slen, buffer);
-  if (memcmp(expected, buffer, (size_t) slen)) {
+  if (memcmp(expected, buffer, (size_t) slen > len ? slen : len) != 0) {
     printf(" != `%s`\n", expected);
     semver_range_dtor(&range);
     return 1;
@@ -118,6 +118,17 @@ int main(void) {
     return EXIT_FAILURE;
   }
   if (test_semver(">=0.0.3 <0.0.4 || >=5.0.0", STRNSIZE("^0.0.3 || >=5"))) {
+    return EXIT_FAILURE;
+  }
+
+  puts("\nprimitive:");
+  if (test_semver(">=1.2.3 <2.0.0", STRNSIZE(">=1.2.3 <2.0.0"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver(">=0.2.3 <0.3.0", STRNSIZE(">=0.2.3 <0.3.0"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_semver(">=0.0.3 <0.0.4", STRNSIZE(">=0.0.3 <0.0.4"))) {
     return EXIT_FAILURE;
   }
 

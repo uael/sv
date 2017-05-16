@@ -34,7 +34,7 @@
 
 int test_semver(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
-  int slen;
+  unsigned slen;
   char buffer[1024];
   semver_comp_t comp = {0};
 
@@ -43,9 +43,9 @@ int test_semver(const char *expected, const char *str, size_t len) {
     puts(" \tcouldn't parse");
     return 1;
   }
-  slen = semver_comp_write(comp, buffer, 1024);
+  slen = (unsigned) semver_comp_write(comp, buffer, 1024);
   printf(" \t=> \t`%.*s`", slen, buffer);
-  if (memcmp(expected, buffer, (size_t) slen)) {
+  if (memcmp(expected, buffer, (size_t) slen > len ? slen : len) != 0) {
     printf(" != `%s`\n", expected);
     semver_comp_dtor(&comp);
     return 1;
