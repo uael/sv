@@ -32,10 +32,10 @@
 
 #define SV_NUM_X -1
 
-typedef struct sv sv_t;
-typedef struct sv_id sv_id_t;
-typedef struct sv_comp sv_comp_t;
-typedef struct sv_range sv_range_t;
+typedef struct sv_t sv_t;
+typedef struct sv_id_t sv_id_t;
+typedef struct sv_comp_t sv_comp_t;
+typedef struct sv_range_t sv_range_t;
 
 enum sv_op {
   SV_OP_EQ = 0,
@@ -48,12 +48,12 @@ enum sv_op {
 char sv_num_read(int *self, const char *str, size_t len, size_t *offset);
 char sv_num_comp(const int self, const int other);
 
-struct sv_id {
+struct sv_id_t {
   char numeric;
   int num;
   size_t len;
   const char *raw;
-  struct sv_id *next;
+  struct sv_id_t *next;
 };
 
 void sv_id_ctor(sv_id_t *self);
@@ -62,7 +62,7 @@ char sv_id_read(sv_id_t *self, const char *str, size_t len, size_t *offset);
 int  sv_id_write(const sv_id_t self, char *buffer, size_t len);
 char sv_id_comp(const sv_id_t self, const sv_id_t other);
 
-struct sv {
+struct sv_t {
   int major, minor, patch;
   sv_id_t prerelease, build;
   size_t len;
@@ -75,8 +75,8 @@ char sv_read(sv_t *self, const char *str, size_t len, size_t *offset);
 int  sv_write(const sv_t self, char *buffer, size_t len);
 char sv_comp(const sv_t self, const sv_t other);
 
-struct sv_comp {
-  struct sv_comp *next;
+struct sv_comp_t {
+  struct sv_comp_t *next;
   enum sv_op op;
   sv_t version;
 };
@@ -87,8 +87,8 @@ char sv_comp_read(sv_comp_t *self, const char *str, size_t len, size_t *offset);
 int  sv_comp_write(const sv_comp_t self, char *buffer, size_t len);
 char sv_match(const sv_t self, const sv_comp_t comp);
 
-struct sv_range {
-  struct sv_range *next;
+struct sv_range_t {
+  struct sv_range_t *next;
   sv_comp_t comp;
 };
 
