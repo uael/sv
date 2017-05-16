@@ -36,22 +36,22 @@ int test_semver(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   int slen;
   char buffer[1024];
-  sv_range_t range = {0};
+  semver_range_t range = {0};
 
   printf("test: `%.*s`", (int) len, str);
-  if (sv_range_read(&range, str, len, &offset)) {
+  if (semver_range_read(&range, str, len, &offset)) {
     puts(" \tcouldn't parse");
     return 1;
   }
-  slen = sv_range_write(range, buffer, 1024);
+  slen = semver_range_write(range, buffer, 1024);
   printf(" \t=> \t`%.*s`", slen, buffer);
   if (memcmp(expected, buffer, (size_t) slen)) {
     printf(" != `%s`\n", expected);
-    sv_range_dtor(&range);
+    semver_range_dtor(&range);
     return 1;
   }
   printf(" == `%s`\n", expected);
-  sv_range_dtor(&range);
+  semver_range_dtor(&range);
   return 0;
 }
 
