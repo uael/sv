@@ -2,9 +2,7 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.69])
-AC_INIT([Libsv],[3.1],
-  [marco.maggi-ipsu@poste.it],
-  [libsv],[http://github.com/marcomaggi/libsv])
+AC_INIT([Libsv],[3.1],,[libsv],[http://github.com/uael/sv])
 dnl This is the revision number of this configure.ac
 AC_REVISION([0.1])
 AC_COPYRIGHT([This is free and unencumbered software released into the public domain.
