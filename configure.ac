@@ -2,7 +2,7 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.69])
-AC_INIT([Libsv],[3.1],,[libsv],[http://github.com/uael/sv])
+AC_INIT([Libsv],[0.0.1],,[libsv],[http://github.com/uael/sv])
 dnl This is the revision number of this configure.ac
 AC_REVISION([0.1])
 AC_COPYRIGHT([This is free and unencumbered software released into the public domain.
@@ -50,7 +50,7 @@ dnl page
 #### libraries interface version
 
 dnl This is the version stored in the pkg-config data file.
-AC_SUBST([LIBSV_PKG_CONFIG_VERSION],[3.1])
+AC_SUBST([LIBSV_PKG_CONFIG_VERSION],[0.0.1])
 
 MM_LIBTOOL_LIBRARY_VERSIONS([libsv],1,0,0)
 
