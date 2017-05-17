@@ -37,13 +37,13 @@
 
 void semver_id_ctor(semver_id_t *self) {
 #ifndef _MSC_VER
-  *self = (semver_id_t) {1};
+  *self = (semver_id_t) {true};
 #else
   self->next = NULL;
   self->len = 0;
   self->raw = NULL;
   self->num = 0;
-  self->numeric = 1;
+  self->numeric = true;
 #endif
 }
 
@@ -64,7 +64,7 @@ char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offs
     if (isalnum(str[*offset]) || str[*offset] == '-') {
       if (!isdigit(str[*offset])) {
         is_zero = 0;
-        self->numeric = 0;
+        self->numeric = false;
       } else {
         if (i == 0) {
           is_zero = str[*offset] == '0';

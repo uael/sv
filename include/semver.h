@@ -59,6 +59,19 @@
 # endif
 #endif
 
+#if !defined(__cplusplus) && defined(_MSC_VER) && _MSC_VER < 1900
+# define bool	unsigned char
+# define true	1
+# define false	0
+# define __bool_true_false_are_defined	1
+#else
+# ifdef __cplusplus
+#  include <cstdbool>
+# else
+#  include <stdbool.h>
+# endif
+#endif
+
 #define SEMVER_NUM_X (-1)
 
 typedef struct semver semver_t;
@@ -78,7 +91,7 @@ SEMVER_API char semver_num_read(int *self, const char *str, size_t len, size_t *
 SEMVER_API char semver_num_comp(const int self, const int other);
 
 struct semver_id {
-  char numeric;
+  bool numeric;
   int num;
   size_t len;
   const char *raw;
