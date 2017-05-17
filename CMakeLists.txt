@@ -49,10 +49,10 @@ if(SHARED)
         endforeach()
     endif()
 
-    add_library(${PROJECT_NAME} STATIC ${sv_SOURCES} ${sv_HEADERS})
+    add_library(${PROJECT_NAME} SHARED ${sv_SOURCES} ${sv_HEADERS})
     target_compile_definitions(${PROJECT_NAME} PUBLIC BUILD_DYNAMIC_LINK=1)
 else()
-    add_library(${PROJECT_NAME} SHARED ${sv_SOURCES} ${sv_HEADERS})
+    add_library(${PROJECT_NAME} STATIC ${sv_SOURCES} ${sv_HEADERS})
 endif()
 target_compile_definitions(${PROJECT_NAME} PUBLIC SEMVER_COMPILE=1)
 
