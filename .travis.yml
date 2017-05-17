@@ -17,6 +17,13 @@ script:
 matrix:
   include:
     - os: linux
+      addons:
+        apt:
+          sources:
+            - george-edison55-precise-backports
+          packages:
+            - cmake
+            - cmake-data
     - os: linux
       compiler: gcc-4.9
       addons:
