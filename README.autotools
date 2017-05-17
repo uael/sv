@@ -23,8 +23,8 @@ Topics
 This  package  installs  a  C  language  library  implementing  semantic
 versioning for the C language.
 
-  This README file describes a repackaging of the original sources under
-the GNU Autotools infrastructure.
+  This README file  describes the building infrastructure  using the GNU
+Autotools.
 
 
 2. License
@@ -38,7 +38,7 @@ See the LICENSE file.
 
 To install from a proper release tarball, do this:
 
-    $ cd libsv-0.1.0
+    $ cd libsv-3.1
     $ mkdir build
     $ cd build
     $ ../configure
@@ -104,8 +104,7 @@ Read the documentation.
 A. Credits
 ----------
 
-The stuff was  written by Lucas Abel.  The GNU  Autotools repackaging is
-by Marco Maggi.
+The stuff was written by Lucas Abel, <https://github.com/uael>.
 
 
 B. Bugs, vulnerabilities and contributions
@@ -128,12 +127,7 @@ reports about the GNU Autotools repackaging must be registered at:
 C. Resources
 ------------
 
-The latest  release of  this package,  under the  GNU Autotools,  can be
-downloaded from:
-
-	   <https://bitbucket.org/marcomaggi/sv/downloads>
-
-development of the original projects takes place at:
+Development of the original projects takes place at:
 
 		  <https://github.com/uael/sv/>
 
@@ -141,13 +135,9 @@ development of the GNU Autotools repackaging takes place at:
 
 		  <https://github.com/marcomaggi/sv/>
 
-under the "forked.marcomaggi-2017-05-16" branch, and as backup at:
+under the "autotools.marcomaggi-2017-05-17" branch, and as backup at:
 
 		 <https://bitbucket.org/marcomaggi/sv/>
-
-the documentation is available online:
-
-	      <https://marcomaggi.github.io/docs/sv.html>
 
 the GNU Project software can be found here:
 
