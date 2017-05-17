@@ -147,7 +147,21 @@ the GNU Project software can be found here:
 D. Badges and static analysis
 -----------------------------
 
-D.1 Clang's Static Analyzer
+D.1 Travis CI
+-------------
+
+Travis CI is  a hosted, distributed continuous  integration service used
+to build and test software projects  hosted at GitHub.  We can find this
+project's dashboards at:
+
+		    <https://travis-ci.org/uael/sv>
+		<https://travis-ci.org/marcomaggi/cre2>
+
+  Usage of this service is configured through the file ".travis.yml" and
+the  scripts  for the  GNU  Autotools  builds  are under  the  directory
+"meta/travis-ci".
+
+D.3 Clang's Static Analyzer
 ---------------------------
 
 The Clang Static Analyzer is a source code analysis tool that finds bugs

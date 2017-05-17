@@ -96,6 +96,30 @@ matrix:
             - llvm-toolchain-trusty-4.0
           packages:
             - clang-4.0
+    - os: linux
+      branches:
+        only:
+	  - autotools.marcomaggi-2017-05-17
+      compiler: gcc-5
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-5
+      install:
+        - ./meta/travis-ci/install-autoconf.sh
+	- ./meta/travis-ci/install-automake.sh
+	- ./meta/travis-ci/install-texinfo.sh
+	- ./meta/travis-ci/install-pkg-config.sh
+      script: |
+        export PATH=/tmp/mine/bin:$PATH;
+	export LD_LIBRARY_PATH=/tmp/mine/lib:$LD_LIBRARY_PATH;
+	export PKG_CONFIG_PATH=/tmp/mine/lib/pkgconfig:$PKG_CONFIG_PATH;
+  	sh ./autogen.sh;
+        ./configure --enable-maintainer-mode CC=/usr/bin/gcc-5;
+        make -j2 all;
+        make -j2 check;
     - os: osx
       osx_image: xcode6.4
       compiler: clang
