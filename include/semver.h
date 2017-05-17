@@ -138,6 +138,6 @@ SEMVER_API void semver_range_ctor(semver_range_t *self);
 SEMVER_API void semver_range_dtor(semver_range_t *self);
 SEMVER_API char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset);
 SEMVER_API int  semver_range_write(semver_range_t self, char *buffer, size_t len);
-SEMVER_API char semver_rmatch(semver_t self, const semver_range_t range);
+SEMVER_API char semver_rmatch(semver_t self, semver_range_t range);
 
 #endif /* SEMVER_H__ */
