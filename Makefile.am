@@ -2,7 +2,7 @@
 
 ACLOCAL_AMFLAGS		= -I meta/autotools
 AUTOMAKE_OPTIONS	= foreign
-EXTRA_DIST		= INSTALL configure.sh
+EXTRA_DIST		= INSTALL.autotools configure.sh
 dist_doc_DATA		= README.md README.autotools LICENSE
 AM_CFLAGS		= -I$(srcdir)/src -I$(srcdir)/include -Wall $(AX_CFLAGS)
 
