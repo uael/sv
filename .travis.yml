@@ -117,7 +117,7 @@ matrix:
 	export LD_LIBRARY_PATH=/tmp/mine/lib:$LD_LIBRARY_PATH;
 	export PKG_CONFIG_PATH=/tmp/mine/lib/pkgconfig:$PKG_CONFIG_PATH;
   	sh ./autogen.sh;
-        ./configure --enable-maintainer-mode CC=/usr/bin/gcc-5;
+        ./configure --enable-maintainer-mode
         make -j2 all;
         make -j2 check;
     - os: osx
