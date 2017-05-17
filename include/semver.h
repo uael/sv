@@ -30,7 +30,7 @@
 
 #include <stddef.h>
 
-#define SEMVER_NUM_X -1
+#define SEMVER_NUM_X (-1)
 
 typedef struct semver semver_t;
 typedef struct semver_id semver_id_t;
