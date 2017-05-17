@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 project(sv)
 
 option(SHARED "Build as shared library" OFF)
