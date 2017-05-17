@@ -8,6 +8,10 @@ Makefile.in
 /py-compile
 /test-driver
 /ylwrap
+.deps/
+.libs/
+.dirstamp
+stamp-vti
 
 # http://www.gnu.org/software/autoconf
 
@@ -25,6 +29,9 @@ Makefile.in
 /install-sh
 /missing
 /stamp-h1
+stamp-h1
+config.cache
+autotools/
 
 # https://www.gnu.org/software/libtool/
 
@@ -33,6 +40,9 @@ Makefile.in
 # http://www.gnu.org/software/texinfo
 
 /texinfo.tex
+*.info*
+version.texi
+
 ### CMake template
 CMakeCache.txt
 CMakeFiles
@@ -147,3 +157,9 @@ cmake-build-debug/
 # xmake
 .xmake/
 build/
+
+# Stuff
+*~
+=*
+,,*
+
