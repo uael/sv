@@ -118,11 +118,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-4.0
-            - george-edison55-precise-backports
           packages:
             - clang-4.0
-            - cmake
-            - cmake-data
     - os: osx
       osx_image: xcode6.4
       compiler: clang
