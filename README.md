@@ -20,15 +20,17 @@ $ xmake install
 ...
 semver_t semver = {0};
 semver_range_t range = {0};
+size_t offset = 0;
 
-semver_read(&semver, "v1.2.3-alpha.1", sizeof("v1.2.3-alpha.1")-1);
+semver_read(&semver, "v1.2.3-alpha.1", sizeof("v1.2.3-alpha.1")-1, &offset);
 assert(1 == semver.major);
 assert(2 == semver.minor);
 assert(3 == semver.patch);
 assert(0 == memcmp("alpha", semver.prerelease.raw, sizeof("alpha")-1));
 assert(0 == memcmp("1", semver.prerelease.next->raw, sizeof("1")-1));
 
-semver_range_read(&range, "1.2.1 || >=1.2.3 <1.2.5", sizeof("1.2.1 || >=1.2.3 <1.2.5")-1);
+offset = 0;
+semver_range_read(&range, "1.2.1 || >=1.2.3 <1.2.5", sizeof("1.2.1 || >=1.2.3 <1.2.5")-1, &offset);
 assert(1 == semver_rmatch(semver, range));
 
 semver_dtor(&semver);
