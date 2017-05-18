@@ -325,24 +325,16 @@ char semver_and(semver_comp_t *self, const char *str, size_t len) {
 }
 
 char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
-  switch (semver_pcomp(self, &comp->version)) {
-    case -1:
-      if (comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
-        return 0;
-      }
-      break;
-    case 0:
-      if (comp->op != SEMVER_OP_EQ && comp->op != SEMVER_OP_LE && comp->op != SEMVER_OP_GE) {
-        return 0;
-      }
-      break;
-    case 1:
-      if (comp->op != SEMVER_OP_GT && comp->op != SEMVER_OP_GE) {
-        return 0;
-      }
-      break;
-    default:
-      return 0;
+  char result = semver_pcomp(self, &comp->version);
+
+  if (result < 0 && comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
+    return 0;
+  }
+  if (result > 0 && comp->op != SEMVER_OP_GT && comp->op != SEMVER_OP_GE) {
+    return 0;
+  }
+  if (comp->op != SEMVER_OP_EQ && comp->op != SEMVER_OP_LE && comp->op != SEMVER_OP_GE) {
+    return 0;
   }
   if (comp->next) {
     return semver_pmatch(self, comp->next);

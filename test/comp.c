@@ -166,6 +166,9 @@ int main(void) {
   if (test_read(">=0.0.3 <0.0.4", STRNSIZE(">=0.0.3 <0.0.4"))) {
     return EXIT_FAILURE;
   }
+  if (test_read(">0.0.3", STRNSIZE(">0.0.3"))) {
+    return EXIT_FAILURE;
+  }
 
   puts("\nand:");
   if (test_and(">=0.0.0 >=0.0.3 <0.0.4", STRNSIZE("*"), STRNSIZE("^0.0.3"))) {
