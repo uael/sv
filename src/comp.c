@@ -333,7 +333,7 @@ char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
   if (result > 0 && comp->op != SEMVER_OP_GT && comp->op != SEMVER_OP_GE) {
     return 0;
   }
-  if (comp->op != SEMVER_OP_EQ && comp->op != SEMVER_OP_LE && comp->op != SEMVER_OP_GE) {
+  if (result == 0 && comp->op != SEMVER_OP_EQ && comp->op != SEMVER_OP_LE && comp->op != SEMVER_OP_GE) {
     return 0;
   }
   if (comp->next) {
