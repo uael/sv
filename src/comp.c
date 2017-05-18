@@ -53,7 +53,7 @@ static semver_comp_t *semver_xconvert(semver_comp_t *self) {
   if (self->version.minor == SEMVER_NUM_X) {
     semver_xrevert(&self->version);
     self->op = SEMVER_OP_GE;
-    self->next = (semver_comp_t *) semver_malloc(sizeof(semver_comp_t));
+    self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
     if (self->next == NULL) {
       return NULL;
     }
@@ -66,7 +66,7 @@ static semver_comp_t *semver_xconvert(semver_comp_t *self) {
   if (self->version.patch == SEMVER_NUM_X) {
     semver_xrevert(&self->version);
     self->op = SEMVER_OP_GE;
-    self->next = (semver_comp_t *) semver_malloc(sizeof(semver_comp_t));
+    self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
     if (self->next == NULL) {
       return NULL;
     }
@@ -120,7 +120,7 @@ static char parse_hiphen(semver_comp_t *self, const char *str, size_t len, size_
   }
   self->op = SEMVER_OP_GE;
   semver_xrevert(&self->version);
-  self->next = (semver_comp_t *) semver_malloc(sizeof(semver_comp_t));
+  self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
   if (self->next == NULL) {
     return 1;
   }
@@ -157,7 +157,7 @@ static char parse_tidle(semver_comp_t *self, const char *str, size_t len, size_t
   } else {
     ++partial.patch;
   }
-  self->next = (semver_comp_t *) semver_malloc(sizeof(semver_comp_t));
+  self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
   if (self->next == NULL) {
     return 1;
   }
@@ -183,7 +183,7 @@ static char parse_caret(semver_comp_t *self, const char *str, size_t len, size_t
     ++partial.major;
     partial.minor = partial.patch = 0;
   }
-  self->next = (semver_comp_t *) semver_malloc(sizeof(semver_comp_t));
+  self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
   if (self->next == NULL) {
     return 1;
   }
@@ -290,7 +290,7 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
     && *offset < len + 1 && str[*offset + 1] != ' ' && str[*offset + 1] != '|') {
     ++*offset;
     if (*offset < len) {
-      self->next = (semver_comp_t *) semver_malloc(sizeof(semver_comp_t));
+      self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
       if (self->next == NULL) {
         return 1;
       }
@@ -299,6 +299,29 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
     return 1;
   }
   return 0;
+}
+
+char semver_and(semver_comp_t *self, const char *str, size_t len) {
+  if (len) {
+    size_t offset = 0;
+    semver_comp_t *tail = NULL;
+
+    if (self->next == NULL) {
+      self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
+      if (self->next == NULL) {
+        return 1;
+      }
+      return semver_comp_read(self->next, str, len, &offset);
+    }
+    tail = self->next;
+    while (tail->next) tail = tail->next;
+    tail->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
+    if (tail->next == NULL) {
+      return 1;
+    }
+    return semver_comp_read(tail->next, str, len, &offset);
+  }
+  return 1;
 }
 
 char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
