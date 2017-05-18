@@ -87,6 +87,9 @@ char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offs
   }
   if (str[*offset] == '.') {
     self->next = (semver_id_t *) malloc(sizeof(semver_id_t));
+    if (self->next == NULL) {
+      return 1;
+    }
     ++*offset;
     return semver_id_read(self->next, str, len, offset);
   }

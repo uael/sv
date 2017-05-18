@@ -54,6 +54,9 @@ static semver_comp_t *semver_xconvert(semver_comp_t *self) {
     semver_xrevert(&self->version);
     self->op = SEMVER_OP_GE;
     self->next = (semver_comp_t *) malloc(sizeof(semver_comp_t));
+    if (self->next == NULL) {
+      return NULL;
+    }
     semver_comp_ctor(self->next);
     self->next->op = SEMVER_OP_LT;
     self->next->version = self->version;
@@ -64,6 +67,9 @@ static semver_comp_t *semver_xconvert(semver_comp_t *self) {
     semver_xrevert(&self->version);
     self->op = SEMVER_OP_GE;
     self->next = (semver_comp_t *) malloc(sizeof(semver_comp_t));
+    if (self->next == NULL) {
+      return NULL;
+    }
     semver_comp_ctor(self->next);
     self->next->op = SEMVER_OP_LT;
     self->next->version = self->version;
@@ -115,6 +121,9 @@ static char parse_hiphen(semver_comp_t *self, const char *str, size_t len, size_
   self->op = SEMVER_OP_GE;
   semver_xrevert(&self->version);
   self->next = (semver_comp_t *) malloc(sizeof(semver_comp_t));
+  if (self->next == NULL) {
+    return 1;
+  }
   semver_comp_ctor(self->next);
   self->next->op = SEMVER_OP_LT;
   if (partial.minor == SEMVER_NUM_X) {
@@ -149,6 +158,9 @@ static char parse_tidle(semver_comp_t *self, const char *str, size_t len, size_t
     ++partial.patch;
   }
   self->next = (semver_comp_t *) malloc(sizeof(semver_comp_t));
+  if (self->next == NULL) {
+    return 1;
+  }
   semver_comp_ctor(self->next);
   self->next->op = SEMVER_OP_LT;
   self->next->version = partial;
@@ -172,6 +184,9 @@ static char parse_caret(semver_comp_t *self, const char *str, size_t len, size_t
     partial.minor = partial.patch = 0;
   }
   self->next = (semver_comp_t *) malloc(sizeof(semver_comp_t));
+  if (self->next == NULL) {
+    return 1;
+  }
   semver_comp_ctor(self->next);
   self->next->op = SEMVER_OP_LT;
   self->next->version = partial;
@@ -266,6 +281,9 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
     self = self->next;
   } else {
     self = semver_xconvert(self);
+    if (self == NULL) {
+      return 1;
+    }
   }
   next:
   if (*offset < len && str[*offset] == ' '
@@ -273,6 +291,9 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
     ++*offset;
     if (*offset < len) {
       self->next = (semver_comp_t *) malloc(sizeof(semver_comp_t));
+      if (self->next == NULL) {
+        return 1;
+      }
       return semver_comp_read(self->next, str, len, offset);
     }
     return 1;
