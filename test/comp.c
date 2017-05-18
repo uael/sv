@@ -91,7 +91,86 @@ int test_and(const char *expected, const char *base_str, size_t base_len, const 
 }
 
 int main(void) {
-  puts("x-range:");
+  puts("failure:");
+  if (test_read("", STRNSIZE("* ")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("*  ")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("*  |")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("* || *")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("abc")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE(">")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("<=")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("~")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("^")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("=")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("1.2.3 ")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("1.2.3 -")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("1.2.3 - ")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("a.2.3")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("1.a.3")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("1.2.a")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("1.2.3", STRNSIZE("1.2.3"))) {
+    return EXIT_FAILURE;
+  }
+
+  puts("\nsome prerelease and build:");
+  if (test_read(">=0.0.0 1.2.3-alpha", STRNSIZE("* 1.2.3-alpha"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read(">=0.0.0 1.2.3-alpha.2", STRNSIZE("* 1.2.3-alpha.2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read(">=0.0.0 1.2.3+77", STRNSIZE("* 1.2.3+77"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read(">=0.0.0 1.2.3+77.2", STRNSIZE("* 1.2.3+77.2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read(">=0.0.0 1.2.3-alpha.2+77", STRNSIZE("* 1.2.3-alpha.2+77"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read(">=0.0.0 1.2.3-alpha.2+77.2", STRNSIZE("* 1.2.3-alpha.2+77.2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read(">=0.0.0 1.2.3-al-pha.2+77", STRNSIZE("* 1.2.3-al-pha.2+77"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read(">=0.0.0 1.2.3-al-pha.2+77.2", STRNSIZE("* 1.2.3-al-pha.2+77.2"))) {
+    return EXIT_FAILURE;
+  }
+
+  puts("\nx-range:");
   if (test_read(">=0.0.0", STRNSIZE("*"))) {
     return EXIT_FAILURE;
   }
@@ -157,16 +236,22 @@ int main(void) {
   }
 
   puts("\nprimitive:");
-  if (test_read(">=1.2.3 <2.0.0", STRNSIZE(">=1.2.3 <2.0.0"))) {
+  if (test_read(">=1.2.3 <2.0.0", STRNSIZE(">=1.2.3 <2.0"))) {
     return EXIT_FAILURE;
   }
-  if (test_read(">=0.2.3 <0.3.0", STRNSIZE(">=0.2.3 <0.3.0"))) {
+  if (test_read(">=0.2.3 <0.3.0", STRNSIZE(">=0.2.3 <0.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_read(">=0.0.3 <0.0.4", STRNSIZE(">=0.0.3 <0.0.4"))) {
+  if (test_read(">=0.5.0 <0.0.4", STRNSIZE(">=0.5 <0.0.4"))) {
     return EXIT_FAILURE;
   }
   if (test_read(">0.0.3", STRNSIZE(">0.0.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("0.0.3", STRNSIZE("=0.0.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("9.0.0", STRNSIZE("=9"))) {
     return EXIT_FAILURE;
   }
 
@@ -180,13 +265,16 @@ int main(void) {
   if (test_and(">=1.2.0 <1.3.0 >=0.0.3 <0.0.4", STRNSIZE("1.2.x"), STRNSIZE("^0.0.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_and(">=0.0.0 >=0.0.3 <0.0.4", STRNSIZE(""), STRNSIZE("^0.0.3"))) {
+  if (test_and(">=1.2.0 <1.3.0 >=1.2.0 <1.3.0 >=0.0.3 <0.0.4", STRNSIZE("1.2 1.2.x"), STRNSIZE("^0.0.3"))) {
     return EXIT_FAILURE;
   }
   if (test_and(">=1.0.0 <2.0.0 >=0.0.3 <0.0.4", STRNSIZE("1"), STRNSIZE("^0.0.3"))) {
     return EXIT_FAILURE;
   }
   if (test_and(">=1.2.0 <1.3.0 >=0.0.3 <0.0.4", STRNSIZE("1.2"), STRNSIZE("^0.0.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_and("", STRNSIZE("1.2"), STRNSIZE("")) == 0) {
     return EXIT_FAILURE;
   }
 
