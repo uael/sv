@@ -3,6 +3,7 @@ libsv - Public domain semantic versioning in c
 
 [![Build Status](https://travis-ci.org/uael/sv.svg?branch=master)](https://travis-ci.org/uael/sv)
 [![Build status](https://ci.appveyor.com/api/projects/status/7li44f9agk0u4dxc?svg=true)](https://ci.appveyor.com/project/uael/sv)
+[![codecov](https://codecov.io/gh/uael/sv/branch/master/graph/badge.svg)](https://codecov.io/gh/uael/sv)
 
 ## Install
 

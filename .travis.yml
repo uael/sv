@@ -22,6 +22,27 @@ script:
 
 matrix:
   include:
+    # coverage build
+    - os: linux
+      dist: trusty
+      compiler: gcc-5
+      addons:
+        apt:
+          sources:
+            - george-edison55-precise-backports
+            - ubuntu-toolchain-r-test
+          packages:
+            - cmake
+            - cmake-data
+            - gcc-5
+      install:
+        - mkdir build && cd build
+        - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ..
+        - make
+      script:
+        - ctest --verbose
+      after_success:
+        - cd .. && bash <(curl -s https://codecov.io/bash) -xgcov-5
     - os: linux
       addons:
         apt:
