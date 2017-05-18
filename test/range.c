@@ -125,16 +125,5 @@ int main(void) {
     return EXIT_FAILURE;
   }
 
-  puts("\nprimitive:");
-  if (test_read(">=1.2.3 <2.0.0", STRNSIZE(">=1.2.3 <2.0.0"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_read(">=0.2.3 <0.3.0", STRNSIZE(">=0.2.3 <0.3.0"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_read(">=0.0.3 <0.0.4", STRNSIZE(">=0.0.3 <0.0.4"))) {
-    return EXIT_FAILURE;
-  }
-
   return EXIT_SUCCESS;
 }
