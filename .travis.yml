@@ -39,11 +39,10 @@ matrix:
         - mkdir build && cd build
         - cmake -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Debug ..
         - make
-        - cd ..
       script:
         - ctest --verbose
       after_success:
-        - bash <(curl -s https://codecov.io/bash) -xgcov-5
+        - cd .. && bash <(curl -s https://codecov.io/bash) -xgcov-5
     - os: linux
       addons:
         apt:
