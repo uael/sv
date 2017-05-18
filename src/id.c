@@ -50,7 +50,7 @@ void semver_id_ctor(semver_id_t *self) {
 void semver_id_dtor(semver_id_t *self) {
   if (self && self->next) {
     semver_id_dtor(self->next);
-    free(self->next);
+    semver_free(self->next);
     self->next = NULL;
   }
 }
@@ -86,7 +86,10 @@ char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offs
     self->num = (int) strtol(self->raw, NULL, 0);
   }
   if (str[*offset] == '.') {
-    self->next = (semver_id_t *) malloc(sizeof(semver_id_t));
+    self->next = (semver_id_t *) semver_malloc(sizeof(semver_id_t));
+    if (self->next == NULL) {
+      return 1;
+    }
     ++*offset;
     return semver_id_read(self->next, str, len, offset);
   }

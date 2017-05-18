@@ -72,6 +72,14 @@
 # endif
 #endif
 
+#ifndef semver_malloc
+# define semver_malloc malloc
+#endif
+
+#ifndef semver_free
+# define semver_free free
+#endif
+
 #define SEMVER_NUM_X (-1)
 
 typedef struct semver semver_t;

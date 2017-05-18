@@ -46,7 +46,7 @@ static void semver_range_init(semver_range_t *self) {
 void semver_range_dtor(semver_range_t *self) {
   if (self && self->next) {
     semver_range_dtor(self->next);
-    free(self->next);
+    semver_free(self->next);
     self->next = NULL;
   }
 }
@@ -61,7 +61,10 @@ char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t
     && *offset + 1 < len && str[*offset + 1] == '|') {
     *offset += 2;
     while (*offset < len && str[*offset] == ' ') ++*offset;
-    self->next = (semver_range_t *) malloc(sizeof(semver_range_t));
+    self->next = (semver_range_t *) semver_malloc(sizeof(semver_range_t));
+    if (self->next == NULL) {
+      return 1;
+    }
     return semver_range_read(self->next, str, len, offset);
   }
   return 0;
