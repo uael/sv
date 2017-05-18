@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 project(sv)
 
 option(SHARED "Build as shared library" OFF)
+option(COVERAGE "Turn on COVERAGE support" ON)
+
+if (COVERAGE)
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --coverage")
+endif()
 
 if(CMAKE_VERSION VERSION_LESS "3.1")
     if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
