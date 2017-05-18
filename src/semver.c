@@ -75,45 +75,45 @@ char semver_read(semver_t *self, const char *str, size_t len, size_t *offset) {
   return 1;
 }
 
-char semver_comp(const semver_t self, const semver_t other) {
+char semver_pcomp(const semver_t *self, const semver_t *other) {
   char result;
 
-  if ((result = semver_num_comp(self.major, other.major)) != 0) {
+  if ((result = semver_num_comp(self->major, other->major)) != 0) {
     return result;
   }
-  if ((result = semver_num_comp(self.minor, other.minor)) != 0) {
+  if ((result = semver_num_comp(self->minor, other->minor)) != 0) {
     return result;
   }
-  if ((result = semver_num_comp(self.patch, other.patch)) != 0) {
+  if ((result = semver_num_comp(self->patch, other->patch)) != 0) {
     return result;
   }
-  if ((result = semver_id_comp(self.prerelease, other.prerelease)) != 0) {
+  if ((result = semver_id_comp(self->prerelease, other->prerelease)) != 0) {
     return result;
   }
-  return semver_id_comp(self.build, other.build);
+  return semver_id_comp(self->build, other->build);
 }
 
-int semver_write(const semver_t self, char *buffer, size_t len) {
+int semver_pwrite(const semver_t *self, char *buffer, size_t len) {
   char prerelease[256], build[256];
 
-  if (self.prerelease.len && self.build.len) {
+  if (self->prerelease.len && self->build.len) {
     return snprintf(buffer, len, "%d.%d.%d-%.*s+%.*s",
-      self.major, self.minor, self.patch,
-      semver_id_write(self.prerelease, prerelease, 256), prerelease,
-      semver_id_write(self.build, build, 256), build
+      self->major, self->minor, self->patch,
+      semver_id_write(self->prerelease, prerelease, 256), prerelease,
+      semver_id_write(self->build, build, 256), build
     );
   }
-  if (self.prerelease.len) {
+  if (self->prerelease.len) {
     return snprintf(buffer, len, "%d.%d.%d-%.*s",
-      self.major, self.minor, self.patch,
-      semver_id_write(self.prerelease, prerelease, 256), prerelease
+      self->major, self->minor, self->patch,
+      semver_id_write(self->prerelease, prerelease, 256), prerelease
     );
   }
-  if (self.build.len) {
+  if (self->build.len) {
     return snprintf(buffer, len, "%d.%d.%d+%.*s",
-      self.major, self.minor, self.patch,
-      semver_id_write(self.build, build, 256), build
+      self->major, self->minor, self->patch,
+      semver_id_write(self->build, build, 256), build
     );
   }
-  return snprintf(buffer, len, "%d.%d.%d", self.major, self.minor, self.patch);
+  return snprintf(buffer, len, "%d.%d.%d", self->major, self->minor, self->patch);
 }

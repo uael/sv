@@ -70,18 +70,18 @@ char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t
   return 0;
 }
 
-char semver_rmatch(const semver_t self, const semver_range_t range) {
-  return (char) (semver_match(self, range.comp) ? 1 : range.next ? semver_rmatch(self, *range.next) : 0);
+char semver_prmatch(const semver_t *self, const semver_range_t *range) {
+  return (char) (semver_pmatch(self, &range->comp) ? 1 : range->next ? semver_prmatch(self, range->next) : 0);
 }
 
-int semver_range_write(const semver_range_t self, char *buffer, size_t len) {
+int semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len) {
   char comp[1024], next[1024];
 
-  if (self.next) {
+  if (self->next) {
     return snprintf(buffer, len, "%.*s || %.*s",
-      semver_comp_write(self.comp, comp, 1024), comp,
-      semver_range_write(*self.next, next, 1024), next
+      semver_comp_write(self->comp, comp, 1024), comp,
+      semver_range_pwrite(self->next, next, 1024), next
     );
   }
-  return snprintf(buffer, len, "%.*s", semver_comp_write(self.comp, comp, 1024), comp);
+  return snprintf(buffer, len, "%.*s", semver_comp_write(self->comp, comp, 1024), comp);
 }

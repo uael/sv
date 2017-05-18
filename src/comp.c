@@ -301,37 +301,37 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
   return 0;
 }
 
-char semver_match(const semver_t self, const semver_comp_t comp) {
-  switch (semver_comp(self, comp.version)) {
+char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
+  switch (semver_pcomp(self, &comp->version)) {
     case -1:
-      if (comp.op != SEMVER_OP_LT && comp.op != SEMVER_OP_LE) {
+      if (comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
         return 0;
       }
       break;
     case 0:
-      if (comp.op != SEMVER_OP_EQ && comp.op != SEMVER_OP_LE && comp.op != SEMVER_OP_GE) {
+      if (comp->op != SEMVER_OP_EQ && comp->op != SEMVER_OP_LE && comp->op != SEMVER_OP_GE) {
         return 0;
       }
       break;
     case 1:
-      if (comp.op != SEMVER_OP_GT && comp.op != SEMVER_OP_GE) {
+      if (comp->op != SEMVER_OP_GT && comp->op != SEMVER_OP_GE) {
         return 0;
       }
       break;
     default:
       return 0;
   }
-  if (comp.next) {
-    return semver_match(self, *comp.next);
+  if (comp->next) {
+    return semver_pmatch(self, comp->next);
   }
   return 1;
 }
 
-int semver_comp_write(const semver_comp_t self, char *buffer, size_t len) {
+int semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len) {
   char *op = "";
   char semver[256], next[1024];
 
-  switch (self.op) {
+  switch (self->op) {
     case SEMVER_OP_EQ:
       break;
     case SEMVER_OP_LT:
@@ -347,9 +347,9 @@ int semver_comp_write(const semver_comp_t self, char *buffer, size_t len) {
       op = ">=";
       break;
   }
-  semver_write(self.version, semver, 256);
-  if (self.next) {
-    return snprintf(buffer, len, "%s%s %.*s", op, semver, semver_comp_write(*self.next, next, 1024), next);
+  semver_write(self->version, semver, 256);
+  if (self->next) {
+    return snprintf(buffer, len, "%s%s %.*s", op, semver, semver_comp_pwrite(self->next, next, 1024), next);
   }
   return snprintf(buffer, len, "%s%s", op, semver);
 }

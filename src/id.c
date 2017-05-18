@@ -96,47 +96,52 @@ char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offs
   return 0;
 }
 
-char semver_id_comp(const semver_id_t self, const semver_id_t other) {
+char semver_id_pcomp(const semver_id_t *self, const semver_id_t *other) {
   char s;
 
-  if (!self.len && other.len) {
+  if (!self->len && other->len) {
     return 1;
-  } else if (self.len && !other.len) {
+  }
+  if (self->len && !other->len) {
     return -1;
-  } else if (!self.len) {
+  }
+  if (!self->len) {
     return 0;
   }
 
-  if (self.num && other.num) {
-    if (self.num > other.num) {
+  if (self->num && other->num) {
+    if (self->num > other->num) {
       return 1;
-    } else if (self.num < other.num) {
+    }
+    if (self->num < other->num) {
       return -1;
     }
   }
 
-  s = (char) memcmp(self.raw, other.raw, self.len > other.len ? self.len : other.len);
+  s = (char) memcmp(self->raw, other->raw, self->len > other->len ? self->len : other->len);
 
   if (s != 0) {
     return s;
   }
 
-  if (!self.next && other.next) {
+  if (!self->next && other->next) {
     return 1;
-  } else if (self.next && !other.next) {
+  }
+  if (self->next && !other->next) {
     return -1;
-  } else if (!self.next) {
+  }
+  if (!self->next) {
     return 0;
   }
 
-  return semver_id_comp(*self.next, *other.next);
+  return semver_id_pcomp(self->next, other->next);
 }
 
-int semver_id_write(const semver_id_t self, char *buffer, size_t len) {
+int semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len) {
   char next[1024];
 
-  if (self.next) {
-    return snprintf(buffer, len, "%.*s.%.*s", (int) self.len, self.raw, semver_id_write(*self.next, next, 1024), next);
+  if (self->next) {
+    return snprintf(buffer, len, "%.*s.%.*s", (int) self->len, self->raw, semver_id_pwrite(self->next, next, 1024), next);
   }
-  return snprintf(buffer, len, "%.*s", (int) self.len, self.raw);
+  return snprintf(buffer, len, "%.*s", (int) self->len, self->raw);
 }
