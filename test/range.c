@@ -32,7 +32,7 @@
 
 #define STRNSIZE(s) (s), sizeof(s)-1
 
-int test_semver(const char *expected, const char *str, size_t len) {
+int test_read(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   unsigned slen;
   char buffer[1024];
@@ -41,6 +41,10 @@ int test_semver(const char *expected, const char *str, size_t len) {
   printf("test: `%.*s`", (int) len, str);
   if (semver_range_read(&range, str, len, &offset)) {
     puts(" \tcouldn't parse");
+    return 1;
+  }
+  if (offset != len) {
+    puts(" \tcouldn't parse fully base");
     return 1;
   }
   slen = (unsigned) semver_range_write(range, buffer, 1024);
@@ -57,78 +61,67 @@ int test_semver(const char *expected, const char *str, size_t len) {
 
 int main(void) {
   puts("x-range:");
-  if (test_semver(">=0.0.0 || 1.2.3", STRNSIZE("* || 1.2.3"))) {
+  if (test_read(">=0.0.0 || 1.2.3", STRNSIZE("* || 1.2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.0.0 <2.0.0 || >=2.0.0 <3.0.0", STRNSIZE("1.x || 2.x"))) {
+  if (test_read(">=1.0.0 <2.0.0 || >=2.0.0 <3.0.0", STRNSIZE("1.x || 2.x"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <1.3.0 || 3.0.0", STRNSIZE("1.2.x || 3.0.0"))) {
+  if (test_read(">=1.2.0 <1.3.0 || 3.0.0", STRNSIZE("1.2.x || 3.0.0"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.0.0", STRNSIZE(""))) {
+  if (test_read(">=0.0.0", STRNSIZE(""))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.0.0 <2.0.0 || >=2.0.0 <3.0.0 || >=3.0.0 <4.0.0", STRNSIZE("1 || 2 || 3"))) {
+  if (test_read(">=1.0.0 <2.0.0 || >=2.0.0 <3.0.0 || >=3.0.0 <4.0.0", STRNSIZE("1 || 2 || 3"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <1.3.0 || >=5.0.0", STRNSIZE("1.2 || >=5"))) {
+  if (test_read(">=1.2.0 <1.3.0 || >=5.0.0", STRNSIZE("1.2 || >=5"))) {
     return EXIT_FAILURE;
   }
 
   puts("\nhyphen:");
-  if (test_semver(">=1.2.3 <=2.3.4 || >=5.0.0", STRNSIZE("1.2.3 - 2.3.4 || >=5"))) {
+  if (test_read(">=1.2.3 <=2.3.4 || >=5.0.0", STRNSIZE("1.2.3 - 2.3.4 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <=2.3.4 || >=5.0.0", STRNSIZE("1.2 - 2.3.4 || >=5"))) {
+  if (test_read(">=1.2.0 <=2.3.4 || >=5.0.0", STRNSIZE("1.2 - 2.3.4 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.3 <2.4.0 || >=5.0.0", STRNSIZE("1.2.3 - 2.3 || >=5"))) {
+  if (test_read(">=1.2.3 <2.4.0 || >=5.0.0", STRNSIZE("1.2.3 - 2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.3 <3.0.0 || >=5.0.0", STRNSIZE("1.2.3 - 2 || >=5"))) {
+  if (test_read(">=1.2.3 <3.0.0 || >=5.0.0", STRNSIZE("1.2.3 - 2 || >=5"))) {
     return EXIT_FAILURE;
   }
 
   puts("\ntidle:");
-  if (test_semver(">=1.2.3 <1.3.0 || >=5.0.0", STRNSIZE("~1.2.3 || >=5"))) {
+  if (test_read(">=1.2.3 <1.3.0 || >=5.0.0", STRNSIZE("~1.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.2.0 <1.3.0 || >=5.0.0", STRNSIZE("~1.2 || >=5"))) {
+  if (test_read(">=1.2.0 <1.3.0 || >=5.0.0", STRNSIZE("~1.2 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=1.0.0 <2.0.0 || >=5.0.0", STRNSIZE("~1 || >=5"))) {
+  if (test_read(">=1.0.0 <2.0.0 || >=5.0.0", STRNSIZE("~1 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.2.3 <0.3.0 || >=5.0.0", STRNSIZE("~0.2.3 || >=5"))) {
+  if (test_read(">=0.2.3 <0.3.0 || >=5.0.0", STRNSIZE("~0.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.2.0 <0.3.0 || >=5.0.0", STRNSIZE("~0.2 || >=5"))) {
+  if (test_read(">=0.2.0 <0.3.0 || >=5.0.0", STRNSIZE("~0.2 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.0.0 <1.0.0 || >=5.0.0", STRNSIZE("~0 || >=5"))) {
+  if (test_read(">=0.0.0 <1.0.0 || >=5.0.0", STRNSIZE("~0 || >=5"))) {
     return EXIT_FAILURE;
   }
 
   puts("\ncaret:");
-  if (test_semver(">=1.2.3 <2.0.0 || >=5.0.0", STRNSIZE("^1.2.3 || >=5"))) {
+  if (test_read(">=1.2.3 <2.0.0 || >=5.0.0", STRNSIZE("^1.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.2.3 <0.3.0 || >=5.0.0", STRNSIZE("^0.2.3 || >=5"))) {
+  if (test_read(">=0.2.3 <0.3.0 || >=5.0.0", STRNSIZE("^0.2.3 || >=5"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver(">=0.0.3 <0.0.4 || >=5.0.0", STRNSIZE("^0.0.3 || >=5"))) {
-    return EXIT_FAILURE;
-  }
-
-  puts("\nprimitive:");
-  if (test_semver(">=1.2.3 <2.0.0", STRNSIZE(">=1.2.3 <2.0.0"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_semver(">=0.2.3 <0.3.0", STRNSIZE(">=0.2.3 <0.3.0"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_semver(">=0.0.3 <0.0.4", STRNSIZE(">=0.0.3 <0.0.4"))) {
+  if (test_read(">=0.0.3 <0.0.4 || >=5.0.0", STRNSIZE("^0.0.3 || >=5"))) {
     return EXIT_FAILURE;
   }
 

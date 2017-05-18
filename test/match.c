@@ -42,9 +42,17 @@ int test_match(char expected, const char *semver_str, size_t semver_len, const c
     puts(" \tcouldn't parse semver");
     return 1;
   }
+  if (offset != semver_len) {
+    puts(" \tcouldn't parse fully base");
+    return 1;
+  }
   offset = 0;
   if (semver_comp_read(&comp, comp_str, comp_len, &offset)) {
     puts(" \tcouldn't parse comp");
+    return 1;
+  }
+  if (offset != comp_len) {
+    puts(" \tcouldn't parse fully base");
     return 1;
   }
   result = semver_match(semver, comp);

@@ -32,7 +32,7 @@
 
 #define STRNSIZE(s) (s), sizeof(s)-1
 
-int test_semver(const char *expected, const char *str, size_t len) {
+int test_read(const char *expected, const char *str, size_t len) {
   size_t offset = 0;
   unsigned slen;
   char buffer[1024];
@@ -41,6 +41,10 @@ int test_semver(const char *expected, const char *str, size_t len) {
   printf("test: `%.*s`", (int) len, str);
   if (semver_read(&semver, str, len, &offset)) {
     puts(" \tcouldn't parse");
+    return 1;
+  }
+  if (offset != len) {
+    puts(" \tcouldn't parse fully base");
     return 1;
   }
   slen = (unsigned) semver_write(semver, buffer, 1024);
@@ -56,49 +60,49 @@ int test_semver(const char *expected, const char *str, size_t len) {
 }
 
 int main(void) {
-  if (test_semver("1.2.3", STRNSIZE("1.2.3"))) {
+  if (test_read("1.2.3", STRNSIZE("1.2.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3-alpha", STRNSIZE("v1.2.3-alpha"))) {
+  if (test_read("1.2.3-alpha", STRNSIZE("v1.2.3-alpha"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3-alpha.2", STRNSIZE("1.2.3-alpha.2"))) {
+  if (test_read("1.2.3-alpha.2", STRNSIZE("1.2.3-alpha.2"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3+77", STRNSIZE("v1.2.3+77"))) {
+  if (test_read("1.2.3+77", STRNSIZE("v1.2.3+77"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3+77.2", STRNSIZE("1.2.3+77.2"))) {
+  if (test_read("1.2.3+77.2", STRNSIZE("1.2.3+77.2"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3-alpha.2+77", STRNSIZE("v1.2.3-alpha.2+77"))) {
+  if (test_read("1.2.3-alpha.2+77", STRNSIZE("v1.2.3-alpha.2+77"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3-alpha.2+77.2", STRNSIZE("1.2.3-alpha.2+77.2"))) {
+  if (test_read("1.2.3-alpha.2+77.2", STRNSIZE("1.2.3-alpha.2+77.2"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3-al-pha.2+77", STRNSIZE("v1.2.3-al-pha.2+77"))) {
+  if (test_read("1.2.3-al-pha.2+77", STRNSIZE("v1.2.3-al-pha.2+77"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("1.2.3-al-pha.2+77.2", STRNSIZE("1.2.3-al-pha.2+77.2"))) {
+  if (test_read("1.2.3-al-pha.2+77.2", STRNSIZE("1.2.3-al-pha.2+77.2"))) {
     return EXIT_FAILURE;
   }
-  if (test_semver("", STRNSIZE("")) == 0) {
+  if (test_read("", STRNSIZE("")) == 0) {
     return EXIT_FAILURE;
   }
-  if (test_semver("", STRNSIZE("vv1.2.3")) == 0) {
+  if (test_read("", STRNSIZE("vv1.2.3")) == 0) {
     return EXIT_FAILURE;
   }
-  if (test_semver("", STRNSIZE("v1.2")) == 0) {
+  if (test_read("", STRNSIZE("v1.2")) == 0) {
     return EXIT_FAILURE;
   }
-  if (test_semver("", STRNSIZE("v1.2.x")) == 0) {
+  if (test_read("", STRNSIZE("v1.2.x")) == 0) {
     return EXIT_FAILURE;
   }
-  if (test_semver("", STRNSIZE("v1.2.3-")) == 0) {
+  if (test_read("", STRNSIZE("v1.2.3-")) == 0) {
     return EXIT_FAILURE;
   }
-  if (test_semver("", STRNSIZE("v1.2.3+")) == 0) {
+  if (test_read("", STRNSIZE("v1.2.3+")) == 0) {
     return EXIT_FAILURE;
   }
 
