@@ -29,6 +29,7 @@
 # define SV_H__
 
 #include <stddef.h>
+#include <stdio.h>
 
 #ifndef SV_COMPILE
 # define SV_COMPILE (0)
@@ -111,6 +112,7 @@ SV_API void semver_id_dtor(semver_id_t *self);
 SV_API char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offset);
 SV_API int  semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len);
 SV_API char semver_id_pcomp(const semver_id_t *self, const semver_id_t *other);
+SV_API int  semver_id_fwrite (const semver_id_t * idp, FILE * stream);
 
 #define semver_id_write(self, buffer, len) semver_id_pwrite(&(self), buffer, len)
 #define semver_id_comp(self, other) semver_id_pcomp(&(self), &(other))
