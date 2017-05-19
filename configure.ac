@@ -68,7 +68,6 @@ AC_CACHE_SAVE
 dnl page
 #### finish
 
-AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
    [meta/scripts/libsv.pc])
 AC_OUTPUT
