@@ -6,7 +6,7 @@ AM_CFLAGS        = -I$(srcdir)/src -I$(srcdir)/include -Wall $(AX_CFLAGS)
 
 ## --------------------------------------------------------------------
 
-EXTRA_DIST            += scripts/libsv.pc.in
+EXTRA_DIST            = scripts/libsv.pc.in
 pkgconfigdir          = $(libdir)/pkgconfig
 nodist_pkgconfig_DATA = scripts/libsv.pc
 
