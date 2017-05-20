@@ -141,6 +141,7 @@ SV_API void semver_comp_ctor(semver_comp_t *self);
 SV_API void semver_comp_dtor(semver_comp_t *self);
 SV_API char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset);
 SV_API char semver_and(semver_comp_t *self, const char *str, size_t len);
+SV_API char semver_comp_and(semver_comp_t *self, const char *str, size_t len, size_t *offset);
 SV_API int  semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len);
 SV_API char semver_pmatch(const semver_t *self, const semver_comp_t *comp);
 

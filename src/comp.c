@@ -324,6 +324,36 @@ char semver_and(semver_comp_t *self, const char *str, size_t len) {
   return 1;
 }
 
+char semver_comp_and(semver_comp_t *self, const char *str, size_t len, size_t *offset) {
+  if (0 == len) {
+    return 1;
+  } else {
+    semver_comp_t * newp;
+
+    newp = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
+    if (NULL == newp) {
+      return 1;
+    } else {
+      char rv = semver_comp_read(newp, str, len, offset);
+      if (rv) {
+	semver_comp_dtor(newp);
+	free(newp);
+	return rv;
+      }
+    }
+
+    if (NULL == self->next) {
+      self->next = newp;
+    } else {
+      semver_comp_t * tailp = self->next;
+
+      while (tailp->next) { tailp = tailp->next; }
+      tailp->next = newp;
+    }
+    return 0;
+  }
+}
+
 char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
   char result = semver_pcomp(self, &comp->version);
 
