@@ -42,7 +42,7 @@ matrix:
       script:
         - ctest --verbose
       after_success:
-        - cd .. && bash <(curl -s https://codecov.io/bash) -xgcov-5
+        - cd .. && bash <(curl -s https://codecov.io/bash) -xgcov-5 -gtest
     - os: linux
       addons:
         apt:
