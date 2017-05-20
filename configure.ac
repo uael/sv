@@ -44,6 +44,9 @@ AC_PROG_MKDIR_P
 LT_PREREQ([2.4])
 LT_INIT
 
+dnl This is the version stored in the pkg-config data file.
+AC_SUBST([LIBSV_PKG_CONFIG_VERSION],[0.0.1])
+
 dnl page
 #### libraries interface version
 

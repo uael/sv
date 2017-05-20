@@ -20,7 +20,7 @@ sysconfdir=@sysconfdir@
 
 Name: @PACKAGE_NAME@
 Description: semantic versioning for the C language
-Version: @libsv_VERSION_INTERFACE@
+Version: @LIBSV_PKG_CONFIG_VERSION@
 Libs: -L${libdir} -lsv
 Cflags: -I${includedir}
 
