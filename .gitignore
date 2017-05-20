@@ -43,6 +43,22 @@ autotools/
 *.info*
 version.texi
 
+m4/libtool.m4
+m4/ltoptions.m4
+m4/ltsugar.m4
+m4/ltversion.m4
+m4/lt~obsolete.m4
+scripts/ar-lib
+scripts/compile
+scripts/config.guess
+scripts/config.sub
+scripts/depcomp
+scripts/install-sh
+scripts/libsv.pc
+scripts/ltmain.sh
+scripts/missing
+scripts/test-driver
+
 ### CMake template
 CMakeCache.txt
 CMakeFiles
@@ -162,4 +178,3 @@ build/
 *~
 =*
 ,,*
-
