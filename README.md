@@ -22,8 +22,8 @@ libsv - Public domain semantic versioning in c
 
 ## Introduction
 
+This is free and unencumbered software released into the public domain.
 This  package  installs  a  C  language  library  implementing  semantic versioning for the C language.
-
 
 ## License
 
@@ -73,7 +73,6 @@ $ make -j4 all && make -j4 check
 ```
 which,  on  a  4-core  CPU,   should  speed  up  building  and  checking significantly.
 The  Makefile supports  the  DESTDIR environment  variable to  install files in a temporary location, example: to see what will happen:
-
 ```bash
 $ make -n install DESTDIR=/tmp/libsv
 ```
