@@ -1,8 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AUTOMAKE_OPTIONS = foreign
-EXTRA_DIST       = INSTALL.autotools configure.sh
-dist_doc_DATA    = UNLICENSE README.md README.autotools
+dist_doc_DATA    = UNLICENSE README.md
 AM_CFLAGS        = -I$(srcdir)/src -I$(srcdir)/include -Wall $(AX_CFLAGS)
 
 ## --------------------------------------------------------------------
