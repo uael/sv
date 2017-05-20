@@ -159,7 +159,7 @@ matrix:
       before_install: ./autogen.sh
       install:
         - mkdir build && cd build
-        - ../configure
+        - ../configure --enable-maintainer-mode
         - make
       script: make check
     - os: osx
