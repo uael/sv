@@ -198,7 +198,7 @@ int main(void) {
   if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-97"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">0.0.1+alpha-97-1"))) {
+  if (test_match(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">0.0.1+alpha-97"))) {
     return EXIT_FAILURE;
   }
   if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-99-1"))) {
@@ -331,7 +331,7 @@ int main(void) {
   if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-97"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">0.0.1+alpha-97-1"))) {
+  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">0.0.1+alpha-97"))) {
     return EXIT_FAILURE;
   }
   if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-99-1"))) {
@@ -464,7 +464,7 @@ int main(void) {
   if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || >=0.0.1+alpha-97"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || >0.0.1+alpha-97-1"))) {
+  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || >0.0.1+alpha-97"))) {
     return EXIT_FAILURE;
   }
   if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || <=0.0.1+alpha-99-1"))) {
