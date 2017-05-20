@@ -60,6 +60,9 @@ int test_read(const char *expected, const char *str, size_t len) {
 }
 
 int main(void) {
+  if (test_read("0.2.3", STRNSIZE("0.2.3"))) {
+    return EXIT_FAILURE;
+  }
   if (test_read("1.2.3", STRNSIZE("1.2.3"))) {
     return EXIT_FAILURE;
   }
@@ -70,6 +73,9 @@ int main(void) {
     return EXIT_FAILURE;
   }
   if (test_read("1.2.3+77", STRNSIZE("v1.2.3+77"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("1.2.3+0", STRNSIZE("v1.2.3+0"))) {
     return EXIT_FAILURE;
   }
   if (test_read("1.2.3+77.2", STRNSIZE("1.2.3+77.2"))) {
@@ -103,6 +109,9 @@ int main(void) {
     return EXIT_FAILURE;
   }
   if (test_read("", STRNSIZE("v1.2.3+")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_read("", STRNSIZE("v1.2.3+01")) == 0) {
     return EXIT_FAILURE;
   }
 
