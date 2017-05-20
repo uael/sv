@@ -91,6 +91,33 @@ int main(void) {
   if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE(">1"))) {
     return EXIT_FAILURE;
   }
+  if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE(">2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE(">=2"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE("<1"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE("<=1"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE(">=1.2.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE(">1.2.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE("<1.2.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(1, STRNSIZE("v1.2.3"), STRNSIZE("<=1.2.3"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE("2.x"))) {
+    return EXIT_FAILURE;
+  }
 
   return EXIT_SUCCESS;
 }
