@@ -114,6 +114,9 @@ int main(void) {
   if (test_read("", STRNSIZE("v1.2.3+01")) == 0) {
     return EXIT_FAILURE;
   }
+  if (test_read("", STRNSIZE("v0.01.3")) == 0) {
+    return EXIT_FAILURE;
+  }
 
   return EXIT_SUCCESS;
 }
