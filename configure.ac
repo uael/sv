@@ -63,10 +63,8 @@ AC_CACHE_SAVE
 dnl page
 #### finish
 
-AC_CONFIG_FILES(
-    [Makefile]
-    [scripts/libsv.pc]
-)
+AC_CONFIG_FILES([Makefile]
+   [scripts/libsv.pc])
 AC_OUTPUT
 
 ### end of file
