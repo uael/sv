@@ -156,8 +156,8 @@ matrix:
             - clang-4.0
     - os: linux
       dist: trusty
+      before_install: ./autogen.sh
       install:
-        - ./autogen.sh
         - mkdir build && cd build
         - ../configure
         - make
