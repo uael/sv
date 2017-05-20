@@ -1,5 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
+ACLOCAL_AMFLAGS  = -I m4
 AUTOMAKE_OPTIONS = foreign
 dist_doc_DATA    = UNLICENSE README.md
 AM_CFLAGS        = -I$(srcdir)/src -I$(srcdir)/include -Wall $(AX_CFLAGS)
