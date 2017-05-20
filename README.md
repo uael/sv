@@ -14,7 +14,7 @@ libsv - Public domain semantic versioning in c
   - [autotools](#autotools)
 - [Usage](#usage)
 - [Credits](#credits)
-- [Bugs, vulnerabilities and contributions](##bugs-vulnerabilities-and-contributions)
+- [Bugs, vulnerabilities and contributions](#bugs-vulnerabilities-and-contributions)
 - [Resources](#resources)
 - [Badges and static analysis](#badges-and-static-analysis)
   - [Travis CI](#travis-ci)
