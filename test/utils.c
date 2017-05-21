@@ -28,6 +28,7 @@
 #include <semver.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 int test_id_fwrite(void) {
   static const char	input_str[] = "1.2.3-alpha.1+x86-64";
@@ -38,8 +39,8 @@ int test_id_fwrite(void) {
   rv = semver_id_read(&id, input_str, strlen(input_str), &offset);
   if (0 == rv) {
     printf("%s: ", __func__);
-    rv = semver_id_fwrite(&id, stdout);
-    if (-1 != rv) {
+    semver_id_fwrite(&id, stdout);
+    if (0 == errno) {
       printf("\n");
       rv = 0;
     }
@@ -57,8 +58,8 @@ int test_version_fwrite(void) {
   rv = semver_read(&version, input_str, strlen(input_str), &offset);
   if (0 == rv) {
     printf("%s: ", __func__);
-    rv = semver_fwrite(&version, stdout);
-    if (-1 != rv) {
+    semver_fwrite(&version, stdout);
+    if (0 == errno) {
       printf("\n");
       rv = 0;
     }
@@ -76,8 +77,8 @@ int test_comparator_fwrite(void) {
   rv = semver_comp_read(&comp, input_str, strlen(input_str), &offset);
   if (0 == rv) {
     printf("%s: ", __func__);
-    rv = semver_comp_fwrite(&comp, stdout);
-    if (-1 != rv) {
+    semver_comp_fwrite(&comp, stdout);
+    if (0 == errno) {
       printf("\n");
       rv = 0;
     }
@@ -95,8 +96,8 @@ int test_range_fwrite(void) {
   rv = semver_range_read(&range, input_str, strlen(input_str), &offset);
   if (0 == rv) {
     printf("%s: ", __func__);
-    rv = semver_range_fwrite(&range, stdout);
-    if (-1 != rv) {
+    semver_range_fwrite(&range, stdout);
+    if (0 == errno) {
       printf("\n");
       rv = 0;
     }
