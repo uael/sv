@@ -38,7 +38,7 @@ int test_id_fwrite(void) {
 
   rv = semver_id_read(&id, input_str, strlen(input_str), &offset);
   if (0 == rv) {
-    printf("%s: ", __func__);
+    printf("test_id_fwrite: ");
     semver_id_fwrite(&id, stdout);
     if (0 == errno) {
       printf("\n");
@@ -57,7 +57,7 @@ int test_version_fwrite(void) {
 
   rv = semver_read(&version, input_str, strlen(input_str), &offset);
   if (0 == rv) {
-    printf("%s: ", __func__);
+    printf("test_version_fwrite: ");
     semver_fwrite(&version, stdout);
     if (0 == errno) {
       printf("\n");
@@ -76,7 +76,7 @@ int test_comparator_fwrite(void) {
 
   rv = semver_comp_read(&comp, input_str, strlen(input_str), &offset);
   if (0 == rv) {
-    printf("%s: ", __func__);
+    printf("test_comparator_fwrite: ");
     semver_comp_fwrite(&comp, stdout);
     if (0 == errno) {
       printf("\n");
@@ -95,7 +95,7 @@ int test_range_fwrite(void) {
 
   rv = semver_range_read(&range, input_str, strlen(input_str), &offset);
   if (0 == rv) {
-    printf("%s: ", __func__);
+    printf("test_range_fwrite: ");
     semver_range_fwrite(&range, stdout);
     if (0 == errno) {
       printf("\n");
