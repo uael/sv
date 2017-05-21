@@ -47,7 +47,8 @@ check_PROGRAMS	= \
 	test/semver		\
 	test/comp		\
 	test/match		\
-	test/range
+	test/range		\
+	test/utils
 
 TESTS				= $(check_PROGRAMS)
 
@@ -65,6 +66,9 @@ test_match_LDADD		= $(libsv_test_ldadd)
 
 test_range_CPPFLAGS		= $(libsv_test_cppflags)
 test_range_LDADD		= $(libsv_test_ldadd)
+
+test_utils_CPPFLAGS		= $(libsv_test_cppflags)
+test_utils_LDADD		= $(libsv_test_ldadd)
 
 installcheck-local: $(TEST)
 	@for f in $(TEST); do $(builddir)/$$f; done
