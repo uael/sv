@@ -40,7 +40,7 @@ semver_id_fwrite (const semver_id_t * idp, FILE * stream)
    return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
-  char		buffer_ptr[buffer_len];
+  char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
   size_t	needed_count;
 
   needed_count = (size_t)semver_id_pwrite(idp, buffer_ptr, buffer_len);
@@ -74,7 +74,7 @@ semver_fwrite (const semver_t * versionp, FILE * stream)
    return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
-  char		buffer_ptr[buffer_len];
+  char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
   size_t	needed_count;
 
   needed_count = (size_t)semver_pwrite(versionp, buffer_ptr, buffer_len);
@@ -108,7 +108,7 @@ semver_comp_fwrite (const semver_comp_t * compp, FILE * stream)
    return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
-  char		buffer_ptr[buffer_len];
+  char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
   size_t	needed_count;
 
   needed_count = (size_t)semver_comp_pwrite(compp, buffer_ptr, buffer_len);
@@ -142,7 +142,7 @@ semver_range_fwrite (const semver_range_t * rangep, FILE * stream)
    return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
-  char		buffer_ptr[buffer_len];
+  char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
   size_t	needed_count;
 
   needed_count = (size_t)semver_range_pwrite(rangep, buffer_ptr, buffer_len);
