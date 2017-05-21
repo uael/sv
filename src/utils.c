@@ -36,8 +36,8 @@
 int
 semver_id_fwrite (const semver_id_t * idp, FILE * stream)
 /* Serialise the identifier to the  STREAM.  When successful: return the
-   number  of  bytes written.   When  unsuccessful:  return -1  and  set
-   "errno". */
+   number of bytes written and  set "errno" to zero.  When unsuccessful:
+   return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[buffer_len];
@@ -69,6 +69,9 @@ semver_id_fwrite (const semver_id_t * idp, FILE * stream)
 
 int
 semver_fwrite (const semver_t * versionp, FILE * stream)
+/* Serialise the  version to  the STREAM.   When successful:  return the
+   number of bytes written and  set "errno" to zero.  When unsuccessful:
+   return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[buffer_len];
@@ -100,6 +103,9 @@ semver_fwrite (const semver_t * versionp, FILE * stream)
 
 int
 semver_comp_fwrite (const semver_comp_t * compp, FILE * stream)
+/* Serialise the comparator to the  STREAM.  When successful: return the
+   number of bytes written and  set "errno" to zero.  When unsuccessful:
+   return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[buffer_len];
@@ -131,6 +137,9 @@ semver_comp_fwrite (const semver_comp_t * compp, FILE * stream)
 
 int
 semver_range_fwrite (const semver_range_t * rangep, FILE * stream)
+/* Serialise  the range  to  the STREAM.   When  successful: return  the
+   number of bytes written and  set "errno" to zero.  When unsuccessful:
+   return -1 and set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[buffer_len];
