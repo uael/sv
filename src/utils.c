@@ -33,11 +33,11 @@
 #undef SEMVER_FWRITE_STACK_BUFLEN
 #define SEMVER_FWRITE_STACK_BUFLEN	64
 
-int
+size_t
 semver_id_fwrite (const semver_id_t * idp, FILE * stream)
 /* Serialise the identifier to the  STREAM.  When successful: return the
    number of bytes written and  set "errno" to zero.  When unsuccessful:
-   return -1 and set "errno" to an error code. */
+   set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
@@ -55,7 +55,7 @@ semver_id_fwrite (const semver_id_t * idp, FILE * stream)
     errno = 0;
     buffer_ptr = (char *)malloc(buffer_len);
     if (NULL == buffer_ptr) {
-      return -1;
+      return 0;
     } else {
       size_t	actual_count  = semver_id_pwrite(idp, buffer_ptr, buffer_len);
       size_t	written_count;
@@ -67,11 +67,11 @@ semver_id_fwrite (const semver_id_t * idp, FILE * stream)
   }
 }
 
-int
+size_t
 semver_fwrite (const semver_t * versionp, FILE * stream)
 /* Serialise the  version to  the STREAM.   When successful:  return the
    number of bytes written and  set "errno" to zero.  When unsuccessful:
-   return -1 and set "errno" to an error code. */
+   set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
@@ -89,7 +89,7 @@ semver_fwrite (const semver_t * versionp, FILE * stream)
     errno = 0;
     buffer_ptr = (char *)malloc(buffer_len);
     if (NULL == buffer_ptr) {
-      return -1;
+      return 0;
     } else {
       size_t	actual_count  = semver_pwrite(versionp, buffer_ptr, buffer_len);
       size_t	written_count;
@@ -101,11 +101,11 @@ semver_fwrite (const semver_t * versionp, FILE * stream)
   }
 }
 
-int
+size_t
 semver_comp_fwrite (const semver_comp_t * compp, FILE * stream)
 /* Serialise the comparator to the  STREAM.  When successful: return the
    number of bytes written and  set "errno" to zero.  When unsuccessful:
-   return -1 and set "errno" to an error code. */
+   set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
@@ -123,7 +123,7 @@ semver_comp_fwrite (const semver_comp_t * compp, FILE * stream)
     errno = 0;
     buffer_ptr = (char *)malloc(buffer_len);
     if (NULL == buffer_ptr) {
-      return -1;
+      return 0;
     } else {
       size_t	actual_count  = semver_comp_pwrite(compp, buffer_ptr, buffer_len);
       size_t	written_count;
@@ -135,11 +135,11 @@ semver_comp_fwrite (const semver_comp_t * compp, FILE * stream)
   }
 }
 
-int
+size_t
 semver_range_fwrite (const semver_range_t * rangep, FILE * stream)
 /* Serialise  the range  to  the STREAM.   When  successful: return  the
    number of bytes written and  set "errno" to zero.  When unsuccessful:
-   return -1 and set "errno" to an error code. */
+   set "errno" to an error code. */
 {
   size_t	buffer_len = SEMVER_FWRITE_STACK_BUFLEN;
   char		buffer_ptr[SEMVER_FWRITE_STACK_BUFLEN];
@@ -157,7 +157,7 @@ semver_range_fwrite (const semver_range_t * rangep, FILE * stream)
     errno = 0;
     buffer_ptr = (char *)malloc(buffer_len);
     if (NULL == buffer_ptr) {
-      return -1;
+      return 0;
     } else {
       size_t	actual_count  = semver_range_pwrite(rangep, buffer_ptr, buffer_len);
       size_t	written_count;
