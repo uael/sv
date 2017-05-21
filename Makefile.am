@@ -37,7 +37,8 @@ libsv_la_SOURCES	= \
 	src/id.c		\
 	src/num.c		\
 	src/range.c		\
-	src/semver.c
+	src/semver.c		\
+	src/utils.c
 
 #page
 #### test
