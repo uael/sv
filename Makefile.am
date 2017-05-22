@@ -37,7 +37,7 @@ libsv_la_SOURCES = \
 	src/num.c      \
 	src/range.c    \
 	src/semver.c   \
-  src/utils.c
+	src/utils.c
 
 #page
 #### test
@@ -47,7 +47,7 @@ check_PROGRAMS = \
 	test/comp    \
 	test/match   \
 	test/range   \
-  test/utils
+	test/utils
 
 TESTS                = $(check_PROGRAMS)
 
