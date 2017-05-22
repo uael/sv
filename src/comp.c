@@ -363,28 +363,13 @@ bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_
 }
 
 int semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len) {
-  char *op = "";
   char semver[256], next[1024];
 
-  switch (self->op) {
-    case SEMVER_OP_EQ:
-      break;
-    case SEMVER_OP_LT:
-      op = "<";
-      break;
-    case SEMVER_OP_LE:
-      op = "<=";
-      break;
-    case SEMVER_OP_GT:
-      op = ">";
-      break;
-    case SEMVER_OP_GE:
-      op = ">=";
-      break;
-  }
   semver_write(self->version, semver, 256);
   if (self->next) {
-    return snprintf(buffer, len, "%s%s %.*s", op, semver, semver_comp_pwrite(self->next, next, 1024), next);
+    return snprintf(buffer, len, "%s%s %.*s",
+      semver_op_string(self->op), semver, semver_comp_pwrite(self->next, next, 1024), next
+    );
   }
-  return snprintf(buffer, len, "%s%s", op, semver);
+  return snprintf(buffer, len, "%s%s", semver_op_string(self->op), semver);
 }
