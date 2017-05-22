@@ -32,9 +32,9 @@
 #include "semver.h"
 
 int test_version_fwrite(void) {
-  static const char	input_str[] = "1.2.3-alpha.1+x86-64";
-  semver_t		version;
-  int			rv;
+  static const char input_str[] = "1.2.3-alpha.1+x86-64";
+  semver_t version;
+  int rv;
 
   rv = semver(&version, input_str);
   if (0 == rv) {
@@ -50,9 +50,9 @@ int test_version_fwrite(void) {
 }
 
 int test_comparator_fwrite(void) {
-  static const char	input_str[] = "<=1.2.3";
-  semver_comp_t		comp;
-  int			rv;
+  static const char input_str[] = "<=1.2.3";
+  semver_comp_t comp;
+  int rv;
 
   rv = semver_comp(&comp, input_str);
   if (0 == rv) {
@@ -68,9 +68,9 @@ int test_comparator_fwrite(void) {
 }
 
 int test_range_fwrite(void) {
-  static const char	input_str[] = ">=1.2.3 <4.0.0";
-  semver_range_t	range;
-  int			rv;
+  static const char input_str[] = ">=1.2.3 <4.0.0";
+  semver_range_t range;
+  int rv;
 
   rv = semver_range(&range, input_str);
   if (0 == rv) {
