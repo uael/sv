@@ -55,18 +55,13 @@ int test_read(const char *expected, const char *str, size_t len) {
 }
 
 int test_and(const char *expected, const char *base_str, size_t base_len, const char *str, size_t len) {
-  size_t offset = 0;
   unsigned slen;
   char buffer[1024];
   semver_comp_t comp = {0};
 
   printf("test and: `%.*s`", (int) base_len, base_str);
-  if (semver_comp_read(&comp, base_str, base_len, &offset)) {
+  if (semver_compn(&comp, base_str, base_len)) {
     puts(" \tcouldn't parse base");
-    return 1;
-  }
-  if (offset != base_len) {
-    puts(" \tcouldn't parse fully base");
     return 1;
   }
   if (semver_and(&comp, str, len)) {
