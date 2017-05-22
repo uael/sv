@@ -34,6 +34,9 @@
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
 #endif
 
+#define SV_MAX_LEN (256)
+#define SV_RANGE_MAX_LEN (512)
+
 const char *semver_op_string(enum semver_op op);
 
 char semver_num_read(int *self, const char *str, size_t len, size_t *offset);

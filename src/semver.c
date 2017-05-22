@@ -98,25 +98,25 @@ char semver_pcmp(const semver_t *self, const semver_t *other) {
 }
 
 int semver_pwrite(const semver_t *self, char *buffer, size_t len) {
-  char prerelease[256], build[256];
+  char prerelease[SV_MAX_LEN], build[SV_MAX_LEN];
 
   if (self->prerelease.len && self->build.len) {
     return snprintf(buffer, len, "%d.%d.%d-%.*s+%.*s",
       self->major, self->minor, self->patch,
-      semver_id_write(self->prerelease, prerelease, 256), prerelease,
-      semver_id_write(self->build, build, 256), build
+      semver_id_write(self->prerelease, prerelease, SV_MAX_LEN), prerelease,
+      semver_id_write(self->build, build, SV_MAX_LEN), build
     );
   }
   if (self->prerelease.len) {
     return snprintf(buffer, len, "%d.%d.%d-%.*s",
       self->major, self->minor, self->patch,
-      semver_id_write(self->prerelease, prerelease, 256), prerelease
+      semver_id_write(self->prerelease, prerelease, SV_MAX_LEN), prerelease
     );
   }
   if (self->build.len) {
     return snprintf(buffer, len, "%d.%d.%d+%.*s",
       self->major, self->minor, self->patch,
-      semver_id_write(self->build, build, 256), build
+      semver_id_write(self->build, build, SV_MAX_LEN), build
     );
   }
   return snprintf(buffer, len, "%d.%d.%d", self->major, self->minor, self->patch);

@@ -118,13 +118,13 @@ bool semver_range_matchn(const semver_t *self, const char *range_str, size_t ran
 }
 
 int semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len) {
-  char comp[1024], next[1024];
+  char comp[SV_RANGE_MAX_LEN], next[SV_RANGE_MAX_LEN];
 
   if (self->next) {
     return snprintf(buffer, len, "%.*s || %.*s",
-      semver_comp_write(self->comp, comp, 1024), comp,
-      semver_range_pwrite(self->next, next, 1024), next
+      semver_comp_write(self->comp, comp, SV_RANGE_MAX_LEN), comp,
+      semver_range_pwrite(self->next, next, SV_RANGE_MAX_LEN), next
     );
   }
-  return snprintf(buffer, len, "%.*s", semver_comp_write(self->comp, comp, 1024), comp);
+  return snprintf(buffer, len, "%.*s", semver_comp_write(self->comp, comp, SV_RANGE_MAX_LEN), comp);
 }

@@ -131,10 +131,12 @@ char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other) {
 }
 
 int semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len) {
-  char next[1024];
+  char next[SV_MAX_LEN];
 
   if (self->next) {
-    return snprintf(buffer, len, "%.*s.%.*s", (int) self->len, self->raw, semver_id_pwrite(self->next, next, 1024), next);
+    return snprintf(buffer, len, "%.*s.%.*s",
+      (int) self->len, self->raw, semver_id_pwrite(self->next, next, SV_MAX_LEN), next
+    );
   }
   return snprintf(buffer, len, "%.*s", (int) self->len, self->raw);
 }
