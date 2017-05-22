@@ -93,7 +93,7 @@
 #define semver_match(self, comp_str) semver_comp_matchn(self, comp_str, strlen(comp_str))
 #define semver_range(self, str) semver_rangen(self, str, strlen(str))
 #define semver_range_write(self, buffer, len) semver_range_pwrite(&(self), buffer, len)
-#define semver_range_match(self, comp) semver_range_pmatch(&(self), &(comp))
+#define semver_range_match(self, range) semver_range_pmatch(&(self), &(range))
 #define semver_rmatch(self, range_str) semver_range_matchn(self, range_str, strlen(range_str))
 
 typedef struct semver semver_t;
