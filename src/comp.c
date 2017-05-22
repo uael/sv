@@ -211,6 +211,16 @@ void semver_comp_dtor(semver_comp_t *self) {
   }
 }
 
+char semver_compn(semver_comp_t *self, const char *str, size_t len) {
+  size_t offset = 0;
+
+  if (semver_comp_read(self, str, len, &offset) || offset < len) {
+    semver_comp_dtor(self);
+    return 1;
+  }
+  return 0;
+}
+
 char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset) {
   semver_comp_ctor(self);
   while (*offset < len) {
@@ -325,7 +335,7 @@ char semver_and(semver_comp_t *self, const char *str, size_t len) {
 }
 
 char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
-  char result = semver_pcomp(self, &comp->version);
+  char result = semver_pcmp(self, &comp->version);
 
   if (result < 0 && comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
     return 0;

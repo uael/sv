@@ -51,6 +51,16 @@ void semver_range_dtor(semver_range_t *self) {
   }
 }
 
+char semver_rangen(semver_range_t *self, const char *str, size_t len) {
+  size_t offset = 0;
+
+  if (semver_range_read(self, str, len, &offset) || offset < len) {
+    semver_range_dtor(self);
+    return 1;
+  }
+  return 0;
+}
+
 char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset) {
   semver_range_ctor(self);
   if (semver_comp_read(&self->comp, str, len, offset)) {
