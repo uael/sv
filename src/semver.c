@@ -52,6 +52,9 @@ void semver_dtor(semver_t *self) {
 char semvern(semver_t *self, const char *str, size_t len) {
   size_t offset = 0;
 
+  if (len > SV_MAX_LEN) {
+    return 1;
+  }
   if (semver_read(self, str, len, &offset) || offset < len) {
     semver_dtor(self);
     return 1;

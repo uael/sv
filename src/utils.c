@@ -51,10 +51,10 @@ size_t semver_fwrite(const semver_t *self, FILE *stream) {
  * set "errno" to an error code.
  */
 size_t semver_comp_fwrite(const semver_comp_t *self, FILE *stream) {
-  char buffer[SV_MAX_LEN];
+  char buffer[SV_RANGE_MAX_LEN];
   int cs;
 
-  if ((cs = semver_comp_pwrite(self, buffer, SV_MAX_LEN)) == 0) {
+  if ((cs = semver_comp_pwrite(self, buffer, SV_RANGE_MAX_LEN)) == 0) {
     return 0;
   }
   errno = 0;

@@ -211,6 +211,9 @@ void semver_comp_dtor(semver_comp_t *self) {
 char semver_compn(semver_comp_t *self, const char *str, size_t len) {
   size_t offset = 0;
 
+  if (len > SV_RANGE_MAX_LEN) {
+    return 1;
+  }
   if (semver_comp_read(self, str, len, &offset) || offset < len) {
     semver_comp_dtor(self);
     return 1;
@@ -363,12 +366,12 @@ bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_
 }
 
 int semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len) {
-  char semver[SV_MAX_LEN], next[SV_MAX_LEN];
+  char semver[SV_RANGE_MAX_LEN], next[SV_RANGE_MAX_LEN];
 
-  semver_write(self->version, semver, SV_MAX_LEN);
+  semver_write(self->version, semver, SV_RANGE_MAX_LEN);
   if (self->next) {
     return snprintf(buffer, len, "%s%s %.*s",
-      semver_op_string(self->op), semver, semver_comp_pwrite(self->next, next, SV_MAX_LEN), next
+      semver_op_string(self->op), semver, semver_comp_pwrite(self->next, next, SV_RANGE_MAX_LEN), next
     );
   }
   return snprintf(buffer, len, "%s%s", semver_op_string(self->op), semver);
