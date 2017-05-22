@@ -61,7 +61,7 @@ int test_and(const char *expected, const char *base_str, size_t base_len, const 
 
   printf("test and: `%.*s`", (int) base_len, base_str);
   if (semver_compn(&comp, base_str, base_len)) {
-    puts(" \tcouldn't parse base");
+    puts(" \tcouldn't parse");
     return 1;
   }
   if (semver_and(&comp, str, len)) {
