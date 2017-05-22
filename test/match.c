@@ -156,221 +156,94 @@ int main(void) {
   if (test_match(0, STRNSIZE("v1.2.3"), STRNSIZE("2.x"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE("<0.0.1+99"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE("<0.0.1-99"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE("<=0.0.1+99"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE("<=0.0.1-99"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE("<=0.0.1+98"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE("<=0.0.1-98"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE("=0.0.1+98"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE("=0.0.1-98"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE(">=0.0.1+98"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE(">=0.0.1-98"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE(">=0.0.1+97"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE(">=0.0.1-97"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE(">0.0.1+97"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE(">0.0.1-97"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha"), STRNSIZE("0.0.1+alpha"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha"), STRNSIZE("0.0.1-alpha"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+98"), STRNSIZE("<0.0.1+99"))) {
+  if (test_match(1, STRNSIZE("0.0.1-98"), STRNSIZE("<0.0.1-99"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-99"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("<0.0.1-alpha.99"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-98"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("<=0.0.1-alpha.99"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("=0.0.1+alpha-98"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("<=0.0.1-alpha.98"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-98"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("=0.0.1-alpha.98"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-97"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE(">=0.0.1-alpha.98"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">0.0.1+alpha-97"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE(">=0.0.1-alpha.97"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-99-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE(">0.0.1-alpha.97"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-98-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("<0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("=0.0.1+alpha-98-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("<=0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-98-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("<=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">=0.0.1+alpha-97-1"))) {
+  if (test_match(0, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">0.0.1+alpha-97-1"))) {
+  if (test_match(0, STRNSIZE("0.0.1-alpha.98"), STRNSIZE(">=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">0.0.1+alpha-97-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE(">=0.0.1-alpha.97.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("<=0.0.1+alpha-99-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE(">0.0.1-alpha.97.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("<=0.0.1+alpha-98-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("<0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("=0.0.1+alpha-98-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("<=0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">=0.0.1+alpha-98-1"))) {
+  if (test_match(0, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("<=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">=0.0.1+alpha-97-1"))) {
+  if (test_match(0, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_match(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">0.0.1+alpha-97-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE(">=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE("1.2.3"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE(">=0.0.1-alpha.97.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE("1.2.x"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE("1.x.x"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE("1.x"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE("1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE("*"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE(">1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE(">2"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE(">=2"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE("<1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE("<=1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE(">=1.2.3"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE(">1.2.3"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE("<1.2.3"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("v1.2.3"), STRNSIZE("<=1.2.3"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE("2.x"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("<0.0.1+99"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("<=0.0.1+99"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("<=0.0.1+98"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("=0.0.1+98"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE(">=0.0.1+98"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE(">=0.0.1+97"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE(">0.0.1+97"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha"), STRNSIZE("0.0.1+alpha"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("<0.0.1+99"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-99"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-98"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("=0.0.1+alpha-98"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-98"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-97"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">0.0.1+alpha-97"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-99-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("<=0.0.1+alpha-98-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("=0.0.1+alpha-98-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE(">=0.0.1+alpha-98-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">=0.0.1+alpha-97-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">0.0.1+alpha-97-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">0.0.1+alpha-97-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("<=0.0.1+alpha-99-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("<=0.0.1+alpha-98-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("=0.0.1+alpha-98-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">=0.0.1+alpha-98-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">=0.0.1+alpha-97-1"))) {
-    return EXIT_FAILURE;
-  }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE(">0.0.1+alpha-97-1"))) {
+  if (test_match(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE(">0.0.1-alpha.97.1"))) {
     return EXIT_FAILURE;
   }
 
@@ -422,88 +295,94 @@ int main(void) {
   if (test_rmatch(0, STRNSIZE("v1.2.3"), STRNSIZE("9.x || 2.x"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || <0.0.1+99"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || <0.0.1-99"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || <=0.0.1+99"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || <=0.0.1-99"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || <=0.0.1+98"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || <=0.0.1-98"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || =0.0.1+98"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || =0.0.1-98"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || >=0.0.1+98"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || >=0.0.1-98"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || >=0.0.1+97"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || >=0.0.1-97"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || >0.0.1+97"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || >0.0.1-97"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha"), STRNSIZE("9.x || 0.0.1+alpha"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha"), STRNSIZE("9.x || 0.0.1-alpha"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+98"), STRNSIZE("9.x || <0.0.1+99"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-98"), STRNSIZE("9.x || <0.0.1-99"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || <=0.0.1+alpha-99"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || <0.0.1-alpha.99"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || <=0.0.1+alpha-98"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || <=0.0.1-alpha.99"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || =0.0.1+alpha-98"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || <=0.0.1-alpha.98"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || >=0.0.1+alpha-98"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || =0.0.1-alpha.98"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || >=0.0.1+alpha-97"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || >=0.0.1-alpha.98"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || >0.0.1+alpha-97"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || >=0.0.1-alpha.97"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || <=0.0.1+alpha-99-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || >0.0.1-alpha.97"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || <=0.0.1+alpha-98-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || <0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || =0.0.1+alpha-98-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || <=0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98"), STRNSIZE("9.x || >=0.0.1+alpha-98-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || <=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || >=0.0.1+alpha-97-1"))) {
+  if (test_rmatch(0, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || =0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || >0.0.1+alpha-97-1"))) {
+  if (test_rmatch(0, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || >=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || >0.0.1+alpha-97-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || >=0.0.1-alpha.97.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || <=0.0.1+alpha-99-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98"), STRNSIZE("9.x || >0.0.1-alpha.97.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || <=0.0.1+alpha-98-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("9.x || <0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || =0.0.1+alpha-98-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("9.x || <=0.0.1-alpha.99.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || >=0.0.1+alpha-98-1"))) {
+  if (test_rmatch(0, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("9.x || <=0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(1, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || >=0.0.1+alpha-97-1"))) {
+  if (test_rmatch(0, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("9.x || =0.0.1-alpha.98.1"))) {
     return EXIT_FAILURE;
   }
-  if (test_rmatch(0, STRNSIZE("0.0.1+alpha-98-1-3"), STRNSIZE("9.x || >0.0.1+alpha-97-1"))) {
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("9.x || >=0.0.1-alpha.98.1"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("9.x || >=0.0.1-alpha.97.1"))) {
+    return EXIT_FAILURE;
+  }
+  if (test_rmatch(1, STRNSIZE("0.0.1-alpha.98.1.3"), STRNSIZE("9.x || >0.0.1-alpha.97.1"))) {
     return EXIT_FAILURE;
   }
 
