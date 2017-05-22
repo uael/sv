@@ -87,10 +87,7 @@ char semver_pcomp(const semver_t *self, const semver_t *other) {
   if ((result = semver_num_comp(self->patch, other->patch)) != 0) {
     return result;
   }
-  if ((result = semver_id_comp(self->prerelease, other->prerelease)) != 0) {
-    return result;
-  }
-  return semver_id_comp(self->build, other->build);
+  return semver_id_comp(self->prerelease, other->prerelease);
 }
 
 int semver_pwrite(const semver_t *self, char *buffer, size_t len) {
