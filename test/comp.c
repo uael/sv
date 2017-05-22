@@ -325,6 +325,9 @@ int main(void) {
   if (test_and("", STRNSIZE("1.2"), STRNSIZE("")) == 0) {
     return EXIT_FAILURE;
   }
+  if (test_and("", STRNSIZE("1.2"), STRNSIZE("a")) == 0) {
+    return EXIT_FAILURE;
+  }
 
   return EXIT_SUCCESS;
 }
