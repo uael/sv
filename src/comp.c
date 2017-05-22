@@ -352,6 +352,18 @@ char semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp) {
   return 1;
 }
 
+char semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len) {
+  semver_comp_t comp;
+  char result;
+
+  if (semver_compn(&comp, comp_str, comp_len)) {
+    return 0;
+  }
+  result = semver_comp_pmatch(self, &comp);
+  semver_comp_dtor(&comp);
+  return result;
+}
+
 int semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len) {
   char *op = "";
   char semver[256], next[1024];

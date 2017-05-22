@@ -146,11 +146,13 @@ SV_API char semver_compn(semver_comp_t *self, const char *str, size_t len);
 SV_API char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset);
 SV_API int  semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len);
 SV_API char semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp);
+SV_API char semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len);
 SV_API char semver_and(semver_comp_t *left, const char *str, size_t len);
 
 #define semver_comp(self, str) semver_compn(self, str, strlen(str))
 #define semver_comp_write(self, buffer, len) semver_comp_pwrite(&(self), buffer, len)
 #define semver_comp_match(self, comp) semver_comp_pmatch(&(self), &(comp))
+#define semver_match(self, comp_str) semver_comp_matchn(self, comp_str, strlen(comp_str))
 
 struct semver_range {
   struct semver_range *next;
@@ -163,9 +165,11 @@ SV_API char semver_rangen(semver_range_t *self, const char *str, size_t len);
 SV_API char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset);
 SV_API int  semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len);
 SV_API char semver_range_pmatch(const semver_t *self, const semver_range_t *range);
+SV_API char semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len);
 
 #define semver_range(self, str) semver_rangen(self, str, strlen(str))
 #define semver_range_write(self, buffer, len) semver_range_pwrite(&(self), buffer, len)
 #define semver_range_match(self, comp) semver_range_pmatch(&(self), &(comp))
+#define semver_rmatch(self, range_str) semver_range_matchn(self, range_str, strlen(range_str))
 
 #endif /* SV_H__ */

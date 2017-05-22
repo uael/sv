@@ -84,6 +84,18 @@ char semver_range_pmatch(const semver_t *self, const semver_range_t *range) {
   return (char) (semver_comp_pmatch(self, &range->comp) ? 1 : range->next ? semver_range_pmatch(self, range->next) : 0);
 }
 
+char semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len) {
+  semver_range_t range;
+  char result;
+
+  if (semver_rangen(&range, range_str, range_len)) {
+    return 0;
+  }
+  result = semver_range_pmatch(self, &range);
+  semver_range_dtor(&range);
+  return result;
+}
+
 int semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len) {
   char comp[1024], next[1024];
 
