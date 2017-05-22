@@ -28,7 +28,9 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "xsemver.h"
+#include "version.h"
+#include "num.h"
+#include "id.h"
 
 void semver_ctor(semver_t *self) {
 #ifndef _MSC_VER

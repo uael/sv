@@ -25,39 +25,12 @@
  * For more information, please refer to <http://unlicense.org>
  */
 
-#ifndef XSV_H__
-# define XSV_H__
+#ifndef SV_NUM_H__
+# define SV_NUM_H__
 
-#include "semver.h"
-
-#ifdef _MSC_VER
-# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
-#endif
-
-#define SV_MAX_LEN (256)
-#define SV_RANGE_MAX_LEN (512)
-
-const char *semver_op_string(enum semver_op op);
+#include "version.h"
 
 char semver_num_read(int *self, const char *str, size_t len, size_t *offset);
 char semver_num_cmp(int self, int other);
 
-void semver_id_ctor(semver_id_t *self);
-void semver_id_dtor(semver_id_t *self);
-char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offset);
-int  semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len);
-char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other);
-
-#define semver_id_write(self, buffer, len) semver_id_pwrite(&(self), buffer, len)
-#define semver_id_comp(self, other) semver_id_pcmp(&(self), &(other))
-
-void semver_ctor(semver_t *self);
-char semver_read(semver_t *self, const char *str, size_t len, size_t *offset);
-
-void semver_comp_ctor(semver_comp_t *self);
-char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset);
-
-void semver_range_ctor(semver_range_t *self);
-char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset);
-
-#endif /* XSV_H__ */
+#endif /* SV_NUM_H__ */

@@ -29,7 +29,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "xsemver.h"
+#include "range.h"
+#include "comp.h"
 
 void semver_range_ctor(semver_range_t *self) {
 #ifndef _MSC_VER

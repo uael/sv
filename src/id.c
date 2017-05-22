@@ -30,7 +30,7 @@
 #include <ctype.h>
 #include <stdio.h>
 
-#include "xsemver.h"
+#include "id.h"
 
 void semver_id_ctor(semver_id_t *self) {
 #ifndef _MSC_VER
