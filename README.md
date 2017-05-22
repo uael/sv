@@ -118,7 +118,7 @@ assert(0 == memcmp("1", semver.prerelease.next->raw, sizeof("1")-1));
 
 offset = 0;
 semver_range_read(&range, "1.2.1 || >=1.2.3 <1.2.5", sizeof("1.2.1 || >=1.2.3 <1.2.5")-1, &offset);
-assert(1 == semver_rmatch(semver, range));
+assert(1 == semver_range_match(semver, range));
 
 semver_dtor(&semver);
 semver_range_dtor(&range);

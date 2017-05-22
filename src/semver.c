@@ -53,6 +53,16 @@ void semver_dtor(semver_t *self) {
   semver_id_dtor(&self->build);
 }
 
+char semvern(semver_t *self, const char *str, size_t len) {
+  size_t offset = 0;
+
+  if (semver_read(self, str, len, &offset) || offset < len) {
+    semver_dtor(self);
+    return 1;
+  }
+  return 0;
+}
+
 char semver_read(semver_t *self, const char *str, size_t len, size_t *offset) {
   if (*offset < len) {
     semver_ctor(self);
@@ -76,16 +86,16 @@ char semver_read(semver_t *self, const char *str, size_t len, size_t *offset) {
   return 1;
 }
 
-char semver_pcomp(const semver_t *self, const semver_t *other) {
+char semver_pcmp(const semver_t *self, const semver_t *other) {
   char result;
 
-  if ((result = semver_num_comp(self->major, other->major)) != 0) {
+  if ((result = semver_num_cmp(self->major, other->major)) != 0) {
     return result;
   }
-  if ((result = semver_num_comp(self->minor, other->minor)) != 0) {
+  if ((result = semver_num_cmp(self->minor, other->minor)) != 0) {
     return result;
   }
-  if ((result = semver_num_comp(self->patch, other->patch)) != 0) {
+  if ((result = semver_num_cmp(self->patch, other->patch)) != 0) {
     return result;
   }
   return semver_id_comp(self->prerelease, other->prerelease);

@@ -52,6 +52,16 @@ void semver_range_dtor(semver_range_t *self) {
   }
 }
 
+char semver_rangen(semver_range_t *self, const char *str, size_t len) {
+  size_t offset = 0;
+
+  if (semver_range_read(self, str, len, &offset) || offset < len) {
+    semver_range_dtor(self);
+    return 1;
+  }
+  return 0;
+}
+
 char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset) {
   semver_range_ctor(self);
   if (semver_comp_read(&self->comp, str, len, offset)) {
@@ -71,24 +81,22 @@ char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t
   return 0;
 }
 
-char semver_or(semver_range_t *self, const char *str, size_t len) {
+char semver_or(semver_range_t *left, const char *str, size_t len) {
   semver_range_t *range, *tail;
-  size_t offset = 0;
 
   if (len > 0) {
     range = (semver_range_t *) sv_malloc(sizeof(semver_range_t));
     if (NULL == range) {
       return 1;
     }
-    if (semver_range_read(range, str, len, &offset)) {
-      semver_range_dtor(range);
+    if (semver_rangen(range, str, len)) {
       sv_free(range);
       return 1;
     }
-    if (NULL == self->next) {
-      self->next = range;
+    if (NULL == left->next) {
+      left->next = range;
     } else {
-      tail = self->next;
+      tail = left->next;
       while (tail->next) tail = tail->next;
       tail->next = range;
     }
@@ -97,8 +105,20 @@ char semver_or(semver_range_t *self, const char *str, size_t len) {
   return 1;
 }
 
-char semver_prmatch(const semver_t *self, const semver_range_t *range) {
-  return (char) (semver_pmatch(self, &range->comp) ? 1 : range->next ? semver_prmatch(self, range->next) : 0);
+bool semver_range_pmatch(const semver_t *self, const semver_range_t *range) {
+  return semver_comp_pmatch(self, &range->comp) ? true : range->next ? semver_range_pmatch(self, range->next) : false;
+}
+
+bool semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len) {
+  semver_range_t range;
+  bool result;
+
+  if (semver_rangen(&range, range_str, range_len)) {
+    return false;
+  }
+  result = semver_range_pmatch(self, &range);
+  semver_range_dtor(&range);
+  return result;
 }
 
 int semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len) {

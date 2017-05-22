@@ -34,18 +34,13 @@
 #define STRNSIZE(s) (s), sizeof(s)-1
 
 int test_read(const char *expected, const char *str, size_t len) {
-  size_t offset = 0;
   unsigned slen;
   char buffer[1024];
   semver_range_t range = {0};
 
   printf("test: `%.*s`", (int) len, str);
-  if (semver_range_read(&range, str, len, &offset)) {
+  if (semver_rangen(&range, str, len)) {
     puts(" \tcouldn't parse");
-    return 1;
-  }
-  if (offset != len) {
-    puts(" \tcouldn't parse fully base");
     return 1;
   }
   slen = (unsigned) semver_range_write(range, buffer, 1024);
@@ -181,7 +176,7 @@ int main(void) {
   if (test_or(">=1.2.0 <1.3.0 || >=0.0.3 <0.0.4", STRNSIZE("1.2.x"), STRNSIZE("^0.0.3"))) {
     return EXIT_FAILURE;
   }
-  if (test_or(">=1.2.0 <1.3.0 >=1.2.0 <1.3.0 || >=0.0.3 <0.0.4", STRNSIZE("1.2 1.2.x"), STRNSIZE("^0.0.3"))) {
+  if (test_or(">=1.2.0 <1.3.0 || >=1.2.0 <1.3.0 || >=0.0.3 <0.0.4", STRNSIZE("1.2 || 1.2.x"), STRNSIZE("^0.0.3"))) {
     return EXIT_FAILURE;
   }
   if (test_or(">=1.0.0 <2.0.0 || >=0.0.3 <0.0.4", STRNSIZE("1"), STRNSIZE("^0.0.3"))) {
@@ -194,6 +189,9 @@ int main(void) {
     return EXIT_FAILURE;
   }
   if (test_or("", STRNSIZE("1.2"), STRNSIZE("a")) == 0) {
+    return EXIT_FAILURE;
+  }
+  if (test_or("", STRNSIZE("1.2"), STRNSIZE("1.2.x || abc")) == 0) {
     return EXIT_FAILURE;
   }
 

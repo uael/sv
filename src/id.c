@@ -97,7 +97,7 @@ char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offs
   return 0;
 }
 
-char semver_id_pcomp(const semver_id_t *self, const semver_id_t *other) {
+char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other) {
   char s;
 
   if (self->len && !other->len) {
@@ -131,7 +131,7 @@ char semver_id_pcomp(const semver_id_t *self, const semver_id_t *other) {
     return 0;
   }
 
-  return semver_id_pcomp(self->next, other->next);
+  return semver_id_pcmp(self->next, other->next);
 }
 
 int semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len) {

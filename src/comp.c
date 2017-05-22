@@ -212,6 +212,16 @@ void semver_comp_dtor(semver_comp_t *self) {
   }
 }
 
+char semver_compn(semver_comp_t *self, const char *str, size_t len) {
+  size_t offset = 0;
+
+  if (semver_comp_read(self, str, len, &offset) || offset < len) {
+    semver_comp_dtor(self);
+    return 1;
+  }
+  return 0;
+}
+
 char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset) {
   semver_comp_ctor(self);
   while (*offset < len) {
@@ -302,24 +312,22 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
   return 0;
 }
 
-char semver_and(semver_comp_t *self, const char *str, size_t len) {
+char semver_and(semver_comp_t *left, const char *str, size_t len) {
   semver_comp_t *comp, *tail;
-  size_t offset = 0;
 
   if (len > 0) {
     comp = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
     if (NULL == comp) {
       return 1;
     }
-    if (semver_comp_read(comp, str, len, &offset)) {
-      semver_comp_dtor(comp);
+    if (semver_compn(comp, str, len)) {
       sv_free(comp);
       return 1;
     }
-    if (NULL == self->next) {
-      self->next = comp;
+    if (NULL == left->next) {
+      left->next = comp;
     } else {
-      tail = self->next;
+      tail = left->next;
       while (tail->next) tail = tail->next;
       tail->next = comp;
     }
@@ -328,22 +336,34 @@ char semver_and(semver_comp_t *self, const char *str, size_t len) {
   return 1;
 }
 
-char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
-  char result = semver_pcomp(self, &comp->version);
+bool semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp) {
+  char result = semver_pcmp(self, &comp->version);
 
   if (result < 0 && comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
-    return 0;
+    return false;
   }
   if (result > 0 && comp->op != SEMVER_OP_GT && comp->op != SEMVER_OP_GE) {
-    return 0;
+    return false;
   }
   if (result == 0 && comp->op != SEMVER_OP_EQ && comp->op != SEMVER_OP_LE && comp->op != SEMVER_OP_GE) {
-    return 0;
+    return false;
   }
   if (comp->next) {
-    return semver_pmatch(self, comp->next);
+    return semver_comp_pmatch(self, comp->next);
   }
-  return 1;
+  return true;
+}
+
+bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len) {
+  semver_comp_t comp;
+  bool result;
+
+  if (semver_compn(&comp, comp_str, comp_len)) {
+    return false;
+  }
+  result = semver_comp_pmatch(self, &comp);
+  semver_comp_dtor(&comp);
+  return result;
 }
 
 int semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len) {
