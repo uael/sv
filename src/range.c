@@ -80,8 +80,34 @@ char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t
   return 0;
 }
 
+char semver_or(semver_range_t *left, const char *str, size_t len) {
+  semver_range_t *range, *tail;
+  size_t offset = 0;
+
+  if (len > 0) {
+    range = (semver_range_t *) sv_malloc(sizeof(semver_range_t));
+    if (NULL == range) {
+      return 1;
+    }
+    if (semver_range_read(range, str, len, &offset)) {
+      semver_range_dtor(range);
+      sv_free(range);
+      return 1;
+    }
+    if (NULL == left->next) {
+      left->next = range;
+    } else {
+      tail = self->next;
+      while (tail->next) tail = tail->next;
+      tail->next = range;
+    }
+    return 0;
+  }
+  return 1;
+}
+
 char semver_range_pmatch(const semver_t *self, const semver_range_t *range) {
-  return (char) (semver_comp_pmatch(self, &range->comp) ? 1 : range->next ? semver_range_pmatch(self, range->next) : 0);
+  return (char) (semver_pmatch(self, &range->comp) ? 1 : range->next ? semver_prmatch(self, range->next) : 0);
 }
 
 char semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len) {
