@@ -36,14 +36,14 @@ libsv_la_SOURCES = \
 	src/id.c       \
 	src/num.c      \
 	src/range.c    \
-	src/version.c   \
+	src/version.c  \
 	src/utils.c
 
 #page
 #### test
 
 check_PROGRAMS = \
-	test/semver  \
+	test/version \
 	test/comp    \
 	test/match   \
 	test/range   \
@@ -54,20 +54,20 @@ TESTS                = $(check_PROGRAMS)
 libsv_test_cppflags  = -I$(srcdir)/src -I$(srcdir)/include
 libsv_test_ldadd     = libsv.la
 
-test_semver_CPPFLAGS = $(libsv_test_cppflags)
-test_semver_LDADD    = $(libsv_test_ldadd)
+test_version_CPPFLAGS = $(libsv_test_cppflags)
+test_version_LDADD    = $(libsv_test_ldadd)
 
-test_comp_CPPFLAGS   = $(libsv_test_cppflags)
-test_comp_LDADD      = $(libsv_test_ldadd)
+test_comp_CPPFLAGS    = $(libsv_test_cppflags)
+test_comp_LDADD       = $(libsv_test_ldadd)
 
-test_match_CPPFLAGS  = $(libsv_test_cppflags)
-test_match_LDADD     = $(libsv_test_ldadd)
+test_match_CPPFLAGS   = $(libsv_test_cppflags)
+test_match_LDADD      = $(libsv_test_ldadd)
 
-test_range_CPPFLAGS  = $(libsv_test_cppflags)
-test_range_LDADD     = $(libsv_test_ldadd)
+test_range_CPPFLAGS   = $(libsv_test_cppflags)
+test_range_LDADD      = $(libsv_test_ldadd)
 
-test_utils_CPPFLAGS  = $(libsv_test_cppflags)
-test_utils_LDADD     = $(libsv_test_ldadd)
+test_utils_CPPFLAGS   = $(libsv_test_cppflags)
+test_utils_LDADD      = $(libsv_test_ldadd)
 
 installcheck-local: $(TEST)
 	@for f in $(TEST); do $(builddir)/$$f; done
