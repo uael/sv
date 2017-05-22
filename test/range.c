@@ -33,18 +33,13 @@
 #define STRNSIZE(s) (s), sizeof(s)-1
 
 int test_read(const char *expected, const char *str, size_t len) {
-  size_t offset = 0;
   unsigned slen;
   char buffer[1024];
   semver_range_t range = {0};
 
   printf("test: `%.*s`", (int) len, str);
-  if (semver_range_read(&range, str, len, &offset)) {
+  if (semver_rangen(&range, str, len)) {
     puts(" \tcouldn't parse");
-    return 1;
-  }
-  if (offset != len) {
-    puts(" \tcouldn't parse fully base");
     return 1;
   }
   slen = (unsigned) semver_range_write(range, buffer, 1024);
