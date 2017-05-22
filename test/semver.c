@@ -113,6 +113,12 @@ int main(void) {
   if (test_read("", STRNSIZE("v0.01.3")) == 0) {
     return EXIT_FAILURE;
   }
+  if (test_read("", STRNSIZE("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget "
+                             "dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascet"
+                             "ur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, s"))
+      == 0) {
+    return EXIT_FAILURE;
+  }
 
   return EXIT_SUCCESS;
 }
