@@ -32,27 +32,17 @@
 #define STRNSIZE(s) (s), sizeof(s)-1
 
 int test_match(char expected, const char *semver_str, size_t semver_len, const char *comp_str, size_t comp_len) {
-  size_t offset = 0;
   char result;
   semver_t semver = {0};
   semver_comp_t comp = {0};
 
   printf("test: `%.*s` ^ `%.*s`", (int) semver_len, semver_str, (int) comp_len, comp_str);
-  if (semver_read(&semver, semver_str, semver_len, &offset)) {
+  if (semvern(&semver, semver_str, semver_len)) {
     puts(" \tcouldn't parse semver");
     return 1;
   }
-  if (offset != semver_len) {
-    puts(" \tcouldn't parse fully base");
-    return 1;
-  }
-  offset = 0;
-  if (semver_comp_read(&comp, comp_str, comp_len, &offset)) {
+  if (semver_compn(&comp, comp_str, comp_len)) {
     puts(" \tcouldn't parse comp");
-    return 1;
-  }
-  if (offset != comp_len) {
-    puts(" \tcouldn't parse fully base");
     return 1;
   }
   result = semver_match(semver, comp);
@@ -70,27 +60,17 @@ int test_match(char expected, const char *semver_str, size_t semver_len, const c
 }
 
 int test_rmatch(char expected, const char *semver_str, size_t semver_len, const char *comp_str, size_t comp_len) {
-  size_t offset = 0;
   char result;
   semver_t semver = {0};
   semver_range_t range = {0};
 
   printf("test: `%.*s` ^ `%.*s`", (int) semver_len, semver_str, (int) comp_len, comp_str);
-  if (semver_read(&semver, semver_str, semver_len, &offset)) {
+  if (semvern(&semver, semver_str, semver_len)) {
     puts(" \tcouldn't parse semver");
     return 1;
   }
-  if (offset != semver_len) {
-    puts(" \tcouldn't parse fully base");
-    return 1;
-  }
-  offset = 0;
-  if (semver_range_read(&range, comp_str, comp_len, &offset)) {
+  if (semver_rangen(&range, comp_str, comp_len)) {
     puts(" \tcouldn't parse comp");
-    return 1;
-  }
-  if (offset != comp_len) {
-    puts(" \tcouldn't parse fully base");
     return 1;
   }
   result = semver_rmatch(semver, range);
