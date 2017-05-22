@@ -99,36 +99,32 @@ char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offs
 char semver_id_pcomp(const semver_id_t *self, const semver_id_t *other) {
   char s;
 
-  if (!self->len && other->len) {
-    return 1;
-  }
   if (self->len && !other->len) {
     return -1;
+  }
+  if (!self->len && other->len) {
+    return 1;
   }
   if (!self->len) {
     return 0;
   }
 
-  if (self->num && other->num) {
+  if (self->numeric && other->numeric) {
     if (self->num > other->num) {
       return 1;
     }
     if (self->num < other->num) {
       return -1;
     }
-  }
-
-  s = (char) memcmp(self->raw, other->raw, self->len > other->len ? self->len : other->len);
-
-  if (s != 0) {
+  } else if ((s = (char) memcmp(self->raw, other->raw, self->len > other->len ? self->len : other->len)) != 0) {
     return s;
   }
 
   if (!self->next && other->next) {
-    return 1;
+    return -1;
   }
   if (self->next && !other->next) {
-    return -1;
+    return 1;
   }
   if (!self->next) {
     return 0;

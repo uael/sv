@@ -48,6 +48,13 @@ char semver_num_read(int *self, const char *str, size_t len, size_t *offset) {
       *self = SEMVER_NUM_X;
       ++*offset;
       break;
+    case '0':
+      ++*offset;
+      if (*offset < len && isdigit(str[*offset])) {
+        return 1;
+      }
+      *self = 0;
+      break;
     default:
       if (isdigit(str[*offset])) {
         *self = (int) strtol(str + *offset, &endptr, 0);
@@ -61,9 +68,6 @@ char semver_num_read(int *self, const char *str, size_t len, size_t *offset) {
 }
 
 char semver_num_comp(const int self, const int other) {
-  if (self == SEMVER_NUM_X || other == SEMVER_NUM_X) {
-    return 0;
-  }
   if (self > other) {
     return 1;
   }
