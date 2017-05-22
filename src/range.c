@@ -34,7 +34,7 @@
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
 #endif
 
-static void semver_range_init(semver_range_t *self) {
+void semver_range_ctor(semver_range_t *self) {
 #ifndef _MSC_VER
   *self = (semver_range_t) {0};
 #else
@@ -52,7 +52,7 @@ void semver_range_dtor(semver_range_t *self) {
 }
 
 char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset) {
-  semver_range_init(self);
+  semver_range_ctor(self);
   if (semver_comp_read(&self->comp, str, len, offset)) {
     return 1;
   }
