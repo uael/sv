@@ -29,6 +29,7 @@
 # define SV_H__
 
 #include <stddef.h>
+#include <stdio.h>
 
 #ifndef SV_COMPILE
 # define SV_COMPILE (0)
@@ -161,5 +162,11 @@ SV_API char semver_prmatch(const semver_t *self, const semver_range_t *range);
 
 #define semver_range_write(self, buffer, len) semver_range_pwrite(&(self), buffer, len)
 #define semver_rmatch(self, comp) semver_prmatch(&(self), &(comp))
+
+SV_API size_t semver_id_fwrite (const semver_id_t * idp, FILE * stream);
+SV_API size_t semver_fwrite (const semver_t * versionp, FILE * stream);
+SV_API size_t semver_comp_fwrite (const semver_comp_t * compp, FILE * stream);
+SV_API size_t semver_range_fwrite (const semver_range_t * rangep, FILE * stream);
+SV_API const char * semver_op_string (enum semver_op op);
 
 #endif /* SV_H__ */
