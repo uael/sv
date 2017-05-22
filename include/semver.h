@@ -153,6 +153,7 @@ struct semver_range {
   semver_comp_t comp;
 };
 
+SV_API void semver_range_ctor(semver_range_t *self);
 SV_API void semver_range_dtor(semver_range_t *self);
 SV_API char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset);
 SV_API int  semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len);
