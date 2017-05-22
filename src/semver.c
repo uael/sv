@@ -28,11 +28,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "semver.h"
-
-#ifdef _MSC_VER
-# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
-#endif
+#include "xsemver.h"
 
 void semver_ctor(semver_t *self) {
 #ifndef _MSC_VER

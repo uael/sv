@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "semver.h"
+#include "xsemver.h"
 
 #undef SEMVER_FWRITE_STACK_BUFLEN
 #define SEMVER_FWRITE_STACK_BUFLEN	64

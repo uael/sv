@@ -29,11 +29,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "semver.h"
-
-#ifdef _MSC_VER
-# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
-#endif
+#include "xsemver.h"
 
 static void semver_xrevert(semver_t *semver) {
   if (semver->major == SEMVER_NUM_X) {
