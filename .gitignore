@@ -58,6 +58,26 @@ scripts/libsv.pc
 scripts/ltmain.sh
 scripts/missing
 scripts/test-driver
+config.log
+config.status
+libtool
+test-suite.log
+test/comp
+test/comp.log
+test/comp.trs
+test/match
+test/match.log
+test/match.trs
+test/range
+test/range.log
+test/range.trs
+test/utils
+test/utils.log
+test/utils.trs
+test/version
+test/version.log
+test/version.trs
+travis.log
 
 ### CMake template
 CMakeCache.txt
