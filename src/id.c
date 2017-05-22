@@ -141,3 +141,23 @@ int semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len) {
   }
   return snprintf(buffer, len, "%.*s", (int) self->len, self->raw);
 }
+
+int
+semver_id_fwrite (const semver_id_t * idp, FILE * stream)
+{
+  size_t	buffer_len = 64;
+  char		buffer_ptr[buffer_len];
+  size_t	needed_count;
+
+  needed_count = (size_t)semver_id_pwrite(idp, buffer_ptr, buffer_len);
+  if (0 == needed_count) {
+    return 0;
+  } else if (needed_count < buffer_len) {
+    return fwrite(buffer_ptr, sizeof(char), needed_count, stream);
+  } else {
+    size_t	buffer_len = needed_count+1;
+    char	buffer_ptr[buffer_len];
+    size_t	actual_count = semver_id_pwrite(idp, buffer_ptr, buffer_len);
+    return fwrite(buffer_ptr, sizeof(char), actual_count, stdout);
+  }
+}
