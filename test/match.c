@@ -53,7 +53,7 @@ int test_matchn(bool expected, const char *semver_str, size_t semver_len, const 
   return 0;
 }
 
-int test_rmatchn(char expected, const char *semver_str, size_t semver_len, const char *range_str, size_t range_len) {
+int test_rmatchn(bool expected, const char *semver_str, size_t semver_len, const char *range_str, size_t range_len) {
   bool result;
   semver_t semver = {0};
 
