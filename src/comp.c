@@ -313,15 +313,13 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
 
 char semver_and(semver_comp_t *left, const char *str, size_t len) {
   semver_comp_t *comp, *tail;
-  size_t offset = 0;
 
   if (len > 0) {
     comp = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
     if (NULL == comp) {
       return 1;
     }
-    if (semver_comp_read(comp, str, len, &offset)) {
-      semver_comp_dtor(comp);
+    if (semver_compn(comp, str, len)) {
       sv_free(comp);
       return 1;
     }

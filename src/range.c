@@ -82,15 +82,13 @@ char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t
 
 char semver_or(semver_range_t *left, const char *str, size_t len) {
   semver_range_t *range, *tail;
-  size_t offset = 0;
 
   if (len > 0) {
     range = (semver_range_t *) sv_malloc(sizeof(semver_range_t));
     if (NULL == range) {
       return 1;
     }
-    if (semver_range_read(range, str, len, &offset)) {
-      semver_range_dtor(range);
+    if (semver_rangen(range, str, len)) {
       sv_free(range);
       return 1;
     }
