@@ -140,8 +140,8 @@ struct semver_comp {
 SV_API void semver_comp_ctor(semver_comp_t *self);
 SV_API void semver_comp_dtor(semver_comp_t *self);
 SV_API char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset);
-SV_API char semver_and(semver_comp_t *self, const char *str, size_t len);
 SV_API int  semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len);
+SV_API char semver_and(semver_comp_t *self, const char *str, size_t len);
 SV_API char semver_pmatch(const semver_t *self, const semver_comp_t *comp);
 
 #define semver_comp_write(self, buffer, len) semver_comp_pwrite(&(self), buffer, len)
@@ -156,6 +156,7 @@ SV_API void semver_range_ctor(semver_range_t *self);
 SV_API void semver_range_dtor(semver_range_t *self);
 SV_API char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset);
 SV_API int  semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len);
+SV_API char semver_or(semver_range_t *self, const char *str, size_t len);
 SV_API char semver_prmatch(const semver_t *self, const semver_range_t *range);
 
 #define semver_range_write(self, buffer, len) semver_range_pwrite(&(self), buffer, len)

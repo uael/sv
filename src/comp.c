@@ -302,24 +302,27 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
 }
 
 char semver_and(semver_comp_t *self, const char *str, size_t len) {
-  if (len) {
-    size_t offset = 0;
-    semver_comp_t *tail = NULL;
+  semver_comp_t *comp, *tail;
+  size_t offset = 0;
 
-    if (self->next == NULL) {
-      self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
-      if (self->next == NULL) {
-        return 1;
-      }
-      return semver_comp_read(self->next, str, len, &offset);
-    }
-    tail = self->next;
-    while (tail->next) tail = tail->next;
-    tail->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
-    if (tail->next == NULL) {
+  if (len > 0) {
+    comp = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
+    if (NULL == comp) {
       return 1;
     }
-    return semver_comp_read(tail->next, str, len, &offset);
+    if (semver_comp_read(comp, str, len, &offset)) {
+      semver_comp_dtor(comp);
+      sv_free(comp);
+      return 1;
+    }
+    if (NULL == self->next) {
+      self->next = comp;
+    } else {
+      tail = self->next;
+      while (tail->next) tail = tail->next;
+      tail->next = comp;
+    }
+    return 0;
   }
   return 1;
 }
