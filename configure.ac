@@ -2,9 +2,7 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.69])
-AC_INIT([Libsv],[0.0.1],,[libsv],[http://github.com/uael/sv])
-dnl This is the revision number of this configure.ac
-AC_REVISION([0.1])
+AC_INIT([libsv],[0.0.1],,[libsv],[http://github.com/uael/sv])
 AC_COPYRIGHT([This is free and unencumbered software released into the public domain.
 
 Anyone  is  free  to  copy,  modify, publish,  use,  compile,  sell,  or
@@ -28,9 +26,9 @@ DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
 ])
-AC_CONFIG_SRCDIR([src/])
-AC_CONFIG_MACRO_DIR([meta/autotools])
-AC_CONFIG_AUX_DIR([meta/autotools])
+AC_CONFIG_SRCDIR([src])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([scripts])
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -46,11 +44,11 @@ AC_PROG_MKDIR_P
 LT_PREREQ([2.4])
 LT_INIT
 
-dnl page
-#### libraries interface version
-
 dnl This is the version stored in the pkg-config data file.
 AC_SUBST([LIBSV_PKG_CONFIG_VERSION],[0.0.1])
+
+dnl page
+#### libraries interface version
 
 MM_LIBTOOL_LIBRARY_VERSIONS([libsv],1,0,0)
 
@@ -69,7 +67,7 @@ dnl page
 #### finish
 
 AC_CONFIG_FILES([Makefile]
-   [meta/scripts/libsv.pc])
+   [scripts/libsv.pc])
 AC_OUTPUT
 
 ### end of file
