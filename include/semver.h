@@ -84,6 +84,18 @@
 
 #define SEMVER_NUM_X (-1)
 
+#define semver(self, str) semvern(self, str, strlen(str))
+#define semver_write(self, buffer, len) semver_pwrite(&(self), buffer, len)
+#define semver_cmp(self, other) semver_pcmp(&(self), &(other))
+#define semver_comp(self, str) semver_compn(self, str, strlen(str))
+#define semver_comp_write(self, buffer, len) semver_comp_pwrite(&(self), buffer, len)
+#define semver_comp_match(self, comp) semver_comp_pmatch(&(self), &(comp))
+#define semver_match(self, comp_str) semver_comp_matchn(self, comp_str, strlen(comp_str))
+#define semver_range(self, str) semver_rangen(self, str, strlen(str))
+#define semver_range_write(self, buffer, len) semver_range_pwrite(&(self), buffer, len)
+#define semver_range_match(self, range) semver_range_pmatch(&(self), &(range))
+#define semver_rmatch(self, range_str) semver_range_matchn(self, range_str, strlen(range_str))
+
 typedef struct semver semver_t;
 typedef struct semver_id semver_id_t;
 typedef struct semver_comp semver_comp_t;
@@ -97,9 +109,6 @@ enum semver_op {
   SEMVER_OP_GE,
 };
 
-SV_API char semver_num_read(int *self, const char *str, size_t len, size_t *offset);
-SV_API char semver_num_cmp(int self, int other);
-
 struct semver_id {
   bool numeric;
   int num;
@@ -108,15 +117,6 @@ struct semver_id {
   struct semver_id *next;
 };
 
-SV_API void semver_id_ctor(semver_id_t *self);
-SV_API void semver_id_dtor(semver_id_t *self);
-SV_API char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offset);
-SV_API int  semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len);
-SV_API char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other);
-
-#define semver_id_write(self, buffer, len) semver_id_pwrite(&(self), buffer, len)
-#define semver_id_comp(self, other) semver_id_pcmp(&(self), &(other))
-
 struct semver {
   int major, minor, patch;
   semver_id_t prerelease, build;
@@ -124,16 +124,15 @@ struct semver {
   const char *raw;
 };
 
-SV_API void semver_ctor(semver_t *self);
-SV_API void semver_dtor(semver_t *self);
 SV_API char semvern(semver_t *self, const char *str, size_t len);
-SV_API char semver_read(semver_t *self, const char *str, size_t len, size_t *offset);
+SV_API void semver_dtor(semver_t *self);
 SV_API int  semver_pwrite(const semver_t *self, char *buffer, size_t len);
+SV_API size_t semver_fwrite (const semver_t *self, FILE * stream);
 SV_API char semver_pcmp(const semver_t *self, const semver_t *other);
-
-#define semver(self, str) semvern(self, str, strlen(str))
-#define semver_write(self, buffer, len) semver_pwrite(&(self), buffer, len)
-#define semver_cmp(self, other) semver_pcmp(&(self), &(other))
+SV_API bool semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp);
+SV_API bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len);
+SV_API bool semver_range_pmatch(const semver_t *self, const semver_range_t *range);
+SV_API bool semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len);
 
 struct semver_comp {
   struct semver_comp *next;
@@ -141,43 +140,21 @@ struct semver_comp {
   semver_t version;
 };
 
-SV_API void semver_comp_ctor(semver_comp_t *self);
-SV_API void semver_comp_dtor(semver_comp_t *self);
 SV_API char semver_compn(semver_comp_t *self, const char *str, size_t len);
-SV_API char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset);
+SV_API void semver_comp_dtor(semver_comp_t *self);
 SV_API int  semver_comp_pwrite(const semver_comp_t *self, char *buffer, size_t len);
-SV_API bool semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp);
-SV_API bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len);
+SV_API size_t semver_comp_fwrite (const semver_comp_t *self, FILE *stream);
 SV_API char semver_and(semver_comp_t *left, const char *str, size_t len);
-
-#define semver_comp(self, str) semver_compn(self, str, strlen(str))
-#define semver_comp_write(self, buffer, len) semver_comp_pwrite(&(self), buffer, len)
-#define semver_comp_match(self, comp) semver_comp_pmatch(&(self), &(comp))
-#define semver_match(self, comp_str) semver_comp_matchn(self, comp_str, strlen(comp_str))
 
 struct semver_range {
   struct semver_range *next;
   semver_comp_t comp;
 };
 
-SV_API void semver_range_ctor(semver_range_t *self);
-SV_API void semver_range_dtor(semver_range_t *self);
 SV_API char semver_rangen(semver_range_t *self, const char *str, size_t len);
-SV_API char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset);
+SV_API void semver_range_dtor(semver_range_t *self);
 SV_API int  semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len);
-SV_API bool semver_range_pmatch(const semver_t *self, const semver_range_t *range);
-SV_API bool semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len);
+SV_API size_t semver_range_fwrite (const semver_range_t *rangep, FILE *stream);
 SV_API char semver_or(semver_range_t *left, const char *str, size_t len);
-
-#define semver_range(self, str) semver_rangen(self, str, strlen(str))
-#define semver_range_write(self, buffer, len) semver_range_pwrite(&(self), buffer, len)
-#define semver_range_match(self, comp) semver_range_pmatch(&(self), &(comp))
-#define semver_rmatch(self, range_str) semver_range_matchn(self, range_str, strlen(range_str))
-
-SV_API size_t semver_id_fwrite (const semver_id_t * idp, FILE * stream);
-SV_API size_t semver_fwrite (const semver_t * versionp, FILE * stream);
-SV_API size_t semver_comp_fwrite (const semver_comp_t * compp, FILE * stream);
-SV_API size_t semver_range_fwrite (const semver_range_t * rangep, FILE * stream);
-SV_API const char * semver_op_string (enum semver_op op);
 
 #endif /* SV_H__ */

@@ -31,32 +31,12 @@
 
 #include "semver.h"
 
-int test_id_fwrite(void) {
-  static const char	input_str[] = "1.2.3-alpha.1+x86-64";
-  semver_id_t		id;
-  size_t		offset = 0;
-  int			rv;
-
-  rv = semver_id_read(&id, input_str, strlen(input_str), &offset);
-  if (0 == rv) {
-    printf("test_id_fwrite: ");
-    semver_id_fwrite(&id, stdout);
-    if (0 == errno) {
-      printf("\n");
-      rv = 0;
-    }
-  }
-  semver_id_dtor(&id);
-  return rv;
-}
-
 int test_version_fwrite(void) {
   static const char	input_str[] = "1.2.3-alpha.1+x86-64";
   semver_t		version;
-  size_t		offset = 0;
   int			rv;
 
-  rv = semver_read(&version, input_str, strlen(input_str), &offset);
+  rv = semver(&version, input_str);
   if (0 == rv) {
     printf("test_version_fwrite: ");
     semver_fwrite(&version, stdout);
@@ -66,16 +46,15 @@ int test_version_fwrite(void) {
     }
   }
   semver_dtor(&version);
-  return 0;
+  return rv;
 }
 
 int test_comparator_fwrite(void) {
   static const char	input_str[] = "<=1.2.3";
   semver_comp_t		comp;
-  size_t		offset = 0;
   int			rv;
 
-  rv = semver_comp_read(&comp, input_str, strlen(input_str), &offset);
+  rv = semver_comp(&comp, input_str);
   if (0 == rv) {
     printf("test_comparator_fwrite: ");
     semver_comp_fwrite(&comp, stdout);
@@ -91,10 +70,9 @@ int test_comparator_fwrite(void) {
 int test_range_fwrite(void) {
   static const char	input_str[] = ">=1.2.3 <4.0.0";
   semver_range_t	range;
-  size_t		offset = 0;
   int			rv;
 
-  rv = semver_range_read(&range, input_str, strlen(input_str), &offset);
+  rv = semver_range(&range, input_str);
   if (0 == rv) {
     printf("test_range_fwrite: ");
     semver_range_fwrite(&range, stdout);
@@ -108,10 +86,6 @@ int test_range_fwrite(void) {
 }
 
 int main(void) {
-  if (test_id_fwrite()) {
-    return EXIT_FAILURE;
-  }
-
   if (test_version_fwrite()) {
     return EXIT_FAILURE;
   }

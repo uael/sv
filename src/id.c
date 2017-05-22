@@ -30,11 +30,7 @@
 #include <ctype.h>
 #include <stdio.h>
 
-#include "semver.h"
-
-#ifdef _MSC_VER
-# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
-#endif
+#include "xsemver.h"
 
 void semver_id_ctor(semver_id_t *self) {
 #ifndef _MSC_VER

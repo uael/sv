@@ -25,51 +25,36 @@
  * For more information, please refer to <http://unlicense.org>
  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
+#ifndef XSV_H__
+# define XSV_H__
 
-#include "xsemver.h"
+#include "semver.h"
 
-char semver_num_read(int *self, const char *str, size_t len, size_t *offset) {
-  char *endptr;
+#ifdef _MSC_VER
+# define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)
+#endif
 
-  *self = 0;
-  if (*offset >= len) {
-    return 1;
-  }
-  switch (str[*offset]) {
-    case 'x':
-    case 'X':
-    case '*':
-      *self = SEMVER_NUM_X;
-      ++*offset;
-      break;
-    case '0':
-      ++*offset;
-      if (*offset < len && isdigit(str[*offset])) {
-        return 1;
-      }
-      *self = 0;
-      break;
-    default:
-      if (isdigit(str[*offset])) {
-        *self = (int) strtol(str + *offset, &endptr, 0);
-        *offset += endptr - str - *offset;
-      } else {
-        return 1;
-      }
-      break;
-  }
-  return 0;
-}
+const char *semver_op_string(enum semver_op op);
 
-char semver_num_cmp(int self, int other) {
-  if (self > other) {
-    return 1;
-  }
-  if (self < other) {
-    return -1;
-  }
-  return 0;
-}
+char semver_num_read(int *self, const char *str, size_t len, size_t *offset);
+char semver_num_cmp(int self, int other);
+
+void semver_id_ctor(semver_id_t *self);
+void semver_id_dtor(semver_id_t *self);
+char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offset);
+int  semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len);
+char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other);
+
+#define semver_id_write(self, buffer, len) semver_id_pwrite(&(self), buffer, len)
+#define semver_id_comp(self, other) semver_id_pcmp(&(self), &(other))
+
+void semver_ctor(semver_t *self);
+char semver_read(semver_t *self, const char *str, size_t len, size_t *offset);
+
+void semver_comp_ctor(semver_comp_t *self);
+char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *offset);
+
+void semver_range_ctor(semver_range_t *self);
+char semver_range_read(semver_range_t *self, const char *str, size_t len, size_t *offset);
+
+#endif /* XSV_H__ */
