@@ -17,3 +17,7 @@ add_test(match match)
 add_executable(utils utils.c)
 target_link_libraries(utils ${PROJECT_NAME})
 add_test(utils utils)
+
+add_executable(usage usage.c)
+target_link_libraries(usage ${PROJECT_NAME})
+add_test(usage usage)

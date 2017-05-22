@@ -63,20 +63,13 @@ config.status
 libtool
 test-suite.log
 test/comp
-test/comp.log
-test/comp.trs
 test/match
-test/match.log
-test/match.trs
 test/range
-test/range.log
-test/range.trs
 test/utils
-test/utils.log
-test/utils.trs
+test/usage
 test/version
-test/version.log
-test/version.trs
+test/*.log
+test/*.trs
 travis.log
 
 ### CMake template

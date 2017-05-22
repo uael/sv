@@ -21,6 +21,9 @@ target("match_test")
 target("utils_test")
     add_files("utils.c")
 
+target("usage_test")
+    add_files("usage.c")
+
 task("check")
     on_run(function ()
         import("core.project.task")
@@ -29,6 +32,7 @@ task("check")
         task.run("run", {target = "range_test"})
         task.run("run", {target = "match_test"})
         task.run("run", {target = "utils_test"})
+        task.run("run", {target = "usage_test"})
     end)
     set_menu {
         usage = "xmake check"
