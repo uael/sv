@@ -25,10 +25,11 @@
  * For more information, please refer to <http://unlicense.org>
  */
 
-#include <semver.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+
+#include "semver.h"
 
 #undef SEMVER_FWRITE_STACK_BUFLEN
 #define SEMVER_FWRITE_STACK_BUFLEN	64

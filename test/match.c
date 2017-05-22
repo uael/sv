@@ -25,9 +25,10 @@
  * For more information, please refer to <http://unlicense.org>
  */
 
-#include <semver.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "semver.h"
 
 #define STRNSIZE(s) (s), sizeof(s)-1
 

@@ -27,8 +27,9 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <semver.h>
 #include <stdio.h>
+
+#include "semver.h"
 
 #ifdef _MSC_VER
 # define snprintf(s, maxlen, fmt, ...) _snprintf_s(s, _TRUNCATE, maxlen, fmt, __VA_ARGS__)

@@ -25,10 +25,11 @@
  * For more information, please refer to <http://unlicense.org>
  */
 
-#include <semver.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+
+#include "semver.h"
 
 int test_id_fwrite(void) {
   static const char	input_str[] = "1.2.3-alpha.1+x86-64";
