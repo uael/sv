@@ -311,19 +311,19 @@ char semver_comp_read(semver_comp_t *self, const char *str, size_t len, size_t *
   return 0;
 }
 
-char semver_and(semver_comp_t *self, const char *str, size_t len) {
+char semver_and(semver_comp_t *left, const char *str, size_t len) {
   if (len) {
     size_t offset = 0;
     semver_comp_t *tail = NULL;
 
-    if (self->next == NULL) {
-      self->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
-      if (self->next == NULL) {
+    if (left->next == NULL) {
+      left->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
+      if (left->next == NULL) {
         return 1;
       }
-      return semver_comp_read(self->next, str, len, &offset);
+      return semver_comp_read(left->next, str, len, &offset);
     }
-    tail = self->next;
+    tail = left->next;
     while (tail->next) tail = tail->next;
     tail->next = (semver_comp_t *) sv_malloc(sizeof(semver_comp_t));
     if (tail->next == NULL) {
@@ -334,7 +334,7 @@ char semver_and(semver_comp_t *self, const char *str, size_t len) {
   return 1;
 }
 
-char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
+char semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp) {
   char result = semver_pcmp(self, &comp->version);
 
   if (result < 0 && comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
@@ -347,7 +347,7 @@ char semver_pmatch(const semver_t *self, const semver_comp_t *comp) {
     return 0;
   }
   if (comp->next) {
-    return semver_pmatch(self, comp->next);
+    return semver_comp_pmatch(self, comp->next);
   }
   return 1;
 }

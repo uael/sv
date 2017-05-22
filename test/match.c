@@ -45,7 +45,7 @@ int test_match(char expected, const char *semver_str, size_t semver_len, const c
     puts(" \tcouldn't parse comp");
     return 1;
   }
-  result = semver_match(semver, comp);
+  result = semver_comp_match(semver, comp);
   printf(" \t=> %d\t", result);
   if (result != expected) {
     printf(" != `%d`\n", expected);
@@ -73,7 +73,7 @@ int test_rmatch(char expected, const char *semver_str, size_t semver_len, const 
     puts(" \tcouldn't parse comp");
     return 1;
   }
-  result = semver_rmatch(semver, range);
+  result = semver_range_match(semver, range);
   printf(" \t=> %d\t", result);
   if (result != expected) {
     printf(" != `%d`\n", expected);
