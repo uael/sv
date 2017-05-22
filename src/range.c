@@ -106,16 +106,16 @@ char semver_or(semver_range_t *left, const char *str, size_t len) {
   return 1;
 }
 
-char semver_range_pmatch(const semver_t *self, const semver_range_t *range) {
-  return (char) (semver_comp_pmatch(self, &range->comp) ? 1 : range->next ? semver_range_pmatch(self, range->next) : 0);
+bool semver_range_pmatch(const semver_t *self, const semver_range_t *range) {
+  return semver_comp_pmatch(self, &range->comp) ? true : range->next ? semver_range_pmatch(self, range->next) : false;
 }
 
-char semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len) {
+bool semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len) {
   semver_range_t range;
-  char result;
+  bool result;
 
   if (semver_rangen(&range, range_str, range_len)) {
-    return 0;
+    return false;
   }
   result = semver_range_pmatch(self, &range);
   semver_range_dtor(&range);

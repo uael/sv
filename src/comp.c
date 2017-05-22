@@ -337,30 +337,30 @@ char semver_and(semver_comp_t *left, const char *str, size_t len) {
   return 1;
 }
 
-char semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp) {
+bool semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp) {
   char result = semver_pcmp(self, &comp->version);
 
   if (result < 0 && comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
-    return 0;
+    return false;
   }
   if (result > 0 && comp->op != SEMVER_OP_GT && comp->op != SEMVER_OP_GE) {
-    return 0;
+    return false;
   }
   if (result == 0 && comp->op != SEMVER_OP_EQ && comp->op != SEMVER_OP_LE && comp->op != SEMVER_OP_GE) {
-    return 0;
+    return false;
   }
   if (comp->next) {
     return semver_comp_pmatch(self, comp->next);
   }
-  return 1;
+  return true;
 }
 
-char semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len) {
+bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len) {
   semver_comp_t comp;
-  char result;
+  bool result;
 
   if (semver_compn(&comp, comp_str, comp_len)) {
-    return 0;
+    return false;
   }
   result = semver_comp_pmatch(self, &comp);
   semver_comp_dtor(&comp);

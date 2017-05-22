@@ -32,7 +32,7 @@
 #define STRNSIZE(s) (s), sizeof(s)-1
 
 int test_matchn(char expected, const char *semver_str, size_t semver_len, const char *comp_str, size_t comp_len) {
-  char result;
+  bool result;
   semver_t semver = {0};
 
   printf("test: `%.*s` ^ `%.*s`", (int) semver_len, semver_str, (int) comp_len, comp_str);
@@ -53,7 +53,7 @@ int test_matchn(char expected, const char *semver_str, size_t semver_len, const 
 }
 
 int test_rmatchn(char expected, const char *semver_str, size_t semver_len, const char *range_str, size_t range_len) {
-  char result;
+  bool result;
   semver_t semver = {0};
 
   printf("test: `%.*s` ^ `%.*s`", (int) semver_len, semver_str, (int) range_len, range_str);
