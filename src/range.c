@@ -97,7 +97,7 @@ char semver_or(semver_range_t *left, const char *str, size_t len) {
     if (NULL == left->next) {
       left->next = range;
     } else {
-      tail = self->next;
+      tail = left->next;
       while (tail->next) tail = tail->next;
       tail->next = range;
     }
@@ -107,7 +107,7 @@ char semver_or(semver_range_t *left, const char *str, size_t len) {
 }
 
 char semver_range_pmatch(const semver_t *self, const semver_range_t *range) {
-  return (char) (semver_pmatch(self, &range->comp) ? 1 : range->next ? semver_prmatch(self, range->next) : 0);
+  return (char) (semver_comp_pmatch(self, &range->comp) ? 1 : range->next ? semver_range_pmatch(self, range->next) : 0);
 }
 
 char semver_range_matchn(const semver_t *self, const char *range_str, size_t range_len) {
