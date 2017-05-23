@@ -31,6 +31,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 
 #ifndef SV_COMPILE
 # define SV_COMPILE (0)
@@ -98,6 +99,7 @@ typedef struct semver semver_t;
 typedef struct semver_id semver_id_t;
 typedef struct semver_comp semver_comp_t;
 typedef struct semver_range semver_range_t;
+typedef struct semvers semvers_t;
 
 enum semver_op {
   SEMVER_OP_EQ = 0,
@@ -119,7 +121,7 @@ struct semver {
   int major, minor, patch;
   semver_id_t prerelease, build;
   size_t len;
-  const char *raw;
+  const char *raw, *source;
 };
 
 SV_API char semvern(semver_t *self, const char *str, size_t len);
@@ -155,5 +157,17 @@ SV_API void semver_range_dtor(semver_range_t *self);
 SV_API int  semver_range_pwrite(const semver_range_t *self, char *buffer, size_t len);
 SV_API size_t semver_range_fwrite (const semver_range_t *rangep, FILE *stream);
 SV_API char semver_or(semver_range_t *left, const char *str, size_t len);
+
+struct semvers {
+  uint32_t length, capacity;
+  semver_t *data;
+};
+
+SV_API uint32_t semvers_pgrowth(semvers_t *self, int32_t nmin);
+SV_API void semvers_sort(semvers_t *self);
+SV_API void semvers_rsort(semvers_t *self);
+
+#define semvers_push(semvers, x) \
+  (semvers_pgrowth(&(semvers), (semvers).length+1), (semvers).data[(semvers).length++] = (x))
 
 #endif /* SV_H__ */
