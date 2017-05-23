@@ -33,9 +33,9 @@
 #define ISPOW2(n) (((n) & -(n)) == (n))
 
 static uint32_t roundup32(uint32_t n) {
+  int32_t l = n;
   uint32_t j;
-
-  return ISPOW2(n) ? n : (
+  return ISPOW2(l) ? n : (
     ((j = n & 0xFFFF0000) || (j = n)),
       ((n = j & 0xFF00FF00) || (n = j)),
       ((j = n & 0xF0F0F0F0) || (j = n)),
@@ -51,21 +51,21 @@ uint32_t semvers_pgrowth(semvers_t *self, const int32_t nmin) {
 
     if (self->capacity) {
       if (self->capacity < unmin) {
-        if (ISPOW2(unmin)) {
+        if (ISPOW2(nmin)) {
           self->capacity = unmin;
         } else {
           do self->capacity *= 2; while (self->capacity < unmin);
         }
-        self->data = realloc(self->data, sizeof(semver_t) * self->capacity);
+        self->data = realloc((char *) self->data, sizeof(semver_t) * self->capacity);
       }
     } else {
-      if (unmin == SEMVERS_MIN_CAP || (unmin > SEMVERS_MIN_CAP && ISPOW2(unmin))) {
+      if (unmin == SEMVERS_MIN_CAP || (unmin > SEMVERS_MIN_CAP && ISPOW2(nmin))) {
         self->capacity = unmin;
       } else {
         self->capacity = SEMVERS_MIN_CAP;
         while (self->capacity < unmin) self->capacity *= 2;
       }
-      self->data = sv_malloc(sizeof(semver_t) * self->capacity);
+      self->data = (semver_t *) sv_malloc(sizeof(semver_t) * self->capacity);
     }
     return unmin;
   }
@@ -73,7 +73,7 @@ uint32_t semvers_pgrowth(semvers_t *self, const int32_t nmin) {
 }
 
 static int semvers_qsort_fn(const void *a, const void *b) {
-  return semver_pcmp(a, b);
+  return semver_pcmp((semver_t *) a, (semver_t *) b);
 }
 
 void semvers_sort(semvers_t *self) {
@@ -81,7 +81,7 @@ void semvers_sort(semvers_t *self) {
 }
 
 static int semvers_rqsort_fn(const void *a, const void *b) {
-  return semver_pcmp(b, a);
+  return semver_pcmp((semver_t *) b, (semver_t *) a);
 }
 
 void semvers_rsort(semvers_t *self) {
