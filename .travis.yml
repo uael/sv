@@ -7,18 +7,12 @@ cache:
   directories:
     - $HOME/.xmake
 
-before_install:
-  - bash <(curl -s https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
-
 install:
-  - xmake
-  - cd build
+  - mkdir build && cd build
   - cmake ..
   - make all
 
-script:
- - ctest --verbose
- - cd .. && xmake check
+script: ctest --verbose
 
 matrix:
   include:
@@ -29,11 +23,8 @@ matrix:
       addons:
         apt:
           sources:
-            - george-edison55-precise-backports
             - ubuntu-toolchain-r-test
           packages:
-            - cmake
-            - cmake-data
             - gcc-5
       install:
         - mkdir build && cd build
@@ -44,46 +35,30 @@ matrix:
       after_success:
         - cd .. && bash <(curl -s https://codecov.io/bash) -xgcov-5
     - os: linux
-      addons:
-        apt:
-          sources:
-            - george-edison55-precise-backports
-          packages:
-            - cmake
-            - cmake-data
     - os: linux
       compiler: gcc-4.9
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - george-edison55-precise-backports
           packages:
             - gcc-4.9
-            - cmake
-            - cmake-data
     - os: linux
       compiler: gcc-5
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - george-edison55-precise-backports
           packages:
             - gcc-5
-            - cmake
-            - cmake-data
     - os: linux
       compiler: gcc-6
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - george-edison55-precise-backports
           packages:
             - gcc-6
-            - cmake
-            - cmake-data
     - os: linux
       compiler: clang-3.5
       addons:
@@ -91,11 +66,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.5
-            - george-edison55-precise-backports
           packages:
             - clang-3.5
-            - cmake
-            - cmake-data
     - os: linux
       compiler: clang-3.6
       addons:
@@ -103,11 +75,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.6
-            - george-edison55-precise-backports
           packages:
             - clang-3.6
-            - cmake
-            - cmake-data
     - os: linux
       compiler: clang-3.7
       addons:
@@ -115,11 +84,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.7
-            - george-edison55-precise-backports
           packages:
             - clang-3.7
-            - cmake
-            - cmake-data
     - os: linux
       compiler: clang-3.8
       addons:
@@ -127,11 +93,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.8
-            - george-edison55-precise-backports
           packages:
             - clang-3.8
-            - cmake
-            - cmake-data
     - os: linux
       compiler: clang-3.9
       addons:
@@ -139,11 +102,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.9
-            - george-edison55-precise-backports
           packages:
             - clang-3.9
-            - cmake
-            - cmake-data
     - os: linux
       dist: trusty
       compiler: clang-4.0
@@ -165,30 +125,9 @@ matrix:
     - os: osx
       osx_image: xcode6.4
       compiler: clang
-      install:
-        - brew install ccache
-        - PATH=$PATH:/usr/local/opt/ccache/libexec
-        - xmake
-        - cd build
-        - cmake ..
-        - make all
     - os: osx
       osx_image: xcode7.3
       compiler: clang
-      install:
-        - brew install ccache
-        - PATH=$PATH:/usr/local/opt/ccache/libexec
-        - xmake
-        - cd build
-        - cmake ..
-        - make all
     - os: osx
       osx_image: xcode8.3
       compiler: clang
-      install:
-        - brew install ccache
-        - PATH=$PATH:/usr/local/opt/ccache/libexec
-        - xmake
-        - cd build
-        - cmake ..
-        - make all
