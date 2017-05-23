@@ -304,16 +304,10 @@ Bug  and vulnerability  reports are  appreciated, all  the vulnerability reports
 Reports about the original code must be registered at:
 <https://github.com/uael/sv/issues>
 
-reports about the GNU Autotools repackaging must be registered at:
-<https://github.com/marcomaggi/sv/issues>
-    
 ## Resources
 
 Development of the original projects takes place at:
 <https://github.com/uael/sv/>
-
-development of the GNU Autotools repackaging takes place at:
-<https://github.com/marcomaggi/sv/>
 
 the GNU Project software can be found here:
 <https://www.gnu.org/>
@@ -325,7 +319,7 @@ the GNU Project software can be found here:
 Travis CI is  a hosted, distributed continuous  integration service used to build and test software projects  hosted at GitHub.  We can find this project's dashboards at:
 <https://travis-ci.org/uael/sv>
 
-Usage of this service is configured through the file ".travis.yml" and the  scripts  for the  GNU  Autotools  builds  are under  the  directory "meta/travis-ci".
+Usage of this service is configured through the file ".travis.yml".
 
 ### Clang's Static Analyzer
 
