@@ -29,7 +29,7 @@ matrix:
       dist: trusty
       before_install: bash <(curl -s https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
       install: xmake -v
-      script: xmake all
+      script: xmake check
 
     # coverage build
     - os: linux
