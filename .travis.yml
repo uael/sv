@@ -122,6 +122,11 @@ matrix:
         - ../configure --enable-maintainer-mode
         - make
       script: make check
+    - os: linux
+      dist: trusty
+      before_install: bash <(curl -s https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+      install: xmake -v
+      script: xmake all
     - os: osx
       osx_image: xcode6.4
       compiler: clang
