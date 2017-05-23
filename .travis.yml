@@ -83,6 +83,16 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - gcc-6
+    - os: linux
+      dist: trusty
+      compiler: gcc-7
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-7
+
     # clang
     - os: linux
       compiler: clang-3.5
