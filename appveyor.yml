@@ -20,11 +20,6 @@ init:
 
 clone_folder: C:\projects\sv
 
-branches:
-  only:
-    - master
-    - dev
-
 install:
   - git submodule update --init --recursive
 
