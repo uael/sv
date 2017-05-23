@@ -43,7 +43,7 @@ uint32_t semvers_pgrowth(semvers_t *self, const int32_t nmin) {
         } else {
           do self->capacity *= 2; while (self->capacity < unmin);
         }
-        self->data = realloc((char *) self->data, sizeof(semver_t) * self->capacity);
+        self->data = (semver_t *) realloc((char *) self->data, sizeof(semver_t) * self->capacity);
       }
     } else {
       if (unmin == SEMVERS_MIN_CAP || (unmin > SEMVERS_MIN_CAP && ISPOW2(nmin))) {
