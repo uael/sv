@@ -32,19 +32,6 @@
 
 #define ISPOW2(n) (((n) & -(n)) == (n))
 
-static uint32_t roundup32(uint32_t n) {
-  int32_t l = n;
-  uint32_t j;
-  return ISPOW2(l) ? n : (
-    ((j = n & 0xFFFF0000) || (j = n)),
-      ((n = j & 0xFF00FF00) || (n = j)),
-      ((j = n & 0xF0F0F0F0) || (j = n)),
-      ((n = j & 0xCCCCCCCC) || (n = j)),
-      ((j = n & 0xAAAAAAAA) || (j = n)),
-      j << 1
-  );
-}
-
 uint32_t semvers_pgrowth(semvers_t *self, const int32_t nmin) {
   if (nmin > 0) {
     uint32_t unmin = (uint32_t) nmin;
