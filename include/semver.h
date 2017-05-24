@@ -121,7 +121,7 @@ struct semver {
   int major, minor, patch;
   semver_id_t prerelease, build;
   size_t len;
-  const char *raw, *source;
+  const char *raw;
 };
 
 SV_API char semvern(semver_t *self, const char *str, size_t len);

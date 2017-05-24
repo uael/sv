@@ -39,17 +39,14 @@ int main(void) {
   semver_tryn(&v0, STRNSIZE("2.0.0"));
   semver_tryn(&v1, STRNSIZE("2.0.1"));
   semver_tryn(&v2, STRNSIZE("2.0.2"));
-  v0.source = v1.source = v2.source = "version";
   semver_tryn(&v3, STRNSIZE("v2.0.0"));
   semver_tryn(&v4, STRNSIZE("v2.0.1"));
   semver_tryn(&v5, STRNSIZE("v2.0.2"));
   semver_tryn(&v6, STRNSIZE("v2.0.3"));
   semver_tryn(&v7, STRNSIZE("v2.1.0-beta1"));
   semver_tryn(&v8, STRNSIZE("v2.1.0-beta2"));
-  v3.source = v4.source = v5.source = v6.source = v7.source = v8.source = "tag";
   semver_tryn(&v9, STRNSIZE("v2.0"));
   semver_tryn(&v10, STRNSIZE("v2.1"));
-  v9.source = v10.source = "branch";
 
   if (semver_rmatch(v0, ">2.0.1")) semvers_push(semvers, v0);
   if (semver_rmatch(v1, ">2.0.1")) semvers_push(semvers, v1);
@@ -74,14 +71,14 @@ int main(void) {
 
   for (unsigned i = 0; i < semvers.length; ++i) {
     semver_fwrite(semvers.data + i, stdout);
-    fprintf(stdout, ", %s\n", semvers.data[i].source);
+    putc('\n', stdout);
   }
 
   semvers_rsort(&semvers);
   putc('\n', stdout);
   for (unsigned i = 0; i < semvers.length; ++i) {
     semver_fwrite(semvers.data + i, stdout);
-    fprintf(stdout, ", %s\n", semvers.data[i].source);
+    putc('\n', stdout);
   }
 
   return EXIT_SUCCESS;
