@@ -100,7 +100,7 @@ int main(void) {
   v1 = semvers_shift(semvers);
 
   assert(memcmp("v2.1", v0.raw, v0.len) == 0);
-  assert(memcmp("v2.0.2", v1.raw, v1.len) == 0);
+  assert(memcmp("v2.0.2", v1.raw, v1.len) == 0 || memcmp("2.0.2", v1.raw, v1.len) == 0);
 
   semvers_rsort(semvers);
   putc('\n', stdout);
