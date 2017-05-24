@@ -59,11 +59,18 @@ uint32_t semvers_pgrowth(semvers_t *self, const int32_t nmin) {
   return 0;
 }
 
+semver_t semvers_perase(semvers_t *self, uint32_t i) {
+  semver_t x = self->data[i];
+
+  memmove(self->data + i, self->data + i + 1, --self->length * sizeof(semver_t));
+  return x;
+}
+
 static int semvers_qsort_fn(const void *a, const void *b) {
   return semver_pcmp((semver_t *) a, (semver_t *) b);
 }
 
-void semvers_sort(semvers_t *self) {
+void semvers_psort(semvers_t *self) {
   qsort((char *) self->data, self->length, sizeof(semver_t), semvers_qsort_fn);
 }
 
@@ -71,6 +78,6 @@ static int semvers_rqsort_fn(const void *a, const void *b) {
   return semver_pcmp((semver_t *) b, (semver_t *) a);
 }
 
-void semvers_rsort(semvers_t *self) {
+void semvers_prsort(semvers_t *self) {
   qsort((char *) self->data, self->length, sizeof(semver_t), semvers_rqsort_fn);
 }

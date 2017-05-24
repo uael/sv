@@ -164,10 +164,41 @@ struct semvers {
 };
 
 SV_API uint32_t semvers_pgrowth(semvers_t *self, int32_t nmin);
-SV_API void semvers_sort(semvers_t *self);
-SV_API void semvers_rsort(semvers_t *self);
+SV_API semver_t semvers_perase(semvers_t *self, uint32_t i);
+SV_API void semvers_psort(semvers_t *self);
+SV_API void semvers_prsort(semvers_t *self);
 
-#define semvers_push(semvers, x) \
-  (semvers_pgrowth(&(semvers), (semvers).length+1), (semvers).data[(semvers).length++] = (x))
+#define semvers_dtor(s) \
+  (((s).length=(s).capacity=0),((s).data?sv_free((s).data):(void)0),(s).data=NULL)
+
+#define semvers_growth(s, n) \
+  semvers_pgrowth(&(s),n)
+
+#define semvers_grow(s, n) \
+  semvers_pgrowth(&(s),(s).length+(n))
+
+#define semvers_resize(s, n) \
+  ((s).length=semvers_growth(s, n))
+
+#define semvers_erase(s, i) \
+  semvers_perase(&(s), i)
+
+#define semvers_push(s, x) \
+  (semvers_grow(s,1),(s).data[(s).length++]=(x))
+
+#define semvers_pop(s) \
+  (s).data[--(s).length]
+
+#define semvers_unshift(s, x) \
+  (semvers_grow(s,1),memmove((s).data+1,(s).data,(s).length++*sizeof(semver_t)),(s).data[0]=(x))
+
+#define semvers_shift(s) \
+  semvers_erase(s, 0)
+
+#define semvers_sort(s) \
+  semvers_psort(&(s))
+
+#define semvers_rsort(s) \
+  semvers_prsort(&(s))
 
 #endif /* SV_H__ */

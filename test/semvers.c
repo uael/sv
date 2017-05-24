@@ -49,37 +49,67 @@ int main(void) {
   semver_tryn(&v10, STRNSIZE("v2.1"));
 
   if (semver_rmatch(v0, ">2.0.1")) semvers_push(semvers, v0);
-  if (semver_rmatch(v1, ">2.0.1")) semvers_push(semvers, v1);
+  if (semver_rmatch(v1, ">2.0.1")) semvers_unshift(semvers, v1);
   if (semver_rmatch(v2, ">2.0.1")) semvers_push(semvers, v2);
-  if (semver_rmatch(v3, ">2.0.1")) semvers_push(semvers, v3);
+  if (semver_rmatch(v3, ">2.0.1")) semvers_unshift(semvers, v3);
   if (semver_rmatch(v4, ">2.0.1")) semvers_push(semvers, v4);
-  if (semver_rmatch(v5, ">2.0.1")) semvers_push(semvers, v5);
+  if (semver_rmatch(v5, ">2.0.1")) semvers_unshift(semvers, v5);
   if (semver_rmatch(v6, ">2.0.1")) semvers_push(semvers, v6);
-  if (semver_rmatch(v7, ">2.0.1")) semvers_push(semvers, v7);
+  if (semver_rmatch(v7, ">2.0.1")) semvers_unshift(semvers, v7);
   if (semver_rmatch(v8, ">2.0.1")) semvers_push(semvers, v8);
-  if (semver_rmatch(v9, ">2.0.1")) semvers_push(semvers, v9);
+  if (semver_rmatch(v9, ">2.0.1")) semvers_unshift(semvers, v9);
+  if (semver_rmatch(v10, ">2.0.1")) semvers_push(semvers, v10);
+  if (semver_rmatch(v0, ">2.0.1")) semvers_push(semvers, v0);
+  if (semver_rmatch(v1, ">2.0.1")) semvers_unshift(semvers, v1);
+  if (semver_rmatch(v2, ">2.0.1")) semvers_push(semvers, v2);
+  if (semver_rmatch(v3, ">2.0.1")) semvers_unshift(semvers, v3);
+  if (semver_rmatch(v4, ">2.0.1")) semvers_push(semvers, v4);
+  if (semver_rmatch(v5, ">2.0.1")) semvers_unshift(semvers, v5);
+  if (semver_rmatch(v6, ">2.0.1")) semvers_push(semvers, v6);
+  if (semver_rmatch(v7, ">2.0.1")) semvers_unshift(semvers, v7);
+  if (semver_rmatch(v8, ">2.0.1")) semvers_push(semvers, v8);
+  if (semver_rmatch(v9, ">2.0.1")) semvers_unshift(semvers, v9);
+  if (semver_rmatch(v10, ">2.0.1")) semvers_push(semvers, v10);
+  if (semver_rmatch(v0, ">2.0.1")) semvers_push(semvers, v0);
+  if (semver_rmatch(v1, ">2.0.1")) semvers_unshift(semvers, v1);
+  if (semver_rmatch(v2, ">2.0.1")) semvers_push(semvers, v2);
+  if (semver_rmatch(v3, ">2.0.1")) semvers_unshift(semvers, v3);
+  if (semver_rmatch(v4, ">2.0.1")) semvers_push(semvers, v4);
+  if (semver_rmatch(v5, ">2.0.1")) semvers_unshift(semvers, v5);
+  if (semver_rmatch(v6, ">2.0.1")) semvers_push(semvers, v6);
+  if (semver_rmatch(v7, ">2.0.1")) semvers_unshift(semvers, v7);
+  if (semver_rmatch(v8, ">2.0.1")) semvers_push(semvers, v8);
+  if (semver_rmatch(v9, ">2.0.1")) semvers_unshift(semvers, v9);
   if (semver_rmatch(v10, ">2.0.1")) semvers_push(semvers, v10);
 
-  if (semvers.length != 6) {
+  if (semvers.length != 18) {
     return EXIT_FAILURE;
   }
-  if (semvers.capacity != 8) {
+  if (semvers.capacity != 32) {
     return EXIT_FAILURE;
   }
 
-  semvers_sort(&semvers);
+  semvers_sort(semvers);
 
   for (unsigned i = 0; i < semvers.length; ++i) {
     semver_fwrite(semvers.data + i, stdout);
     putc('\n', stdout);
   }
 
-  semvers_rsort(&semvers);
+  v0 = semvers_pop(semvers);
+  v1 = semvers_shift(semvers);
+
+  assert(memcmp("v2.1", v0.raw, v0.len) == 0);
+  assert(memcmp("v2.0.2", v1.raw, v1.len) == 0);
+
+  semvers_rsort(semvers);
   putc('\n', stdout);
   for (unsigned i = 0; i < semvers.length; ++i) {
     semver_fwrite(semvers.data + i, stdout);
     putc('\n', stdout);
   }
+
+  semvers_dtor(semvers);
 
   return EXIT_SUCCESS;
 }
