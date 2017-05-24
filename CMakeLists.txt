@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 project(sv)
 
 option(SHARED "Build as shared library" OFF)
@@ -55,11 +55,11 @@ if(SHARED)
     endif()
 
     add_library(${PROJECT_NAME} SHARED ${sv_SOURCES} ${sv_HEADERS})
-    target_compile_definitions(${PROJECT_NAME} PUBLIC BUILD_DYNAMIC_LINK=1)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSV_BUILD_DYNAMIC_LINK=1")
 else()
     add_library(${PROJECT_NAME} STATIC ${sv_SOURCES} ${sv_HEADERS})
 endif()
-target_compile_definitions(${PROJECT_NAME} PUBLIC SEMVER_COMPILE=1)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSV_COMPILE=1")
 
 enable_testing()
 add_subdirectory(${sv_TEST_DIR})
