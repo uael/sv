@@ -1,4 +1,4 @@
-version: "1.0.0+{build}"
+version: "0.1.0+{build}"
 
 platform:
   - Win32
@@ -19,6 +19,11 @@ init:
   - cmd: msbuild /version
 
 clone_folder: C:\projects\sv
+
+branches:
+  only:
+    - master
+    - dev
 
 install:
   - git submodule update --init --recursive
