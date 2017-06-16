@@ -188,6 +188,7 @@ cmake-build-debug/
 build/
 
 # Stuff
+/vendor/
 *~
 =*
 ,,*
