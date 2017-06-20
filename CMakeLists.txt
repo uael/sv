@@ -113,19 +113,25 @@ endif ()
 if (MSVC)
   if (${PROJECT_NAME}_MSVC_COMPILE_OPTIONS)
     target_compile_options(${PROJECT_NAME}
+      PRIVATE /Oy
+      PRIVATE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>
       PRIVATE ${${PROJECT_NAME}_MSVC_COMPILE_OPTIONS})
+  else ()
+    target_compile_options(${PROJECT_NAME}
+      PRIVATE /Oy
+      PRIVATE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
   endif ()
-  target_compile_options(${PROJECT_NAME}
-    PRIVATE /Oy
-    PRIVATE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
 else ()
   if (${PROJECT_NAME}_COMPILE_OPTIONS)
     target_compile_options(${PROJECT_NAME}
+      PRIVATE -Wall -Werror -Wextra -fomit-frame-pointer
+      PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>
       PRIVATE ${${PROJECT_NAME}_COMPILE_OPTIONS})
+  else ()
+    target_compile_options(${PROJECT_NAME}
+      PRIVATE -Wall -Werror -Wextra -fomit-frame-pointer
+      PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
   endif ()
-  target_compile_options(${PROJECT_NAME}
-    PRIVATE -Wall -Werror -Wextra -fomit-frame-pointer
-    PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
 endif ()
 
 if (MSVC)
