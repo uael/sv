@@ -243,7 +243,7 @@ int main(void) {
     return EXIT_FAILURE;
   }
 
-  puts("\ntidle:");
+  puts("\ntilde:");
   if (test_read(">=1.2.3 <1.3.0", STRNSIZE("~1.2.3"))) {
     return EXIT_FAILURE;
   }
