@@ -1,5 +1,5 @@
 # libsv
-libsv - Public domain semantic versioning in c
+libsv - Public domain cross-platform semantic versioning in c99
 
 [![Build Status](https://travis-ci.org/uael/sv.svg?branch=master)](https://travis-ci.org/uael/sv)
 [![Build status](https://ci.appveyor.com/api/projects/status/7li44f9agk0u4dxc?svg=true)](https://ci.appveyor.com/project/uael/sv)
