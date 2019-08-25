@@ -148,7 +148,7 @@ SV_API char semver_tryn(semver_t *self, const char *str, size_t len);
 SV_API void semver_dtor(semver_t *self);
 SV_API int  semver_pwrite(const semver_t *self, char *buffer, size_t len);
 SV_API size_t semver_fwrite (const semver_t *self, FILE * stream);
-SV_API char semver_pcmp(const semver_t *self, const semver_t *other);
+SV_API int semver_pcmp(const semver_t *self, const semver_t *other);
 SV_API bool semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp);
 SV_API bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len);
 SV_API bool semver_range_pmatch(const semver_t *self, const semver_range_t *range);

@@ -64,7 +64,7 @@ char semver_num_read(int *self, const char *str, size_t len, size_t *offset) {
   return 0;
 }
 
-char semver_num_cmp(int self, int other) {
+int semver_num_cmp(int self, int other) {
   if (self > other) {
     return 1;
   }
