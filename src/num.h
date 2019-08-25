@@ -31,6 +31,6 @@
 #include "version.h"
 
 char semver_num_read(int *self, const char *str, size_t len, size_t *offset);
-char semver_num_cmp(int self, int other);
+int semver_num_cmp(int self, int other);
 
 #endif /* SV_NUM_H__ */

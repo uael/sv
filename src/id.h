@@ -34,7 +34,7 @@ void semver_id_ctor(semver_id_t *self);
 void semver_id_dtor(semver_id_t *self);
 char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offset);
 int  semver_id_pwrite(const semver_id_t *self, char *buffer, size_t len);
-char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other);
+int semver_id_pcmp(const semver_id_t *self, const semver_id_t *other);
 
 #define semver_id_write(self, buffer, len) semver_id_pwrite(&(self), buffer, len)
 #define semver_id_comp(self, other) semver_id_pcmp(&(self), &(other))
