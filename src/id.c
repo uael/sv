@@ -93,8 +93,8 @@ char semver_id_read(semver_id_t *self, const char *str, size_t len, size_t *offs
   return 0;
 }
 
-char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other) {
-  char s;
+int semver_id_pcmp(const semver_id_t *self, const semver_id_t *other) {
+  int s;
 
   if (self->len && !other->len) {
     return -1;
@@ -113,7 +113,7 @@ char semver_id_pcmp(const semver_id_t *self, const semver_id_t *other) {
     if (self->num < other->num) {
       return -1;
     }
-  } else if ((s = (char) memcmp(self->raw, other->raw, self->len > other->len ? self->len : other->len)) != 0) {
+  } else if ((s = (int) memcmp(self->raw, other->raw, self->len > other->len ? self->len : other->len)) != 0) {
     return s;
   }
 

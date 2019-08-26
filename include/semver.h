@@ -148,7 +148,7 @@ SV_API char semver_tryn(semver_t *self, const char *str, size_t len);
 SV_API void semver_dtor(semver_t *self);
 SV_API int  semver_pwrite(const semver_t *self, char *buffer, size_t len);
 SV_API size_t semver_fwrite (const semver_t *self, FILE * stream);
-SV_API char semver_pcmp(const semver_t *self, const semver_t *other);
+SV_API int semver_pcmp(const semver_t *self, const semver_t *other);
 SV_API bool semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp);
 SV_API bool semver_comp_matchn(const semver_t *self, const char *comp_str, size_t comp_len);
 SV_API bool semver_range_pmatch(const semver_t *self, const semver_range_t *range);
@@ -198,8 +198,11 @@ SV_API void semvers_pclear(semvers_t *self);
 #define semvers_growth(s, n) \
   semvers_pgrowth(&(s),n)
 
+#define semvers_pgrow(s, n) \
+  semvers_pgrowth((s),(s)->length+(n))
+
 #define semvers_grow(s, n) \
-  semvers_pgrowth(&(s),(s).length+(n))
+  semvers_pgrow(&(s), n)
 
 #define semvers_resize(s, n) \
   ((s).length=semvers_growth(s, n))
@@ -207,11 +210,17 @@ SV_API void semvers_pclear(semvers_t *self);
 #define semvers_erase(s, i) \
   semvers_perase(&(s), i)
 
+#define semvers_ppush(s, x) \
+  (semvers_pgrow(s,1),(s)->data[(s)->length++]=(x))
+
 #define semvers_push(s, x) \
-  (semvers_grow(s,1),(s).data[(s).length++]=(x))
+  semvers_ppush(&(s), x)
+
+#define semvers_ppop(s) \
+  (s)->data[--(s)->length]
 
 #define semvers_pop(s) \
-  (s).data[--(s).length]
+  semvers_ppop(&(s))
 
 #define semvers_unshift(s, x) \
   (semvers_grow(s,1),memmove((s).data+1,(s).data,(s).length++*sizeof(semver_t)),(s).data[0]=(x))

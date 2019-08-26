@@ -134,8 +134,8 @@ char semver_try_read(semver_t *self, const char *str, size_t len, size_t *offset
   return 1;
 }
 
-char semver_pcmp(const semver_t *self, const semver_t *other) {
-  char result;
+int semver_pcmp(const semver_t *self, const semver_t *other) {
+  int result;
 
   if ((result = semver_num_cmp(self->major, other->major)) != 0) {
     return result;

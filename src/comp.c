@@ -339,7 +339,7 @@ char semver_and(semver_comp_t *left, const char *str, size_t len) {
 }
 
 bool semver_comp_pmatch(const semver_t *self, const semver_comp_t *comp) {
-  char result = semver_pcmp(self, &comp->version);
+  int result = semver_pcmp(self, &comp->version);
 
   if (result < 0 && comp->op != SEMVER_OP_LT && comp->op != SEMVER_OP_LE) {
     return false;
