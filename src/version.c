@@ -89,8 +89,8 @@ char semver_read(semver_t *self, const char *str, size_t len, size_t *offset) {
       || semver_num_read(&self->minor, str, len, (++*offset, offset)) || self->minor == SEMVER_NUM_X
       || *offset >= len || str[*offset] != '.'
       || semver_num_read(&self->patch, str, len, (++*offset, offset)) || self->patch == SEMVER_NUM_X
-      || (str[*offset] == '-' && semver_id_read(&self->prerelease, str, len, (++*offset, offset)))
-      || (str[*offset] == '+' && semver_id_read(&self->build, str, len, (++*offset, offset)))) {
+      || (str[*offset] == '-' && semver_id_read_prerelease(&self->prerelease, str, len, (++*offset, offset)))
+      || (str[*offset] == '+' && semver_id_read_build(&self->build, str, len, (++*offset, offset)))) {
       self->len = str + *offset - self->raw;
       return 1;
     }
@@ -123,11 +123,11 @@ char semver_try_read(semver_t *self, const char *str, size_t len, size_t *offset
     if (*offset < len && str[*offset] == '-') {
       ++*offset;
     }
-    semver_id_read(&self->prerelease, str, len, offset);
+    semver_id_read_prerelease(&self->prerelease, str, len, offset);
     if (*offset < len && str[*offset] == '+') {
       ++*offset;
     }
-    semver_id_read(&self->build, str, len, offset);
+    semver_id_read_build(&self->build, str, len, offset);
     self->len = str + *offset - self->raw;
     return 0;
   }
