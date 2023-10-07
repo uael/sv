@@ -1,9 +1,7 @@
 # libsv
 libsv - Public domain cross-platform semantic versioning in c99
 
-[![Build Status](https://travis-ci.org/uael/sv.svg?branch=master)](https://travis-ci.org/uael/sv)
 [![codecov](https://codecov.io/gh/uael/sv/branch/master/graph/badge.svg)](https://codecov.io/gh/uael/sv)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b21f7acd11a9437c8fe79b0600dc205e)](https://www.codacy.com/app/lucas.abel/sv?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=uael/sv&amp;utm_campaign=Badge_Grade)
 
 # Topics
 - [Introduction](#introduction)
