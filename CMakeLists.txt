@@ -93,6 +93,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${${PROJECT_NAME
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_MAJOR}.${${PROJECT_NAME}_MINOR}.${${PROJECT_NAME}_PATCH}")
 set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION ${${PROJECT_NAME}_MAJOR})
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE SV_COMPILE=1)
+if (${BUILD_SHARED_LIBS})
+  target_compile_definitions(${PROJECT_NAME} PRIVATE SV_BUILD_DYNAMIC_LINK=1)
+endif ()
+
 if (${PROJECT_NAME}_DEPS)
   foreach (DEP ${${PROJECT_NAME}_DEPS})
     add_dependencies(${PROJECT_NAME} ${DEP})
