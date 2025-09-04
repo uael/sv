@@ -4,7 +4,7 @@ set_kind("binary")
 add_deps("sv")
 add_links("sv")
 add_includedirs("../include")
-add_linkdirs("$(buildir)")
+add_linkdirs("$(builddir)")
 
 target("version_test")
     add_files("version.c")
