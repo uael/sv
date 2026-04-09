@@ -1,7 +1,8 @@
-include(CMakeParseArguments)
+cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
 
 project(sv C)
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+
+include(CMakeParseArguments)
 
 if (NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/cmake/properties.cmake)
   message(FATAL_ERROR "cmake/properties.cmake file should exists.")
@@ -28,7 +29,7 @@ if (NOT COMMAND project_dependency)
       set(DL_ARGS_BUILD_DIR "${CMAKE_BINARY_DIR}/vendor/${DEP}")
       set(DL_ARGS_SOURCE_DIR "${CMAKE_SOURCE_DIR}/vendor/${DEP}")
       file(WRITE "${DL_ARGS_BUILD_DIR}/CMakeLists.txt"
-        "cmake_minimum_required(VERSION 3.5 FATAL_ERROR)\n"
+        "cmake_minimum_required(VERSION 3.25 FATAL_ERROR)\n"
         "project(vendor-${DEP} NONE)\n"
         "include(ExternalProject)\n"
         "ExternalProject_Add(vendor-${DEP}\n"
@@ -152,23 +153,7 @@ endif ()
 if (${PROJECT_NAME}_DEVEL)
   if (EXISTS ${${PROJECT_NAME}_TEST_DIR})
     enable_testing()
-
-    file(GLOB ctest_SOURCES ${ctest_SOURCES} ${${PROJECT_NAME}_TEST_DIR}/*.c)
-    foreach (ctest_SRC ${ctest_SOURCES})
-      get_filename_component(ctest_NAME ${ctest_SRC} NAME_WE)
-      add_executable(test_${ctest_NAME} ${ctest_SRC})
-      add_dependencies(test_${ctest_NAME} ${PROJECT_NAME})
-      target_link_libraries(test_${ctest_NAME} ${PROJECT_NAME})
-      if (${PROJECT_NAME}_TEST_DEPS)
-        foreach (DEP ${${PROJECT_NAME}_TEST_DEPS})
-          add_dependencies(test_${ctest_NAME} ${DEP})
-          if (${DEP}_LINK)
-            target_link_libraries(test_${ctest_NAME} ${DEP})
-          endif ()
-        endforeach ()
-      endif ()
-      add_test(${ctest_NAME} test_${ctest_NAME})
-    endforeach ()
+    add_subdirectory(${${PROJECT_NAME}_TEST_DIR})
   endif ()
 else ()
   set(${PROJECT_NAME}_HEADERS ${PROJECT_NAME}_HEADERS PARENT_SCOPE)
